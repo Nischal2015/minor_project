@@ -1,0 +1,77 @@
+.login {
+  background: url("../../assets/svg/login_box.svg");
+  background-size: cover;
+  grid-column: 4 / 10;
+  padding: 4.8rem 7.2rem;
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  gap: 2.8rem;
+
+  &__header {
+    text-align: center;
+    margin: 1.6rem 0 3.2rem 0;
+
+    & > span {
+      font-size: 2rem;
+    }
+  }
+
+  &__description {
+    display: flex;
+    flex-direction: column;
+    gap: 1.6rem;
+  }
+
+  &__constraints {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    span {
+      font-size: 1.6rem;
+
+      input {
+        height: 18px;
+        width: 18px;
+      }
+    }
+
+    & > span {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+  }
+
+  &__footer {
+    display: flex;
+    flex-direction: column;
+    gap: 3.6rem;
+
+    & > :first-child {
+      align-self: flex-start;
+    }
+
+    &--other {
+      display: grid;
+      row-gap: 1.2rem;
+    }
+  }
+
+  &::after {
+    content: "";
+    height: 110%;
+    width: 110%;
+    background-image: url("../../assets/svg/background.svg");
+    background-size: contain;
+    background-repeat: no-repeat;
+    position: absolute;
+    top: 1%;
+    left: -5%;
+    z-index: -9;
+    opacity: 0.2;
+    filter: blur(6px);
+  }
+}
