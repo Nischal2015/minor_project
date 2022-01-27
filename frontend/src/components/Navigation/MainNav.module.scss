@@ -24,7 +24,7 @@
     list-style: none;
     align-items: center;
     justify-content: space-between;
-    gap: 1.6rem;
+    gap: 1.2rem;
   }
 
   &__list {
@@ -32,15 +32,8 @@
     border-radius: 100px;
   }
 
-  &--search {
+  &__search {
     grid-column: 8 / 11;
-
-    padding: 1rem 1.6rem;
-    border-radius: 100px;
-    border: none;
-
-    &:focus {
-      outline: none;
-    }
+    position: relative;
   }
 }

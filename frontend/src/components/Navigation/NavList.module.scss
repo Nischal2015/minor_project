@@ -3,7 +3,7 @@
     &:link,
     &:visited {
       color: red;
-      padding: 0.8rem 1.6rem;
+      padding: 0.8rem 2.4rem;
       display: inline-block;
       border-radius: 100px;
       text-decoration: none;
@@ -13,7 +13,11 @@
 
     &:hover,
     &:active {
-      background: blue;
+      color: #000;
+    }
+
+    &:focus {
+      outline: 4px solid rgba(128, 200, 128, 0.5);
     }
 
     &.nav-cta:link,
@@ -22,5 +26,19 @@
       padding: 1.2rem 2.4rem;
       background-color: olive;
     }
+
+    &--active {
+      @extend .main-nav__link;
+      background: purple;
+      transition: all 0.2s;
+    }
+  }
+}
+
+.utility {
+  padding: 0.8rem !important;
+
+  &:hover {
+    background: none !important;
   }
 }

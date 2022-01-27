@@ -1,0 +1,31 @@
+.input {
+  position: relative;
+
+  &__search {
+    width: 100%;
+    padding: 1rem 1.6rem;
+    border-radius: 100px;
+    border: none;
+    transition: all 0.15s;
+    color: red;
+    font-size: 1.6rem;
+
+    &:focus {
+      outline: none;
+      box-shadow: 0 0.5rem 0.8rem rgba(0, 0, 0, 0.15);
+    }
+  }
+}
+
+.span--icon {
+  position: absolute;
+  top: 50%;
+  right: 5%;
+  transform: translateY(-45%);
+
+  svg {
+    height: 2.4rem;
+    width: 2.4rem;
+    fill: red;
+  }
+}

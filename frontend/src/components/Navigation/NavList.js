@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 import styles from "./NavList.module.scss";
 
@@ -7,19 +7,40 @@ const NavList = () => {
   return (
     <React.Fragment>
       <li>
-        <Link to='/' className={styles["main-nav__link"]}>
+        <NavLink
+          to='/'
+          className={(navData) =>
+            navData.isActive
+              ? styles["main-nav__link--active"]
+              : styles["main-nav__link"]
+          }
+        >
           Home
-        </Link>
+        </NavLink>
       </li>
       <li>
-        <Link to='/login' className={styles["main-nav__link"]}>
+        <NavLink
+          to='/talent'
+          className={(navData) =>
+            navData.isActive
+              ? styles["main-nav__link--active"]
+              : styles["main-nav__link"]
+          }
+        >
           Find Talent
-        </Link>
+        </NavLink>
       </li>
       <li>
-        <Link to='/login' className={styles["main-nav__link"]}>
+        <NavLink
+          to='/jobs'
+          className={(navData) =>
+            navData.isActive
+              ? styles["main-nav__link--active"]
+              : styles["main-nav__link"]
+          }
+        >
           Find Jobs
-        </Link>
+        </NavLink>
       </li>
     </React.Fragment>
   );

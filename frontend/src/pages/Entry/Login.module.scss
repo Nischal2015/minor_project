@@ -1,8 +1,9 @@
 .login {
   background: url("../../assets/svg/login_box.svg");
-  background-size: cover;
-  grid-column: 4 / 10;
-  padding: 4.8rem 7.2rem;
+  background-repeat: no-repeat;
+  max-width: 50rem;
+  margin: 0 auto;
+  padding: 4.8rem 3.6rem;
   position: relative;
 
   display: flex;
@@ -12,6 +13,7 @@
   &__header {
     text-align: center;
     margin: 1.6rem 0 3.2rem 0;
+    font-weight: 500;
 
     & > span {
       font-size: 2rem;

@@ -1,0 +1,53 @@
+.section {
+  &__hero,
+  &__about {
+    background: rgba(80, 80, 80, 0.05);
+  }
+
+  &__hero {
+    position: relative;
+
+    &::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 30%;
+      transform: translate(-50%, -55%);
+      height: 85%;
+      width: 50%;
+      background-size: 100% 100%;
+      background-repeat: no-repeat;
+      background-image: url("../../assets/svg/hero_svg.svg");
+      opacity: 0.3;
+      z-index: -9;
+    }
+  }
+
+  &__popular-cat,
+  &__about {
+    padding: 6.4rem 0 9.6rem 0;
+  }
+}
+
+.hero,
+.about {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  align-items: center;
+
+  &__description {
+    margin-bottom: 4.8rem;
+  }
+
+  &__img-box {
+    height: 500px;
+    width: 100%;
+  }
+}
+
+.popular-cat__list {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  column-gap: 1.6rem;
+  row-gap: 1.2rem;
+}

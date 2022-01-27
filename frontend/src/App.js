@@ -1,18 +1,22 @@
 // import styles from "./App.module.scss";
+import React from "react";
 import Landing from "./pages/Landing/Landing";
 import Navbar from "./components/Navigation/Navbar";
 import Login from "./pages/Entry/Login";
+import Work from "./pages/Work/Work";
+import Talent from "./pages/Talent/Talent";
 
 import { Routes, Route } from "react-router-dom";
-import React from "react";
 
 const App = () => {
   return (
     <React.Fragment>
       <Navbar />
       <Routes>
-        <Route path='/' element={<Landing />} exact />
-        <Route path='/login' element={<Login />} exact />
+        <Route path='/' element={<Landing />} />
+        <Route path='/login' element={<Login />} />
+        <Route path='/talent' element={<Talent />} />
+        <Route path='/jobs' element={<Work />} />
       </Routes>
     </React.Fragment>
   );
@@ -26,24 +30,3 @@ const App = () => {
 // );
 
 export default App;
-
-// import React, { useState } from "react";
-
-// const App = () => {
-//   const [count, setCount] = useState(0);
-
-//   const decrementCountHandler = () => {
-//     setCount((genius) => genius - 1);
-//     setCount((prevCount) => prevCount - 1);
-//   };
-
-//   return (
-//     <div>
-//       <button onClick={decrementCountHandler}>-</button>
-//       <span>{count}</span>
-//       <button>+</button>
-//     </div>
-//   );
-// };
-
-// export default App;

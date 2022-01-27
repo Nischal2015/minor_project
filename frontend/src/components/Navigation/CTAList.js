@@ -9,7 +9,7 @@ const CTAList = () => {
       <li>
         <Link
           to='/login'
-          className={`${styles["main-nav__link"]} ${styles["nav-cta"]}`}
+          className={`${styles["main-nav__link"]} ${styles.utility}`}
         >
           Login
         </Link>
