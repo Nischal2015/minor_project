@@ -1,0 +1,15 @@
+.list {
+  position: relative;
+
+  &:not(:last-child)::after {
+    content: "";
+    height: 4px;
+    width: 4px;
+    border-radius: 50%;
+    background: var(--color-grey-dark-1);
+    position: absolute;
+    right: -20px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}

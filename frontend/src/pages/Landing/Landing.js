@@ -52,7 +52,7 @@ const Landing = () => {
           <Button variant='rounded secondary'>Accounting & Finance</Button>
           <Button variant='rounded secondary'>Design and Creative</Button>
           <Button variant='rounded secondary'>Design and Creative</Button>
-          <Button variant='rounded secondary'>Design and Creative</Button>
+          <Button>Minor</Button>
         </Container>
       </section>
 

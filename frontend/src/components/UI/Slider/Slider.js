@@ -6,7 +6,6 @@ const Slider = ({ text }) => {
   const [sliderValue, setSliderValue] = useState(0);
 
   const sliderChangeHandler = (event) => {
-    console.log("chnage called");
     setSliderValue(event.target.value);
   };
 

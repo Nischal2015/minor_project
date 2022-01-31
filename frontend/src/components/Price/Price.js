@@ -10,12 +10,12 @@ const Price = () => {
       <div className={styles.filter__price__group}>
         <div className={styles.filter__pricing}>
           <label htmlFor='min'>min</label>
-          <Input type='text' id='min' variant='small'></Input>
+          <Input type='text' id='min' variant='small' />
         </div>
 
         <div className={styles.filter__pricing}>
           <label htmlFor='max'>max</label>
-          <Input type='text' id='max' variant='small'></Input>
+          <Input type='text' id='max' variant='small' />
         </div>
       </div>
     </div>
