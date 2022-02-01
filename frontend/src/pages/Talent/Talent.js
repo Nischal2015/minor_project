@@ -20,7 +20,7 @@ const talentLists = [
     jobheading: "Aman Shakya",
     img: profilePic,
     description:
-      "This section is dedicated for the short description of the freelancer themself. The bio must be short and consise, and must clearly explain what expertise do the particular freelancers hold. If possible the bio must contain information such as the DOB, and the age of the person. It should also contain the name of the university of the person who is seeking to be a freelancer.",
+      "My name is Aman Shakya. I teach TOC, Software Engineering, DBMS in Pulchowk Engineering Campus. Sometimes, I like to laugh between the middle of lecture on my own jokes, but many students don't consider them to be funny.",
     skills: [
       "TOC",
       "DBMS",
@@ -37,7 +37,7 @@ const talentLists = [
     jobheading: "Anil Verma",
     img: null,
     description:
-      "This section is dedicated for the short description of the freelancer themself. The bio must be short and consise, and must clearly explain what expertise do the particular freelancers hold. If possible the bio must contain information such as the DOB, and the age of the person. It should also contain the name of the university of the person who is seeking to be a freelancer.",
+      "My name is Anil Verma. I teach Computer Graphics, OS in Pulchowk Campus. Sometimes I am quite lazy to take the classes, so I just cancel the class.",
     skills: [
       "Computer Graphics",
       "OS",
@@ -52,7 +52,7 @@ const talentLists = [
     jobheading: "Anand Kumar Shah",
     img: null,
     description:
-      "This section is dedicated for the short description of the freelancer themself. The bio must be short and consise, and must clearly explain what expertise do the particular freelancers hold. If possible the bio must contain information such as the DOB, and the age of the person. It should also contain the name of the university of the person who is seeking to be a freelancer.",
+      "My name is Anand Kumar Shah. I teach Embedded System in Pulchowk Engineering Campus. I like to explain things in details so that students can understand thoroughly. Hence, my classes sometimes go beyond the time limit set by the college routine.",
     skills: [
       "Embedded System",
       "Microcontroller Design",
@@ -65,7 +65,7 @@ const talentLists = [
     jobheading: "Roshan Karki",
     img: null,
     description:
-      "This section is dedicated for the short description of the freelancer themself. The bio must be short and consise, and must clearly explain what expertise do the particular freelancers hold. If possible the bio must contain information such as the DOB, and the age of the person. It should also contain the name of the university of the person who is seeking to be a freelancer.",
+      "My name is Roshan Karki. I teach Engineering Economics and possibly am the only teacher outside of DOECE to teach this semester. I love numbers hence I teach economics, though not pure Economics as you may think.",
     skills: ["Eng. Economics", "Traffic Engineering"],
     rating: "90",
   },
@@ -74,7 +74,7 @@ const talentLists = [
     jobheading: "Basanta Joshi",
     img: profilePic,
     description:
-      "This section is dedicated for the short description of the freelancer themself. The bio must be short and consise, and must clearly explain what expertise do the particular freelancers hold. If possible the bio must contain information such as the DOB, and the age of the person. It should also contain the name of the university of the person who is seeking to be a freelancer.",
+      "My name is Basanti Joshi and I am Asst. professsor in Pulchowk Campus. I teach Artificial Intelligence and give assignments right during the end of the class. The assignments deadline is generally 20 mins. to 1 hour after the end of the class.",
     skills: [
       "Machine Learning",
       "Deep Learning",
@@ -88,7 +88,7 @@ const talentLists = [
     jobheading: "Lok Nath Regmi",
     img: profilePic,
     description:
-      "This section is dedicated for the short description of the freelancer themself. The bio must be short and consise, and must clearly explain what expertise do the particular freelancers hold. If possible the bio must contain information such as the DOB, and the age of the person. It should also contain the name of the university of the person who is seeking to be a freelancer.",
+      "I don't need to introduce myself but if you need my name, my name is Lok Nath Regmi. I teach OOAD. Recently, I was assigned judge for the minor project defense. During my class, students are generally sleepy or they are not paying attention.",
     skills: [
       "Object Oriented Design",
       "UML Patterns",
