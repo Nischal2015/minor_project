@@ -2,7 +2,11 @@
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 0.8rem;
+  gap: 1rem;
+
+  &:not(:last-child) {
+    margin-bottom: 2.4rem;
+  }
 }
 
 .slider {

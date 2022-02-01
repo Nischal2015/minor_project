@@ -41,12 +41,17 @@
 .list {
   padding: 2.4rem 0;
   display: grid;
-  grid-template-columns: 5fr 1fr;
+  grid-template-columns: minmax(0, 1.25fr) 8.75fr 2fr;
   grid-auto-flow: column;
   column-gap: 1.6rem;
 
   &:not(:last-child) {
     border-bottom: 2px solid var(--color-grey-light-3);
+  }
+
+  &__picture {
+    width: 100%;
+    aspect-ratio: 1;
   }
 
   &__text {
