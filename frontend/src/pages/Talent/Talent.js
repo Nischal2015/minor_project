@@ -3,11 +3,12 @@ import React from "react";
 import Button from "../../components/UI/Button/Button";
 import Container from "../../components/UI/Container/Container";
 import Card from "../../components/UI/Card/Card";
-import CircularRating from "../../components/UI/Ratings/CircularRatings";
+import CircularRating from "../../components/UI/Ratings/CircularRatings/CircularRatings";
 import Price from "../../components/Price/Price";
 import Input from "../../components/UI/Input/Input";
 import List from "../../components/List/List";
 import Slider from "../../components/UI/Slider/Slider";
+import StarRatings from "../../components/UI/Ratings/StarRatings/StarRatings";
 
 import profilePic from "../../assets/png/user_hero.png";
 import Avatar from "react-avatar";
@@ -63,16 +64,16 @@ const talentLists = [
   {
     id: 114,
     jobheading: "Roshan Karki",
-    img: null,
+    img: profilePic,
     description:
-      "My name is Roshan Karki. I teach Engineering Economics and possibly am the only teacher outside of DOECE to teach this semester. I love numbers hence I teach economics, though not pure Economics as you may think.",
+      "My name is Roshan Karki. I teach Engineering Economics and possibly am the only teacher outside of DOECE to teach this semester. I love numbers hence I teach economics, though not pure Economics as you may think. I often like to ask questions to my students while they are solving a certain numerical. I also make students read a certain passage of my slide and ask them what they understood.",
     skills: ["Eng. Economics", "Traffic Engineering"],
     rating: "90",
   },
   {
     id: 115,
     jobheading: "Basanta Joshi",
-    img: profilePic,
+    img: null,
     description:
       "My name is Basanti Joshi and I am Asst. professsor in Pulchowk Campus. I teach Artificial Intelligence and give assignments right during the end of the class. The assignments deadline is generally 20 mins. to 1 hour after the end of the class.",
     skills: [
@@ -94,7 +95,7 @@ const talentLists = [
       "UML Patterns",
       "Object Oriented Analysis",
     ],
-    rating: "13",
+    rating: "21",
   },
 ];
 
@@ -175,7 +176,9 @@ const Talent = () => {
               </div>
             ))}
           </div>
-          <div className={styles.results__pagination}></div>
+          <div className={styles.results__pagination}>
+            <StarRatings />
+          </div>
         </Card>
       </Container>
     </section>

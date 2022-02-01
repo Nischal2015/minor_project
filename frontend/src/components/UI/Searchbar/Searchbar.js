@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./Searchbar.module.scss";
 
-import SearchIcon from "@mui/icons-material/Search";
+import { MdSearch } from "react-icons/md";
 
 const Searchbar = ({ value, onSearch }) => {
   return (
@@ -13,7 +13,7 @@ const Searchbar = ({ value, onSearch }) => {
         onChange={onSearch}
       />
       <span className={styles["span--icon"]}>
-        <SearchIcon />
+        <MdSearch />
       </span>
     </div>
   );
