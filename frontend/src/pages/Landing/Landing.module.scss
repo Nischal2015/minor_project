@@ -1,26 +1,7 @@
 .section {
   &__hero,
   &__about {
-    background: rgba(80, 80, 80, 0.05);
-  }
-
-  &__hero {
-    position: relative;
-
-    &::after {
-      content: "";
-      position: absolute;
-      top: 50%;
-      left: 30%;
-      transform: translate(-50%, -55%);
-      height: 85%;
-      width: 50%;
-      background-size: 100% 100%;
-      background-repeat: no-repeat;
-      background-image: url("../../assets/svg/hero_svg.svg");
-      opacity: 0.3;
-      z-index: -9;
-    }
+    padding: 6.4rem 0 9.6rem 0;
   }
 
   &__popular-cat,
@@ -34,20 +15,55 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   align-items: center;
+  column-gap: 9.6rem;
+}
 
+.hero {
   &__description {
     margin-bottom: 4.8rem;
+    font-size: 2.4rem;
+    line-height: 1.4;
   }
 
-  &__img-box {
-    height: 500px;
-    width: 100%;
+  &__text-box {
+    position: relative;
+
+    &::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 40%;
+      transform: translate(-50%, -55%) scale(1.8);
+      height: 100%;
+      width: 100%;
+      background-size: 100% 100%;
+      background-repeat: no-repeat;
+      background-image: url("../../assets/svg/hero_svg.svg");
+      opacity: 0.25;
+      z-index: -9;
+    }
   }
+
+  &__cta {
+    display: flex;
+    gap: 2.4rem;
+    max-width: 56%;
+
+    & > * {
+      flex-grow: 1;
+    }
+  }
+
+  // &__img-box {
+  //   height: 500px;
+  //   width: 100%;
+  // }
 }
 
 .popular-cat__list {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  column-gap: 1.6rem;
-  row-gap: 1.2rem;
+  grid-template-rows: repeat(2, minmax(4.8rem, 1fr));
+  column-gap: 4.8rem;
+  row-gap: 2.4rem;
 }

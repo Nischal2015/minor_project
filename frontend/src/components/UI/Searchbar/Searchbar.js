@@ -3,7 +3,7 @@ import styles from "./Searchbar.module.scss";
 
 import { MdSearch } from "react-icons/md";
 
-const Searchbar = ({ value, onSearch }) => {
+const Searchbar = ({ value, onSearch, variant }) => {
   return (
     <div className={styles.input}>
       <input
@@ -11,6 +11,9 @@ const Searchbar = ({ value, onSearch }) => {
         value={value}
         className={styles.input__search}
         onChange={onSearch}
+        aria-label='Search'
+        data-variant={variant || null}
+        placeholder='Search'
       />
       <span className={styles["span--icon"]}>
         <MdSearch />

@@ -1,17 +1,18 @@
 import React from "react";
 
-import Button from "../../components/UI/Button/Button";
+import { CustomLink } from "../../components/UI/CustomLink/CustomLink";
 import Container from "../../components/UI/Container/Container";
 import Card from "../../components/UI/Card/Card";
 import CircularRating from "../../components/UI/Ratings/CircularRatings/CircularRatings";
 import Price from "../../components/Price/Price";
-import Input from "../../components/UI/Input/Input";
+import Searchbar from "../../components/UI/Searchbar/Searchbar";
 import List from "../../components/List/List";
 import Slider from "../../components/UI/Slider/Slider";
-import StarRatings from "../../components/UI/Ratings/StarRatings/StarRatings";
 
 import profilePic from "../../assets/png/user_hero.png";
 import Avatar from "react-avatar";
+
+import { HiArrowNarrowRight } from "react-icons/hi";
 
 import styles from "./Talent.module.scss";
 
@@ -97,6 +98,30 @@ const talentLists = [
     ],
     rating: "21",
   },
+  {
+    id: 117,
+    jobheading: "Suresh Jha",
+    img: profilePic,
+    description: "My name is Suresh Jha. I like to scold students.",
+    skills: [
+      "Object Oriented Design",
+      "UML Patterns",
+      "Object Oriented Analysis",
+    ],
+    rating: "91",
+  },
+  {
+    id: 118,
+    jobheading: "Prabesh Raj Bhandari Sharma",
+    img: null,
+    description: "My name is . I am 9th grade student.",
+    skills: [
+      "Object Oriented Design",
+      "UML Patterns",
+      "Object Oriented Analysis",
+    ],
+    rating: "100",
+  },
 ];
 
 const ratingsCriteria = [
@@ -134,7 +159,9 @@ const Talent = () => {
 
           <div className={styles.filter__skills}>
             <h4 className={styles.filter__skills__heading}>Skills</h4>
-            <Input type='text' variant='small'></Input>
+            <label>
+              <Searchbar variant='small' />
+            </label>
           </div>
         </Card>
 
@@ -151,15 +178,16 @@ const Talent = () => {
                       name={jobList.jobheading}
                       round={true}
                       size='100%'
-                      textSizeRatio={1}
+                      textSizeRatio={2.25}
                       alt='Name Initials Avatar'
+                      maxInitials={3}
                     />
                   ) : (
                     <Avatar
                       src={img}
                       round={true}
                       size='100%'
-                      textSizeRatio={1}
+                      textSizeRatio={2.25}
                       alt='Profile Avatar'
                     />
                   )}
@@ -171,14 +199,21 @@ const Talent = () => {
 
                 <div className={styles.list__number}>
                   <CircularRating>{rating}</CircularRating>
-                  <Button variant='secondary small'>See More &rarr;</Button>
+                  <CustomLink
+                    to='/profile'
+                    variant='small primary'
+                    ariaLabel='See more detail about the freelancer'
+                  >
+                    See More{" "}
+                    <span>
+                      <HiArrowNarrowRight />
+                    </span>
+                  </CustomLink>
                 </div>
               </div>
             ))}
           </div>
-          <div className={styles.results__pagination}>
-            <StarRatings />
-          </div>
+          <div className={styles.results__pagination}></div>
         </Card>
       </Container>
     </section>

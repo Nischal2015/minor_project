@@ -21,6 +21,7 @@ const Slider = ({ text }) => {
         value={sliderValue}
         className={styles.slider}
         onChange={sliderChangeHandler}
+        aria-label={`${text} slider`}
       />
     </div>
   );

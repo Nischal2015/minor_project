@@ -1,30 +1,38 @@
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700;800&display=swap");
 
 :root {
-  --hover-primary-color: #06354d;
-  --primary-color: #095073;
-  --secondary-color: #1196d9;
+  --shade-primary-color: #1e5cae;
+  --tint-primary-color: 81, 143, 225;
+  --primary-color: #2b7de7;
+  --secondary-color: #1e7cae;
+  --shade-tertiary-color: #ae1e66;
+  --tertiary-color: #da2580;
   // #14b1ff
   // #13a8f2
   --input-radius: 4px;
-  --button-radius: 8px;
+  --button-radius: 6px;
   --layout-radius: 12px;
 
   --primary-heading: 5.2rem;
   --secondary-heading: 4rem;
-  --tertiary-heading: 2.4rem;
+  --tertiary-heading: 2.2rem;
 
   --btn-primary: #222147;
   --btn-secondary: ;
 
   // COLOR GREY
   --color-grey-dark-1: #212529;
-  --color-grey-dark-2: #343a40;
-  --color-grey-dark-3: #495057;
+  --color-grey-dark-3: #868e96;
+  --color-grey-dark-2: #495057;
 
-  --color-grey-light-1: #f1f3f5;
+  --color-grey-light-1: #fefefe;
   --color-grey-light-2: #e9ecef;
   --color-grey-light-3: #dee2e6;
+
+  --nav-background: #fbfcfe;
+  // --body-background: 229, 231, 235;
+  --body-background: #fbfbfd;
+  // --body-background: #f8fbfe;
 }
 
 *,
@@ -35,8 +43,15 @@
   box-sizing: inherit;
 }
 
+// *:focus {
+//   outline: 3px solid rgba(var(--tint-primary-color), 0.5);
+// }
+
 html {
   font-size: 62.5%;
+  &:focus {
+    outline: 4px solid rgba(var(--tint-primary-color), 0.5);
+  }
 }
 
 body {
@@ -45,20 +60,16 @@ body {
   font-family: "Open sans", sans-serif;
   font-size: 1.4rem;
   font-weight: 500;
-  letter-spacing: -0.25px;
   color: var(--color-grey-dark-2);
+  background: var(--body-background);
+  background-attachment: fixed;
 }
 
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
 
   &-thumb {
-    background: rgba(0, 0, 0, 0.315);
-    border-radius: 100px;
-  }
-
-  &-track {
-    box-shadow: inset 0 0 2px #d8d8d8;
+    background: var(--color-grey-dark-2);
     border-radius: 100px;
   }
 }
@@ -71,7 +82,7 @@ body {
     line-height: 1.1;
     letter-spacing: 2px;
     word-spacing: 2px;
-    font-weight: 600;
+    font-weight: 700;
   }
 
   &--secondary {

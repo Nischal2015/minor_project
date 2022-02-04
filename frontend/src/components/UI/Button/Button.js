@@ -1,11 +1,11 @@
 import React from "react";
 import styles from "./Button.module.scss";
 
-const Button = ({ type, children, className, variant }) => {
+const Button = ({ type, children, variant }) => {
   return (
     <button
       type={type || "button"}
-      className={`${styles.btn} ${className ? styles[className] : ""}`}
+      className={styles.btn}
       data-variant={variant}
     >
       {children}

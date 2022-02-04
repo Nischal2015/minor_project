@@ -3,7 +3,7 @@ import React from "react";
 import Budget from "../../components/SideList/Budget";
 import Container from "../../components/UI/Container/Container";
 import Card from "../../components/UI/Card/Card";
-import Input from "../../components/UI/Input/Input";
+import Searchbar from "../../components/UI/Searchbar/Searchbar";
 import List from "../../components/List/List";
 import Price from "../../components/Price/Price";
 
@@ -105,7 +105,8 @@ const Work = () => {
           {/* Filters skills section */}
           <div className={styles.filter__skills}>
             <h4 className={styles.filter__skills__heading}>Skills</h4>
-            <Input type='text' variant='small'></Input>
+
+            <Searchbar variant='small' />
 
             <ul className={styles.filter__skills__list}>
               {skills.map(({ id, name }) => (

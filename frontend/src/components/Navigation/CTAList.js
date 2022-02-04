@@ -1,26 +1,30 @@
 import React from "react";
-import styles from "./NavList.module.scss";
 
-import { Link } from "react-router-dom";
+import { CustomNavLink } from "../UI/CustomLink/CustomLink";
 
 const CTAList = () => {
+  const ctaStyle = { fontSize: "1.4rem" };
   return (
     <React.Fragment>
       <li>
-        <Link
+        <CustomNavLink
           to='/login'
-          className={`${styles["main-nav__link"]} ${styles.utility}`}
+          ariaLabel='Signup for our website'
+          variant='outline rounded'
+          style={ctaStyle}
         >
           Login
-        </Link>
+        </CustomNavLink>
       </li>
       <li>
-        <Link
+        <CustomNavLink
           to='/login'
-          className={`${styles["main-nav__link"]} ${styles["nav-cta"]}`}
+          variant='tertiary rounded'
+          ariaLabel='Login into our website'
+          style={ctaStyle}
         >
           Signup
-        </Link>
+        </CustomNavLink>
       </li>
     </React.Fragment>
   );
