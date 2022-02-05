@@ -1,5 +1,5 @@
 import React from "react";
-import Button from "../../components/UI/Button/Button";
+import { CustomNavLink } from "../../components/UI/CustomLink/CustomLink";
 import Container from "../../components/UI/Container/Container";
 import { ReactComponent as Hero } from "../../assets/svg/Logo.svg";
 
@@ -50,21 +50,33 @@ const Landing = () => {
       {/* Categories Section */}
       <section className={styles["section__popular-cat"]}>
         <Container>
-          <h2 className='heading--tertiary'>Popular Categories</h2>
+          <h2 className='heading--secondary'>Popular Categories</h2>
         </Container>
         <Container className={styles["popular-cat__list"]}>
-          <Button variant='rounded outline primary'>Design and Creative</Button>
-          <Button variant='rounded outline primary'>Developoment & IT</Button>
-          <Button variant='rounded outline primary'>Sales and Marketing</Button>
-          <Button variant='rounded outline primary'>
+          <CustomNavLink to='/' variant='rounded outline primary'>
+            Design and Creative
+          </CustomNavLink>
+          <CustomNavLink to='/' variant='rounded outline primary'>
+            Development & IT
+          </CustomNavLink>
+          <CustomNavLink to='/' variant='rounded outline primary'>
+            Sales and Marketing
+          </CustomNavLink>
+          <CustomNavLink to='/' variant='rounded outline primary'>
             Writing and Translation
-          </Button>
-          <Button variant='rounded outline primary'>
+          </CustomNavLink>
+          <CustomNavLink to='/' variant='rounded outline primary'>
             Accounting & Finance
-          </Button>
-          <Button variant='rounded outline primary'>Design and Creative</Button>
-          <Button variant='rounded outline primary'>Design and Creative</Button>
-          <Button variant='rounded outline primary'>Minor</Button>
+          </CustomNavLink>
+          <CustomNavLink to='/' variant='rounded outline primary'>
+            Design and Creative
+          </CustomNavLink>
+          <CustomNavLink to='/' variant='rounded outline primary'>
+            Design and Creative
+          </CustomNavLink>
+          <CustomNavLink to='/' variant='rounded outline primary'>
+            Minor
+          </CustomNavLink>
         </Container>
       </section>
 
@@ -75,16 +87,14 @@ const Landing = () => {
           <div className={styles["about__text-box"]}>
             <h2 className='heading--secondary'>About Us</h2>
             <p className={styles["about__description"]}>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias
-              obcaecati dicta numquam ea nam, laudantium quia sequi, est
-              incidunt hic fugiat dolor similique, odio consequuntur? Ratione
-              dolorem modi pariatur similique facilis itaque, repellendus
-              architecto animi praesentium eveniet voluptatibus voluptas sed.
-              Impedit recusandae voluptatem mollitia. Nam aut rem beatae,
-              dolorum modi, nemo veritatis numquam et obcaecati eius nihil
-              voluptatibus nulla molestiae.
+              I am an invisible man. No, I am not a spook like those who haunted
+              Edgar Allan Poe; nor am I one of your Hollywood-movie ectoplasms.
+              I am a man of substance, of flesh and bone, fiber and liquids—and
+              I might even be said to possess a mind. I am invisible,
+              understand, simply because people refuse to see me. I wanted
+              you...
             </p>
-            <CustomLink to='/login' ariaLabel='Read more about us'>
+            <CustomLink to='about' ariaLabel='Read more about us'>
               Read More
             </CustomLink>
           </div>

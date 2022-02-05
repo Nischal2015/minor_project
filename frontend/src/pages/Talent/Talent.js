@@ -16,7 +16,7 @@ import { HiArrowNarrowRight } from "react-icons/hi";
 
 import styles from "./Talent.module.scss";
 
-const talentLists = [
+export const talentLists = [
   {
     id: 111,
     jobheading: "Aman Shakya",
@@ -32,7 +32,13 @@ const talentLists = [
       "Backend Development",
       "Software Engineering",
     ],
-    rating: "32",
+    rating: {
+      reliability: 32,
+      punctual: 23,
+      communication: 54,
+      qualityWork: 59,
+    },
+    hourlyRate: 35,
   },
   {
     id: 112,
@@ -47,7 +53,13 @@ const talentLists = [
       "Photoshop",
       "Powerpoint",
     ],
-    rating: "60",
+    rating: {
+      reliability: 60,
+      punctual: 40,
+      communication: 68,
+      qualityWork: 80,
+    },
+    hourlyRate: 40,
   },
   {
     id: 113,
@@ -60,7 +72,13 @@ const talentLists = [
       "Microcontroller Design",
       "Computer Organization",
     ],
-    rating: "75",
+    rating: {
+      reliability: 75,
+      punctual: 99,
+      communication: 98,
+      qualityWork: 78,
+    },
+    hourlyRate: 60,
   },
   {
     id: 114,
@@ -69,7 +87,13 @@ const talentLists = [
     description:
       "My name is Roshan Karki. I teach Engineering Economics and possibly am the only teacher outside of DOECE to teach this semester. I love numbers hence I teach economics, though not pure Economics as you may think. I often like to ask questions to my students while they are solving a certain numerical. I also make students read a certain passage of my slide and ask them what they understood.",
     skills: ["Eng. Economics", "Traffic Engineering"],
-    rating: "90",
+    rating: {
+      reliability: 90,
+      punctual: 60,
+      communication: 98,
+      qualityWork: 97,
+    },
+    hourlyRate: 15,
   },
   {
     id: 115,
@@ -83,7 +107,13 @@ const talentLists = [
       "Computer Vision",
       "Algorithms",
     ],
-    rating: "43",
+    rating: {
+      reliability: 43,
+      punctual: 80,
+      communication: 70,
+      qualityWork: 90,
+    },
+    hourlyRate: 34,
   },
   {
     id: 116,
@@ -96,7 +126,13 @@ const talentLists = [
       "UML Patterns",
       "Object Oriented Analysis",
     ],
-    rating: "21",
+    rating: {
+      reliability: 21,
+      punctual: 30,
+      communication: 40,
+      qualityWork: 40,
+    },
+    hourlyRate: 55,
   },
   {
     id: 117,
@@ -108,19 +144,13 @@ const talentLists = [
       "UML Patterns",
       "Object Oriented Analysis",
     ],
-    rating: "91",
-  },
-  {
-    id: 118,
-    jobheading: "Prabesh Raj Bhandari Sharma",
-    img: null,
-    description: "My name is . I am 9th grade student.",
-    skills: [
-      "Object Oriented Design",
-      "UML Patterns",
-      "Object Oriented Analysis",
-    ],
-    rating: "100",
+    rating: {
+      reliability: 91,
+      punctual: 99,
+      communication: 90,
+      qualityWork: 67,
+    },
+    hourlyRate: 100,
   },
 ];
 
@@ -132,6 +162,11 @@ const ratingsCriteria = [
 ];
 
 const Talent = () => {
+  const RELIABILITY_WEIGHT = 0.25;
+  const PUCNTUAL_WEIGHT = 0.15;
+  const COMMUNICATION_WEIGHT = 0.15;
+  const QUALITYWORK_WEIGHT = 0.45;
+
   return (
     <section className={styles.section__work}>
       <Container className={styles.talent}>
@@ -170,48 +205,58 @@ const Talent = () => {
             <h3 className='heading--tertiary'>Top Results</h3>
           </div>
           <div className={styles.results__list}>
-            {talentLists.map(({ id, rating, img, ...jobList }) => (
-              <div className={styles.list} key={id}>
-                <picture className={styles.list__picture}>
-                  {img === null ? (
-                    <Avatar
-                      name={jobList.jobheading}
-                      round={true}
-                      size='100%'
-                      textSizeRatio={2.25}
-                      alt='Name Initials Avatar'
-                      maxInitials={3}
-                    />
-                  ) : (
-                    <Avatar
-                      src={img}
-                      round={true}
-                      size='100%'
-                      textSizeRatio={2.25}
-                      alt='Profile Avatar'
-                    />
-                  )}
-                </picture>
+            {talentLists.map(({ id, rating, img, ...jobList }) => {
+              const { reliability, punctual, communication, qualityWork } =
+                rating;
+              const avgRating = parseInt(
+                RELIABILITY_WEIGHT * reliability +
+                  PUCNTUAL_WEIGHT * punctual +
+                  COMMUNICATION_WEIGHT * communication +
+                  QUALITYWORK_WEIGHT * qualityWork
+              );
+              return (
+                <div className={styles.list} key={id}>
+                  <picture className={styles.list__picture}>
+                    {img === null ? (
+                      <Avatar
+                        name={jobList.jobheading}
+                        round={true}
+                        size='100%'
+                        textSizeRatio={2.25}
+                        alt='Name Initials Avatar'
+                        maxInitials={3}
+                      />
+                    ) : (
+                      <Avatar
+                        src={img}
+                        round={true}
+                        size='100%'
+                        textSizeRatio={2.25}
+                        alt='Profile Avatar'
+                      />
+                    )}
+                  </picture>
 
-                <div className={styles.list__text}>
-                  <List {...jobList} />
-                </div>
+                  <div className={styles.list__text}>
+                    <List {...jobList} />
+                  </div>
 
-                <div className={styles.list__number}>
-                  <CircularRating>{rating}</CircularRating>
-                  <CustomLink
-                    to='/profile'
-                    variant='small primary'
-                    ariaLabel='See more detail about the freelancer'
-                  >
-                    See More{" "}
-                    <span>
-                      <HiArrowNarrowRight />
-                    </span>
-                  </CustomLink>
+                  <div className={styles.list__number}>
+                    <CircularRating>{avgRating}</CircularRating>
+                    <CustomLink
+                      to={`${id}`}
+                      variant='small primary'
+                      ariaLabel='See more detail about the freelancer'
+                    >
+                      See More{" "}
+                      <span>
+                        <HiArrowNarrowRight />
+                      </span>
+                    </CustomLink>
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
           <div className={styles.results__pagination}></div>
         </Card>

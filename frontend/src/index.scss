@@ -14,7 +14,7 @@
   --layout-radius: 12px;
 
   --primary-heading: 5.2rem;
-  --secondary-heading: 4rem;
+  --secondary-heading: 3.2rem;
   --tertiary-heading: 2.2rem;
 
   --btn-primary: #222147;
@@ -78,16 +78,16 @@ body {
 .heading {
   &--primary {
     font-size: var(--primary-heading);
+    font-weight: 800;
     margin-bottom: 3.2rem;
     line-height: 1.1;
     letter-spacing: 2px;
     word-spacing: 2px;
-    font-weight: 700;
   }
 
   &--secondary {
     font-size: var(--secondary-heading);
-    margin-bottom: 2.4rem;
+    margin-bottom: 2.8rem;
   }
 
   &--tertiary {

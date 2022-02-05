@@ -1,12 +1,13 @@
 .section {
   &__hero,
+  &__popular-cat,
   &__about {
     padding: 6.4rem 0 9.6rem 0;
   }
 
-  &__popular-cat,
+  &__hero,
   &__about {
-    padding: 6.4rem 0 9.6rem 0;
+    background: rgba(var(--tint-primary-color), 0.022);
   }
 }
 
@@ -22,7 +23,7 @@
   &__description {
     margin-bottom: 4.8rem;
     font-size: 2.4rem;
-    line-height: 1.4;
+    line-height: 1.3;
   }
 
   &__text-box {
@@ -31,9 +32,9 @@
     &::after {
       content: "";
       position: absolute;
-      top: 50%;
-      left: 40%;
-      transform: translate(-50%, -55%) scale(1.8);
+      bottom: 50%;
+      left: 41%;
+      transform: translate(-50%, 40%) scale(1.9);
       height: 100%;
       width: 100%;
       background-size: 100% 100%;
@@ -46,7 +47,7 @@
 
   &__cta {
     display: flex;
-    gap: 2.4rem;
+    gap: 1.8rem;
     max-width: 56%;
 
     & > * {
@@ -54,16 +55,24 @@
     }
   }
 
-  // &__img-box {
-  //   height: 500px;
-  //   width: 100%;
-  // }
+  &__img-box {
+    height: 500px;
+    width: 100%;
+  }
+}
+
+.about {
+  &__description {
+    font-size: 1.8rem;
+    line-height: 1.3;
+    margin-bottom: 2.4rem;
+  }
 }
 
 .popular-cat__list {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: repeat(2, minmax(4.8rem, 1fr));
-  column-gap: 4.8rem;
+  column-gap: 4rem;
   row-gap: 2.4rem;
 }

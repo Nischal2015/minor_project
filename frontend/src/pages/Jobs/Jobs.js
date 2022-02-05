@@ -7,7 +7,7 @@ import Searchbar from "../../components/UI/Searchbar/Searchbar";
 import List from "../../components/List/List";
 import Price from "../../components/Price/Price";
 
-import styles from "./Work.module.scss";
+import styles from "./Jobs.module.scss";
 import PostedTime from "../../components/SideList/PostedTime";
 
 // DUMMY data for skills
@@ -35,7 +35,7 @@ const skills = [
   },
 ];
 
-const jobLists = [
+export const jobLists = [
   {
     id: 111,
     jobheading: "Youtube Thumbnail Creator Required",
@@ -128,7 +128,7 @@ const Work = () => {
             {jobLists.map(({ id, budget, posted, ...jobList }) => (
               <div className={styles.list} key={id}>
                 <div className={styles.list__text}>
-                  <List {...jobList} />
+                  <List id={id} {...jobList} />
                 </div>
 
                 <div className={styles.list__number}>
