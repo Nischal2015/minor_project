@@ -1,0 +1,30 @@
+@mixin input__base {
+  display: block;
+  width: 100%;
+
+  color: var(--color-grey-dark-3z);
+
+  &::-webkit-input-placeholder {
+    font-size: inherit;
+  }
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.input__text {
+  @include input__base;
+
+  border: 2px solid var(--primary-color);
+  border-radius: var(--input-radius);
+  padding: 1.2rem 1.6rem;
+  font-size: 1.6rem;
+}
+
+.input__text[data-variant="small"] {
+  border: 1px solid var(--color-grey-dark-3);
+  border-radius: 0;
+  padding: 0.6rem 1rem;
+  font-size: 1.4rem;
+}

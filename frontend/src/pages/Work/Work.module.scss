@@ -1,0 +1,86 @@
+.section__work {
+  padding: 6.4rem 0 9.6rem 0;
+  background: #f3f3f3;
+}
+
+.work {
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  align-items: start;
+  column-gap: 3rem;
+}
+
+.filter {
+  display: flex;
+  flex-direction: column;
+  gap: 2.4rem;
+  padding: 1.6rem 1.2rem;
+  background: #eee;
+
+  &__price {
+    &__heading {
+      margin-bottom: 1.6rem;
+      font-size: 1.6rem;
+    }
+  }
+
+  &__skills {
+    &__heading {
+      margin-bottom: 0.8rem;
+      font-size: 1.6rem;
+    }
+
+    &__list {
+      margin-top: 1.6rem;
+
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+
+      li {
+        display: flex;
+        gap: 0.8rem;
+        align-items: center;
+      }
+    }
+  }
+}
+
+.results {
+  overflow-y: hidden;
+
+  &__heading {
+    padding: 1.6rem 1.2rem 0.6rem 1.2rem;
+    border-bottom: 2px solid var(--color-grey-light-3);
+  }
+
+  &__list {
+    padding: 0 1.6rem;
+  }
+}
+
+.list {
+  padding: 2.4rem 0;
+  display: grid;
+  grid-template-columns: 5fr 1fr;
+  grid-auto-flow: column;
+  column-gap: 1.6rem;
+
+  &:not(:last-child) {
+    border-bottom: 2px solid var(--color-grey-light-3);
+  }
+
+  &__text {
+    display: flex;
+    flex-direction: column;
+    gap: 1.6rem;
+  }
+
+  &__number {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 1.2rem;
+  }
+}
