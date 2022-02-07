@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 import { CustomNavLink } from "../../components/UI/CustomLink/CustomLink";
 import Container from "../../components/UI/Container/Container";
@@ -13,6 +13,8 @@ import profilePic from "../../assets/png/user_hero.png";
 import Avatar from "react-avatar";
 
 import { HiArrowNarrowRight } from "react-icons/hi";
+
+import axios from "axios";
 
 import styles from "./Talent.module.scss";
 
@@ -162,10 +164,22 @@ const ratingsCriteria = [
 ];
 
 const Talent = () => {
-  const RELIABILITY_WEIGHT = 0.25;
-  const PUCNTUAL_WEIGHT = 0.15;
-  const COMMUNICATION_WEIGHT = 0.15;
-  const QUALITYWORK_WEIGHT = 0.45;
+  // const RELIABILITY_WEIGHT = 0.25;
+  // const PUCNTUAL_WEIGHT = 0.15;
+  // const COMMUNICATION_WEIGHT = 0.15;
+  // const QUALITYWORK_WEIGHT = 0.45;
+
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    getUsers();
+  }, []);
+
+  const getUsers = async () => {
+    const response = await axios.get("users");
+    // console.log(response.data);
+    setUsers(response.data);
+  };
 
   return (
     <section className={styles.section__work}>
@@ -205,7 +219,7 @@ const Talent = () => {
             <h3 className='heading--tertiary'>Top Results</h3>
           </div>
           <div className={styles.results__list}>
-            {talentLists.map(({ id, rating, img, ...jobList }) => {
+            {/* {talentLists.map(({ id, rating, img, ...jobList }) => {
               const { reliability, punctual, communication, qualityWork } =
                 rating;
               const avgRating = parseInt(
@@ -243,6 +257,53 @@ const Talent = () => {
 
                   <div className={styles.list__number}>
                     <CircularRating>{avgRating}</CircularRating>
+                    <CustomNavLink
+                      className={styles.list__more}
+                      to={`${id}`}
+                      variant='small primary'
+                      ariaLabel='See more detail about the freelancer'
+                    >
+                      See More{" "}
+                      <span>
+                        <HiArrowNarrowRight />
+                      </span>
+                    </CustomNavLink>
+                  </div>
+                </div>
+              );
+            })} */}
+
+            {/* FROM API */}
+            {users.map(({ id, rating, avatar, ...otherList }) => {
+              return (
+                <div className={styles.list} key={id}>
+                  <picture className={styles.list__picture}>
+                    {avatar === null ? (
+                      <Avatar
+                        name={`${otherList.first_name} ${otherList.last_name}`}
+                        round={true}
+                        size='100%'
+                        textSizeRatio={2.25}
+                        alt='Name Initials Avatar'
+                        maxInitials={3}
+                      />
+                    ) : (
+                      <Avatar
+                        src={avatar}
+                        round={true}
+                        size='100%'
+                        textSizeRatio={2.25}
+                        alt='Profile Avatar'
+                      />
+                    )}
+                  </picture>
+
+                  <div className={styles.list__text}>
+                    <List {...otherList} />
+                  </div>
+
+                  <div className={styles.list__number}>
+                    <CircularRating>{rating}</CircularRating>
                     <CustomNavLink
                       className={styles.list__more}
                       to={`${id}`}

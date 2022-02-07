@@ -8,7 +8,8 @@ class User(AbstractUser):
     email = models.EmailField(unique=True)
     bio = models.TextField(null=True)
     
-    avatar = models.ImageField(null = True, default = "nepal.png")
+    # avatar = models.ImageField(null = True, default = "nepal.png")
+    avatar = models.ImageField(null = True, blank=True)
 
     #hourly_rate 
     price = models.IntegerField(null = True)

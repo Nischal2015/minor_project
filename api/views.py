@@ -25,7 +25,8 @@ def getUsers(request):
 
     return Response(profiles.data)
 
-
-
-
-
+@api_view(['GET'])
+def getUser(request, pk):
+    note = User.objects.get(id=pk)
+    serializer = UserSerializer(note, many=False)
+    return Response(serializer.data)

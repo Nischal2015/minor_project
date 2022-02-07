@@ -22,16 +22,16 @@ const Footer = () => {
             </div>
 
             <div className={styles.footer__social}>
-              <Link to=''>
+              <Link to='' aria-label="Link to Kamao's Facebook Page">
                 <FaFacebook className={styles.facebook} />
               </Link>
-              <Link to=''>
+              <Link to='' aria-label="Link to Kamao's Instagram Page">
                 <FaInstagram className={styles.instagram} />
               </Link>
-              <Link to=''>
+              <Link to='' aria-label="Link to Kamao's Linkedin Profile">
                 <FaLinkedin className={styles.linkedin} />
               </Link>
-              <Link to=''>
+              <Link to='' aria-label="Link to Kamao's Twitter Handle">
                 <FaTwitter className={styles.twitter} />
               </Link>
             </div>
