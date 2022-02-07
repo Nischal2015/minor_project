@@ -3,12 +3,15 @@ import React from "react";
 import Budget from "../../components/SideList/Budget";
 import Container from "../../components/UI/Container/Container";
 import Card from "../../components/UI/Card/Card";
+import { CustomNavLink } from "../../components/UI/CustomLink/CustomLink";
 import Searchbar from "../../components/UI/Searchbar/Searchbar";
 import List from "../../components/List/List";
 import Price from "../../components/Price/Price";
+import PostedTime from "../../components/SideList/PostedTime";
+
+import { HiArrowNarrowRight } from "react-icons/hi";
 
 import styles from "./Jobs.module.scss";
-import PostedTime from "../../components/SideList/PostedTime";
 
 // DUMMY data for skills
 // will be replaced by data obtained from API
@@ -134,6 +137,17 @@ const Work = () => {
                 <div className={styles.list__number}>
                   <Budget budget={budget} />
                   <PostedTime posted={posted} />
+                  <CustomNavLink
+                    className={styles.list__more}
+                    to={`${id}`}
+                    variant='small primary'
+                    ariaLabel='See more detail about the freelancer'
+                  >
+                    See More{" "}
+                    <span>
+                      <HiArrowNarrowRight />
+                    </span>
+                  </CustomNavLink>
                 </div>
               </div>
             ))}

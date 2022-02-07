@@ -1,6 +1,6 @@
 import React from "react";
 
-import { CustomLink } from "../../components/UI/CustomLink/CustomLink";
+import { CustomNavLink } from "../../components/UI/CustomLink/CustomLink";
 import Container from "../../components/UI/Container/Container";
 import Card from "../../components/UI/Card/Card";
 import CircularRating from "../../components/UI/Ratings/CircularRatings/CircularRatings";
@@ -243,7 +243,8 @@ const Talent = () => {
 
                   <div className={styles.list__number}>
                     <CircularRating>{avgRating}</CircularRating>
-                    <CustomLink
+                    <CustomNavLink
+                      className={styles.list__more}
                       to={`${id}`}
                       variant='small primary'
                       ariaLabel='See more detail about the freelancer'
@@ -252,7 +253,7 @@ const Talent = () => {
                       <span>
                         <HiArrowNarrowRight />
                       </span>
-                    </CustomLink>
+                    </CustomNavLink>
                   </div>
                 </div>
               );

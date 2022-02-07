@@ -13,6 +13,7 @@ import styles from "./Bidding.module.scss";
 const Bidding = () => {
   const { id } = useParams();
   const JobItem = jobLists.filter((JobItem) => JobItem.id === +id)[0];
+  if (JobItem === undefined) return <div>Page not found</div>;
   const { jobheading, description, skills, budget, posted } = JobItem;
   return (
     <section className={styles.section__bid}>

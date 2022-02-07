@@ -21,16 +21,18 @@ import { talentLists } from "../Talent/Talent";
 const Profile = () => {
   const { id } = useParams();
 
-  // This filtering is to be done by the backend
-  const profileHolder = talentLists.filter(
-    (talentItem) => talentItem.id === +id
-  )[0];
-
   const feature = {
     hoursPerWeek: 35,
     totalJobs: 78,
     totalHours: 500,
   };
+  // This filtering is to be done by the backend
+  const profileHolder = talentLists.filter(
+    (talentItem) => talentItem.id === +id
+  )[0];
+
+  if (profileHolder === undefined)
+    return <div>Navako user lai kina khojeko ho kunni</div>;
 
   const { jobheading, description, img, rating, hourlyRate } = profileHolder;
   const { reliability, punctual, communication, qualityWork } = rating;

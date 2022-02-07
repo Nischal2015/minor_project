@@ -4,11 +4,18 @@ import { NavLink, Link } from "react-router-dom";
 
 import styles from "../Button/Button.module.scss";
 
-const CustomNavLink = ({ to, variant, children, ariaLabel, style }) => {
+const CustomNavLink = ({
+  to,
+  variant,
+  children,
+  ariaLabel,
+  style,
+  className,
+}) => {
   return (
     <NavLink
       to={to}
-      className={styles.btn}
+      className={`${styles.btn} ${className ? className : null}`}
       data-variant={variant}
       aria-label={ariaLabel}
       style={() => style}
