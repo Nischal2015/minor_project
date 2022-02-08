@@ -4,6 +4,7 @@ from statistics import mode
 from tkinter import CASCADE
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.forms import FileField
 
 # Create your models here.
 
@@ -133,3 +134,9 @@ class Project_document(models.Model):
     project = models.ForeignKey(Project_define, on_delete=models.CASCADE)
 
     document_name = models.CharField(max_length=255, null=False)
+    document = FileField()
+
+
+class Bid_document(models.Model):
+
+    p
