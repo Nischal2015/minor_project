@@ -306,7 +306,7 @@ const Talent = () => {
                     <CircularRating>{rating}</CircularRating>
                     <CustomNavLink
                       className={styles.list__more}
-                      to={`${id}`}
+                      to={`/talent/${id}`}
                       variant='small primary'
                       ariaLabel='See more detail about the freelancer'
                     >

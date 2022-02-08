@@ -6,8 +6,6 @@ import { ReactComponent as FooterLogo } from "../../assets/svg/logo_text.svg";
 
 import { FaFacebook, FaInstagram, FaLinkedin, FaTwitter } from "react-icons/fa";
 
-import { Link } from "react-router-dom";
-
 import styles from "./Footer.module.scss";
 
 const Footer = () => {
@@ -22,18 +20,38 @@ const Footer = () => {
             </div>
 
             <div className={styles.footer__social}>
-              <Link to='' aria-label="Link to Kamao's Facebook Page">
+              <a
+                href='https://pcampus.edu.np/'
+                target='_blank'
+                rel='noopener noreferrer'
+                aria-label="Link to Kamao's Facebook Page"
+              >
                 <FaFacebook className={styles.facebook} />
-              </Link>
-              <Link to='' aria-label="Link to Kamao's Instagram Page">
+              </a>
+              <a
+                href='https://pcampus.edu.np/'
+                target='_blank'
+                rel='noopener noreferrer'
+                aria-label="Link to Kamao's Instagram Page"
+              >
                 <FaInstagram className={styles.instagram} />
-              </Link>
-              <Link to='' aria-label="Link to Kamao's Linkedin Profile">
+              </a>
+              <a
+                href='https://pcampus.edu.np/'
+                target='_blank'
+                rel='noopener noreferrer'
+                aria-label="Link to Kamao's Linkedin Profile"
+              >
                 <FaLinkedin className={styles.linkedin} />
-              </Link>
-              <Link to='' aria-label="Link to Kamao's Twitter Handle">
+              </a>
+              <a
+                href='https://pcampus.edu.np/'
+                target='_blank'
+                rel='noopener noreferrer'
+                aria-label="Link to Kamao's Twitter Handle"
+              >
                 <FaTwitter className={styles.twitter} />
-              </Link>
+              </a>
             </div>
           </div>
           <div className={styles.column}>

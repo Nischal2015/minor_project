@@ -13,6 +13,9 @@ def api(request):
     ]
     return Response(routes)
 
+def index(request):
+    return render(request, 'index.html')
+
 def home(request):
     users = User.objects.all()
     context = {'users':users}

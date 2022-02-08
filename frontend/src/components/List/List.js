@@ -1,7 +1,18 @@
 import React from "react";
+import PropTypes from "prop-types";
+
 import SkillsList from "../Skills/SkillsList";
 
 import styles from "./List.module.scss";
+
+const MAX_CHARACTER = 350;
+
+const getContent = (description) => {
+  return description.length > MAX_CHARACTER
+    ? description.slice(0, MAX_CHARACTER) + "..."
+    : description;
+  // console.log(description.length);
+};
 
 const JobList = ({
   jobheading,
@@ -17,10 +28,21 @@ const JobList = ({
         {jobheading || `${first_name} ${last_name}`}
       </h3>
 
-      <p className={styles.list__description}>{description || bio}</p>
+      <p className={styles.list__description}>
+        {(description && getContent(description)) || (bio && getContent(bio))}
+      </p>
       {skills ? <SkillsList skills={skills} /> : <></>}
     </React.Fragment>
   );
 };
 
 export default JobList;
+
+JobList.propTypes = {
+  jobheadng: PropTypes.string,
+  first_name: PropTypes.string,
+  last_name: PropTypes.string,
+  bio: PropTypes.string,
+  description: PropTypes.string,
+  skills: PropTypes.array,
+};

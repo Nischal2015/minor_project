@@ -10,10 +10,11 @@ import Footer from "./components/Footer/Footer";
 import Jobs from "./pages/Jobs/Jobs";
 import Landing from "./pages/Landing/Landing";
 import Login from "./pages/Entry/Login";
+import NotFound from "./pages/NotFound/NotFound";
 import Profile from "./pages/Profile/Profile";
 import Talent from "./pages/Talent/Talent";
 
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Outlet } from "react-router-dom";
 import ScrollToTop from "./components/ScrollToTop";
 
 const App = () => {
@@ -24,12 +25,16 @@ const App = () => {
       <Routes>
         <Route path='/' element={<Landing />} />
         <Route path='about' element={<About />} />
-        <Route path='jobs/:id' element={<Bidding />} />
-        <Route path='jobs' element={<Jobs />} />
+        <Route path='jobs' element={<Outlet />}>
+          <Route index element={<Jobs />} />
+          <Route path=':id' element={<Bidding />} />
+        </Route>
         <Route path='login' element={<Login />} />
-        <Route path='talent/:id' element={<Profile />} />
-        <Route path='talent' element={<Talent />} />
-        <Route path='*' element={<div>Not is the found</div>} />
+        <Route path='talent' element={<Outlet />}>
+          <Route index element={<Talent />} />
+          <Route path=':id' element={<Profile />} />
+        </Route>
+        <Route path='*' element={<NotFound />} />
       </Routes>
       <Footer />
     </React.Fragment>
