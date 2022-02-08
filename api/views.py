@@ -4,6 +4,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .serializers import UserSerializer
 
+
 @api_view(['GET'])
 def api(request):
     routes = [
@@ -13,17 +14,21 @@ def api(request):
     ]
     return Response(routes)
 
+
+@api_view(['GET'])
 def home(request):
     users = User.objects.all()
-    context = {'users':users}
-    return render(request, 'api/home.html',context)
+    context = {'users': users}
+    return render(request, 'api/home.html', context)
+
 
 @api_view(['GET'])
 def getUsers(request):
     users = User.objects.all()
-    profiles = UserSerializer(users,many = True)
+    profiles = UserSerializer(users, many=True)
 
     return Response(profiles.data)
+
 
 @api_view(['GET'])
 def getUser(request, pk):

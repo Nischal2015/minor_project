@@ -24,10 +24,10 @@ class User(AbstractUser):
 
     profile_title = models.TextField(null=True)
     bio = models.TextField(null=True)
-    dob = models.DateField()
-    country = models.CharField(max_length=255, null=False)
-    state = models.CharField(max_length=255, null=False)
-    city = models.CharField(max_length=255, null=False)
+    dob = models.DateField(null=True)
+    country = models.CharField(max_length=255, null=True)
+    state = models.CharField(max_length=255, null=True)
+    city = models.CharField(max_length=255, null=True)
 
     hourly_rate = models.PositiveIntegerField(null=True)
     hours_per_week = models.PositiveIntegerField(null=True)
@@ -59,7 +59,7 @@ class Job_category(models.Model):
 
 class Project_define(models.Model):
 
-    creator = models.ForeignKey(User, on_delete=models.SET_NULL)
+    creator = models.ForeignKey(User, on_delete=models.PROTECT)
     skills = models.ManyToManyField(Skill)
 
     project_title = models.CharField(max_length=255, null=False)
@@ -82,7 +82,7 @@ class Project(models.Model):
 
     project_description = models.OneToOneField(
         Project_define, on_delete=models.CASCADE, primary_key=True)
-    freelancer = models.ForeignKey(User, on_delete=models.SET_NULL)
+    freelancer = models.ForeignKey(User, on_delete=models.PROTECT)
 
     project_start_date = models.DateTimeField(auto_now=False)
     running_duration = models.PositiveIntegerField()
@@ -119,8 +119,10 @@ class Rating(models.Model):
 
     project = models.OneToOneField(
         Project, on_delete=models.CASCADE, primary_key=True)
-    critic = models.ForeignKey(User, on_delete=models.CASCADE)
-    freelancer = models.ForeignKey(User, on_delete=models.CASCADE)
+    critic = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name='rating_given')
+    freelancer = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name='rating_received')
 
     reliability = models.PositiveSmallIntegerField()
     punctuality = models.PositiveSmallIntegerField()
@@ -139,4 +141,7 @@ class Project_document(models.Model):
 
 class Bid_document(models.Model):
 
-    p
+    project_bid = models.ForeignKey(Project_bid, on_delete=models.CASCADE)
+
+    document_name = models.CharField(max_length=255, null=False)
+    document = FileField()
