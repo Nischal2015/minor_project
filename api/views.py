@@ -14,7 +14,7 @@ def api(request):
     routes = [
         'GET /',
         'GET /user',
-        'GET /users'
+        'GET /users',
         'GET /room/:id',
         # 'GET /login',
         'POST /register',
