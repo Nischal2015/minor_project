@@ -28,6 +28,7 @@ class User(AbstractUser):
     # extra fields for backup
     field1 = models.CharField(max_length=200,null = False, blank = True)
     field2 = models.CharField(max_length=200,null = False, blank = True)
+    field3 = models.CharField(max_length=200,null = False, blank = True)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
