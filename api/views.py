@@ -77,7 +77,7 @@ def registerUser(request):
     user.username = user.username.lower()
     user.email = user.email.lower()
     user.save()
-    login(request)
+    login(request,user)
     serializer = UserSerializer(user)
     return Response(serializer)
 
