@@ -25,6 +25,7 @@ class User(AbstractUser):
         ('F', 'Freelancer'),
     )
 
+    # extra fields for backup
     field1 = models.CharField(max_length=200,null = False, blank = True)
     field2 = models.CharField(max_length=200,null = False, blank = True)
 
@@ -34,9 +35,47 @@ class User(AbstractUser):
 
 class JobCategory(models.Model):
     name = models.CharField(max_length=200)
+    
+    # extra fields for backup
+    field1 = models.CharField(max_length=200,null = False, blank = True)
+    field2 = models.CharField(max_length=200,null = False, blank = True)
+
+
+class Room(models.Model):
+    # yo chai kun post ko lagi message room create garne vanne ho JobPost model create vayo vane topic field lai uncomment garne
+    # topic = models.ForeignKey(JobPost,on_delete=models.CASCADE)
+    clientUser = models.ForeignKey(User,on_delete=models.CASCADE)
+    title = models.CharField(max_length=200, default= 'Room for message')
+
+    freelancerUser = models.OneToOneField(User,related_name='freelancerUser',on_delete=models.SET_NULL,null=True)
+    updated = models.DateTimeField(auto_now=True)
+    created = models.DateTimeField(auto_now_add=True)
+
+    # extra fields for backup
+    field1 = models.CharField(max_length=200,null = False, blank = True)
+    field2 = models.CharField(max_length=200,null = False, blank = True)
+
+    def __str__(self):
+        return self.title
 
 
 
+class Message(models.Model):
+
+    #sender
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    
+    #references to which room
+    room = models.ForeignKey(Room,on_delete=models.CASCADE)
+    
+    #actual message
+    body = models.TextField()
+    
+    updated = models.DateTimeField(auto_now=True)
+    created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.body
 
 
 
