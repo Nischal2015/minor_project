@@ -5,7 +5,7 @@ from .import views
 
 urlpatterns = [
     path('',views.api),
-    path('home/',views.home),
+    path('home/',views.home,name = "home"),
     path('users/',views.getUsers),
     path('users/<str:pk>/',views.getUser),
     path('room/<str:pk>',views.getRoom,name = "room"),
