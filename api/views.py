@@ -171,7 +171,7 @@ def createRomm(request):
 def dummyUserCreation(request):
     data = request.data
     note = DummyUser.objects.create(
-        username = data['username'],
+        # username = data['username'],
         email = data['email'],
         password = data['password']
     )

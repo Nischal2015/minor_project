@@ -8,7 +8,6 @@ import axios from "axios";
 import styles from "./Login.module.scss";
 
 const Login = () => {
-  const username = useRef();
   const password = useRef();
   const email = useRef();
 
@@ -25,7 +24,6 @@ const Login = () => {
     event.preventDefault();
     const formData = {
       password: password.current.value,
-      username: username.current.value,
       email: email.current.value,
     };
     registerUser(formData);
