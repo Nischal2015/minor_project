@@ -4,7 +4,7 @@ from django.urls import path
 from .import views
 
 urlpatterns = [
-    path('',views.index),
+    path('',views.api),
     path('home/',views.home,name = "home"),
     path('users/',views.getUsers),
     path('users/<str:pk>/',views.getUser),
