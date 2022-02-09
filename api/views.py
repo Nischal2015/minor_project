@@ -1,14 +1,17 @@
 from contextlib import nullcontext
 import email
+from logging import raiseExceptions
+from telnetlib import STATUS
+from rest_framework import generics
 from django.shortcuts import render, redirect
 from .models import DummyUser, User, Room, Message
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from .serializers import UserSerializer, RoomSerializer, MessageSerializer, DummyUserSerializer
+from .serializers import UserSerializer, RoomSerializer, MessageSerializer, DummyUserSerializer,RegisterSerializer
 from django.contrib.auth.decorators import login_required
 from .forms import UserForm, RoomForm
 from api import serializers
-
+from rest_framework import status
 from django.contrib.auth import authenticate,login,logout
 
 from django.contrib import messages
@@ -92,15 +95,37 @@ def getUser(request, pk):
 @api_view(['POST'])
 def registerUser(request):
     if request.method == 'POST':
-        data = request.data 
-        user = User.objects.create(
-            username = data['username'],
-            email = data['email'],
-            password = data['password']
-        )
-        serializer = UserSerializer(user)
-        return Response(serializer.data)
-    return Response('not registered')
+        serializer = UserSerializer(data = request.data)
+        data = {}
+
+        if serializer.is_valid():
+            user = serializer.save()
+            login(request,user)
+            data['response'] = "Guys ! ,  User was successfully registered"
+            data['username'] = user.username 
+            data['email'] = user.email 
+        else:
+            data = serializer.errors 
+        
+        return Response(data)
+
+class RegisterView(generics.GenericAPIView):
+
+    serializer_class = RegisterSerializer
+
+    def post(self,request):
+        data = request.data
+        serializer = self.serializer_class(data = data)
+        serializer.is_valid(raise_exception = True)
+        serializer.save()
+        # login(request,serializer)
+
+        user_data = serializer.data 
+
+        return Response(user_data, status = status.HTTP_201_CREATED)
+
+
+
 
 
     
@@ -142,10 +167,10 @@ def createRomm(request):
 @api_view(['POST'])
 def dummyUserCreation(request):
     data = request.data
-    note = DummyUser.objects.create(
+    dummyuser = DummyUser.objects.create(
         # username = data['username'],
         email = data['email'],
         password = data['password']
     )
-    serializer = DummyUserSerializer(note, many=False)
+    serializer = DummyUserSerializer(dummyuser, many=False)
     return Response(serializer.data)

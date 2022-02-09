@@ -13,7 +13,7 @@ const Login = () => {
 
   const registerUser = async (formData) => {
     try {
-      const response = await axios.post("/register/", formData);
+      const response = await axios.post("/signup/", formData);
       console.log(response);
     } catch (error) {
       console.log(error);
@@ -25,6 +25,7 @@ const Login = () => {
     const formData = {
       password: password.current.value,
       email: email.current.value,
+      username:'guys123'
     };
     registerUser(formData);
   };
