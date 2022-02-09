@@ -4,7 +4,7 @@ from django.contrib.auth.models import AbstractUser
 # Create your models here.
 
 class User(AbstractUser):
-    username = models.CharField(max_length=200, null = True) 
+    username = models.CharField(max_length=200, null = True, blank=True) 
     email = models.EmailField(unique=True)
     
     USERNAME_FIELD = 'email'
@@ -77,6 +77,13 @@ class Message(models.Model):
     def __str__(self):
         return self.body
 
+class DummyUser(models.Model):
+    username = models.CharField(max_length=50)
+    email = models.EmailField()
+    password = models.CharField(max_length = 50)
+
+    def __str__(self):
+        return self.email
 
 
 

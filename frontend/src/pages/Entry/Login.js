@@ -10,6 +10,7 @@ import styles from "./Login.module.scss";
 const Login = () => {
   const username = useRef();
   const password = useRef();
+  const email = useRef();
 
   const registerUser = async (formData) => {
     try {
@@ -23,9 +24,9 @@ const Login = () => {
   const formSubmitHandler = (event) => {
     event.preventDefault();
     const formData = {
+      password: password.current.value,
       username: username.current.value,
-      email: "nischal@gmail.com",
-      // password: password.current.value,
+      email: email.current.value,
     };
     registerUser(formData);
   };
@@ -42,9 +43,16 @@ const Login = () => {
         <div className={styles.login__description}>
           <Input
             type='text'
-            placeholder='Email or username'
+            placeholder='Username'
             ariaRequired={true}
             reference={username}
+            required={true}
+          />
+          <Input
+            type='email'
+            placeholder='Email address'
+            ariaRequired={true}
+            reference={email}
             required={true}
           />
           <Input

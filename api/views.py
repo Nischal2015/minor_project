@@ -1,10 +1,10 @@
 from contextlib import nullcontext
 import email
 from django.shortcuts import render, redirect
-from .models import User, Room, Message
+from .models import DummyUser, User, Room, Message
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from .serializers import UserSerializer, RoomSerializer, MessageSerializer
+from .serializers import UserSerializer, RoomSerializer, MessageSerializer, DummyUserSerializer
 from django.contrib.auth.decorators import login_required
 from .forms import UserForm, RoomForm
 from api import serializers
@@ -77,6 +77,7 @@ def login(request):
 
 @api_view(['GET'])
 def getUsers(request):
+
     users = User.objects.all()
     profiles = UserSerializer(users,many = True)
 
@@ -109,8 +110,10 @@ def registerUser(request):
     data = request.data
     form = UserForm(data)
 
+    print(data)
+    print(form.is_valid())
     if form.is_valid():
-
+        print("valid data received")
         user = form.save(commit=False)
 
         user.username = user.username.lower()
@@ -118,8 +121,17 @@ def registerUser(request):
         user.save()
         login(request,user)
         serializer = UserSerializer(user)
-        return Response(serializer)
+        return Response(serializer.data)
     return Response('not registered')
+
+# @api_view(['POST'])
+# def createNote(request):
+#     data = request.data
+#     note = User.objects.create(
+#         body = data['body']
+#     )
+#     serializer = UserSerializer(note, many=False)
+#     return Response(serializer.data)
    
 
 
@@ -154,4 +166,14 @@ def createRomm(request):
     )
 
     serializer = RoomSerializer(room)
+    return Response(serializer.data)
+@api_view(['POST'])
+def dummyUserCreation(request):
+    data = request.data
+    note = DummyUser.objects.create(
+        username = data['username'],
+        email = data['email'],
+        password = data['password']
+    )
+    serializer = DummyUserSerializer(note, many=False)
     return Response(serializer.data)
