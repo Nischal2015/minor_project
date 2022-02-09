@@ -4,8 +4,9 @@ from django.urls import path
 from .import views
 
 urlpatterns = [
+
+    path('admin/', admin.site.urls),
     path('',views.api),
-    path('home/',views.home,name = "home"),
     path('users/',views.getUsers),
     path('users/<str:pk>/',views.getUser),
     path('login/',views.login, name = 'login'),
@@ -15,5 +16,6 @@ urlpatterns = [
     path('signup/',views.RegisterView.as_view(),name = 'signup'),
     path('send-message/',views.sendMessage,name = 'send-message'),
     path('create-room/',views.createRomm,name = 'create-room'),
+
 
 ]

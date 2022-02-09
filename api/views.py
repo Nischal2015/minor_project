@@ -25,6 +25,7 @@ def api(request):
         'GET /room/:id',
         # 'GET /login',
         'POST /register',
+        'POST /signup',
         'POST /create-room',
         'POST /send-message'
         # 'POST /create-post',
