@@ -44,7 +44,10 @@ INSTALLED_APPS = [
 
 # to set our custom user model as authentication_user_model
 AUTH_USER_MODEL = 'api.User'
-
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.AllowAllUsersModelBackend',
+    'api.backends.CaseInsensitiveModelBackend'
+)
 
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
