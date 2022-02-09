@@ -4,20 +4,28 @@ from statistics import mode
 from tkinter import CASCADE
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-from django.forms import FileField
 
 # Create your models here.
 
 
 class User(AbstractUser):
+    username = models.CharField(max_length=200, unique=True, default='~')
+    email = models.EmailField(verbose_name='email',
+                              max_length=150, unique=True)
+
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = []
+
+
+class Profile(models.Model):
 
     # manytomany column skill_set
 
-    # avatar = models.ImageField(null = True, default = "nepal.png")
+    user = models.OneToOneField(
+        User, on_delete=models.CASCADE, primary_key=True)
+
     avatar = models.ImageField(null=True, blank=True)
 
-    username = models.CharField(max_length=255, null=True, unique=True)
-    email = models.EmailField(unique=True)
     first_name = models.CharField(max_length=255, null=False)
     middle_name = models.CharField(max_length=512, null=True)
     last_name = models.CharField(max_length=255, null=False)
@@ -36,9 +44,6 @@ class User(AbstractUser):
 
     field1 = models.CharField(max_length=255, null=False, blank=True)
     field2 = models.CharField(max_length=255, null=False, blank=True)
-
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = []
 
 
 class Skill(models.Model):
@@ -136,7 +141,7 @@ class Project_document(models.Model):
     project = models.ForeignKey(Project_define, on_delete=models.CASCADE)
 
     document_name = models.CharField(max_length=255, null=False)
-    document = FileField()
+    document = models.FileField(null=True)
 
 
 class Bid_document(models.Model):
@@ -144,4 +149,4 @@ class Bid_document(models.Model):
     project_bid = models.ForeignKey(Project_bid, on_delete=models.CASCADE)
 
     document_name = models.CharField(max_length=255, null=False)
-    document = FileField()
+    document = models.FileField(null=True)

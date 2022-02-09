@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     "corsheaders"
 ]
 
-#to set our custom user model as authentication_user_model
+# to set our custom user model as authentication_user_model
 AUTH_USER_MODEL = 'api.User'
 
 
@@ -135,6 +135,7 @@ STATICFILES_DIRS = [
 ]
 
 MEDIA_ROOT = BASE_DIR / 'static/assets/'
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
