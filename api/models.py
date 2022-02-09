@@ -5,6 +5,10 @@ from tkinter import CASCADE
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
+
+def get_profile_location(self):
+    return f'profile_images/{self.pk}/{"profile_image.png"}'
+
 # Create your models here.
 
 
@@ -12,6 +16,7 @@ class User(AbstractUser):
     username = models.CharField(max_length=200, unique=True, default='~')
     email = models.EmailField(verbose_name='email',
                               max_length=150, unique=True)
+    hide_email = models.BooleanField(default=True)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
@@ -24,7 +29,8 @@ class Profile(models.Model):
     user = models.OneToOneField(
         User, on_delete=models.CASCADE, primary_key=True)
 
-    avatar = models.ImageField(null=True, blank=True)
+    avatar = models.ImageField(
+        max_length=255, upload_to=get_profile_location, null=True, blank=True)
 
     first_name = models.CharField(max_length=255, null=False)
     middle_name = models.CharField(max_length=512, null=True)
@@ -44,6 +50,9 @@ class Profile(models.Model):
 
     field1 = models.CharField(max_length=255, null=False, blank=True)
     field2 = models.CharField(max_length=255, null=False, blank=True)
+
+    def get_avatar_filename(self):
+        return str(self.avatar)[str(self.avatar).index(f'profile_images/{self.pk}/'):]
 
 
 class Skill(models.Model):
