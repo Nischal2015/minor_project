@@ -42,13 +42,6 @@ const Login = () => {
         </div>
         <div className={styles.login__description}>
           <Input
-            type='text'
-            placeholder='Username'
-            ariaRequired={true}
-            reference={username}
-            required={true}
-          />
-          <Input
             type='email'
             placeholder='Email address'
             ariaRequired={true}
