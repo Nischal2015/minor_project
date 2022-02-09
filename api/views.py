@@ -39,7 +39,7 @@ def home(request):
 
 
 
-
+@api_view(['POST'])
 def login(request):
     #to prevent re-logging in if user is already logged in
     if request.user.is_authenticated:
