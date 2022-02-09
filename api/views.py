@@ -36,9 +36,6 @@ def home(request):
     context = {'users':users}
     return render(request, 'api/home.html',context)
 
-
-
-
 def login(request):
     pass
 
@@ -80,12 +77,9 @@ def registerUser(request):
     user.username = user.username.lower()
     user.email = user.email.lower()
     user.save()
-    login(request,user)
+    login(request, user)
     serializer = UserSerializer(user)
     return Response(serializer)
-
-   
-
 
 @api_view(['GET'])
 def getRoom(request,pk):
@@ -107,7 +101,6 @@ def sendMessage(request,pk):
 
         serializer = MessageSerializer(message)
         return Response(serializer.data)
-
 
 @api_view(['POST'])
 # @login_required(login_url = login)

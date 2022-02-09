@@ -36,15 +36,12 @@ class Profile():
     field2 = models.CharField(max_length=200,null = False, blank = True)
     field3 = models.CharField(max_length=200,null = False, blank = True)
 
-
-
 class JobCategory(models.Model):
     name = models.CharField(max_length=200)
     
     # extra fields for backup
     field1 = models.CharField(max_length=200,null = False, blank = True)
     field2 = models.CharField(max_length=200,null = False, blank = True)
-
 
 class Room(models.Model):
     # yo chai kun post ko lagi message room create garne vanne ho JobPost model create vayo vane topic field lai uncomment garne
@@ -62,8 +59,6 @@ class Room(models.Model):
 
     def __str__(self):
         return self.title
-
-
 
 class Message(models.Model):
 

@@ -176,9 +176,12 @@ const Talent = () => {
   }, []);
 
   const getUsers = async () => {
-    const response = await axios.get("users");
-    // console.log(response.data);
-    setUsers(response.data);
+    try {
+      const response = await axios.get("users/");
+      setUsers(response.data);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -278,7 +281,7 @@ const Talent = () => {
               return (
                 <div className={styles.list} key={id}>
                   <picture className={styles.list__picture}>
-                    {avatar === null ? (
+                    {avatar === undefined || null ? (
                       <Avatar
                         name={`${otherList.first_name} ${otherList.last_name}`}
                         round={true}

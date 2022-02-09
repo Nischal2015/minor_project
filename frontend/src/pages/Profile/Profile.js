@@ -25,7 +25,8 @@ const Profile = () => {
   const { id } = useParams();
 
   const [user, setUser] = useState([]);
-  const [error, setError] = useState(false);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const feature = {
     hoursPerWeek: 35,
@@ -38,6 +39,8 @@ const Profile = () => {
   // )[0];
 
   const fetchUserHandler = useCallback(async () => {
+    setError(null);
+    setLoading(true);
     try {
       const response = await axios.get(`/users/${id}`);
       setUser(response.data);
@@ -45,6 +48,7 @@ const Profile = () => {
       setError(true);
       console.log("Server error");
     }
+    setLoading(false);
   }, [id]);
 
   useEffect(() => {
@@ -57,15 +61,16 @@ const Profile = () => {
 
   // const { jobheading, description, img, rating, hourlyRate } = profileHolder;
   // const { reliability, punctual, communication, qualityWork } = rating;
-  return error ? (
-    <NotFound />
-  ) : (
+
+  if (error) return <NotFound />;
+
+  return (
     <React.Fragment>
       <Container className={styles.profile__top}>
         <Card className={styles.profile__summary} variant='boxy'>
           <figure className={styles["summary__image"]}>
             <div>
-              {user.avatar === null ? (
+              {user.avatar === undefined || null ? (
                 <Avatar
                   name={`${user.first_name} ${user.last_name}`}
                   round={true}
