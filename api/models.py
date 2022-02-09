@@ -4,7 +4,7 @@ from django.contrib.auth.models import AbstractUser
 # Create your models here.
 
 class User(AbstractUser):
-    username = models.CharField(max_length=200, null = True) 
+    username = models.CharField(max_length=200, null = True, blank=True) 
     email = models.EmailField(unique=True)
     
     USERNAME_FIELD = 'email'
@@ -34,8 +34,7 @@ class Profile(models.Model):
     # extra fields for backup
     field1 = models.CharField(max_length=200,null = False, blank = True)
     field2 = models.CharField(max_length=200,null = False, blank = True)
-
-
+    field3 = models.CharField(max_length=200,null = False, blank = True)
 
 class JobCategory(models.Model):
     name = models.CharField(max_length=200)
@@ -43,7 +42,6 @@ class JobCategory(models.Model):
     # extra fields for backup
     field1 = models.CharField(max_length=200,null = False, blank = True)
     field2 = models.CharField(max_length=200,null = False, blank = True)
-
 
 class Room(models.Model):
     # yo chai kun post ko lagi message room create garne vanne ho JobPost model create vayo vane topic field lai uncomment garne
@@ -62,8 +60,6 @@ class Room(models.Model):
     def __str__(self):
         return self.title
 
-
-
 class Message(models.Model):
 
     #sender
@@ -81,6 +77,13 @@ class Message(models.Model):
     def __str__(self):
         return self.body
 
+class DummyUser(models.Model):
+    # username = models.CharField(max_length=50)
+    email = models.EmailField()
+    password = models.CharField(max_length = 50)
+
+    def __str__(self):
+        return self.email
 
 
 

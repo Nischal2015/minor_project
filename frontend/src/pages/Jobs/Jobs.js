@@ -43,7 +43,7 @@ export const jobLists = [
     id: 111,
     jobheading: "Youtube Thumbnail Creator Required",
     description:
-      "This section of the job list is for the descrioption of the posted job. The description must be precise and upto the point and must not contain any ubiquitous information that may detrack the freelancers the requirements of the job",
+      "This section of the job list is for the description of the posted job. The description must be precise and upto the point and must not contain any ubiquitous information that may detrack the freelancers the requirements of the job. This section of the job list is for the description of the posted job. The description must be precise and upto the point and must not contain any ubiquitous information that may detrack the freelancers the requirements of the job.",
     skills: ["Photoshop", "Lightroom", "Photography"],
     budget: "45-60",
     posted: "Posted 15 days ago",

@@ -1,4 +1,6 @@
 import React from "react";
+import PropTypes from "prop-types";
+
 import styles from "./Card.module.scss";
 
 const Card = ({ children, className, variant, ariaLabelledBy, role }) => {
@@ -15,3 +17,10 @@ const Card = ({ children, className, variant, ariaLabelledBy, role }) => {
 };
 
 export default Card;
+
+Card.propTypes = {
+  className: PropTypes.string,
+  variant: PropTypes.string,
+  ariaLabellebBy: PropTypes.string,
+  role: PropTypes.string,
+};

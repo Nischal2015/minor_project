@@ -1,4 +1,6 @@
 import React from "react";
+
+import PropTypes from "prop-types";
 import styles from "./Button.module.scss";
 
 const Button = ({ type, children, variant }) => {
@@ -14,3 +16,8 @@ const Button = ({ type, children, variant }) => {
 };
 
 export default Button;
+
+Button.propTypes = {
+  type: PropTypes.string,
+  variant: PropTypes.string,
+};

@@ -176,9 +176,12 @@ const Talent = () => {
   }, []);
 
   const getUsers = async () => {
-    const response = await axios.get("users");
-    // console.log(response.data);
-    setUsers(response.data);
+    try {
+      const response = await axios.get("users/");
+      setUsers(response.data);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -278,7 +281,7 @@ const Talent = () => {
               return (
                 <div className={styles.list} key={id}>
                   <picture className={styles.list__picture}>
-                    {avatar === null ? (
+                    {avatar === undefined || null ? (
                       <Avatar
                         name={`${otherList.first_name} ${otherList.last_name}`}
                         round={true}
@@ -306,7 +309,7 @@ const Talent = () => {
                     <CircularRating>{rating}</CircularRating>
                     <CustomNavLink
                       className={styles.list__more}
-                      to={`${id}`}
+                      to={`/talent/${id}`}
                       variant='small primary'
                       ariaLabel='See more detail about the freelancer'
                     >

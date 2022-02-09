@@ -1,4 +1,6 @@
 import React from "react";
+import PropTypes from "prop-types";
+
 import styles from "./Container.module.scss";
 
 const Container = ({ children, className }) => {
@@ -10,3 +12,7 @@ const Container = ({ children, className }) => {
 };
 
 export default Container;
+
+Container.propTypes = {
+  className: PropTypes.string,
+};
