@@ -10,7 +10,7 @@ class User(AbstractUser):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
 
-class Profile():
+class Profile(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE)
     description = models.TextField(null=True)
     
