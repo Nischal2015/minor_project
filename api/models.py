@@ -55,7 +55,7 @@ class User(AbstractBaseUser):
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
 
-    object = Account_manager()
+    objects = Account_manager()
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
