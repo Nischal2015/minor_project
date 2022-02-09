@@ -3,7 +3,39 @@ from re import T
 from statistics import mode
 from tkinter import CASCADE
 from django.db import models
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser, AbstractBaseUser, BaseUserManager
+
+
+# model_manager for User
+class Account_manager(BaseUserManager):
+
+    def create_user(self, email, username, password):
+        if not email:
+            raise ValueError("User must have email address")
+        if not username:
+            raise ValueError("User must have a username")
+        if not password:
+            raise ValueError("User must have a password")
+
+        user = self.model(
+            email=self.normalize_email(email),
+            username=username,
+        )
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
+
+    def create_superuser(self, email, username, password):
+        user = self.create_user(
+            email=self.normalize_email(email),
+            username=username,
+            password=password,
+        )
+        user.is_admin = True
+        user.is_staff = True
+        user.is_superuser = True
+        user.save(using=self._db)
+        return user
 
 
 def get_profile_location(self):
@@ -12,14 +44,30 @@ def get_profile_location(self):
 # Create your models here.
 
 
-class User(AbstractUser):
-    username = models.CharField(max_length=200, unique=True, default='~')
+class User(AbstractBaseUser):
+    username = models.CharField(max_length=200, unique=True)
     email = models.EmailField(verbose_name='email',
                               max_length=150, unique=True)
     hide_email = models.BooleanField(default=True)
 
+    is_admin = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
+    is_staff = models.BooleanField(default=False)
+    is_superuser = models.BooleanField(default=False)
+
+    object = Account_manager()
+
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = []
+    REQUIRED_FIELDS = ['username']
+
+    def __str__(self):
+        return self.username
+
+    def has_perm(self, perm, obj=None):
+        return self.is_admin
+
+    def has_module_perms(self, add_label):
+        return True
 
 
 class Profile(models.Model):
