@@ -85,38 +85,36 @@ def getUser(request, pk):
     serializer = UserSerializer(note, many=False)
     return Response(serializer.data)
 
-# @api_view(['POST'])
-# def registerUser(request):
-#     form = UserForm()
-
-#     if request.method == 'POST':
-#         form = UserForm(request.POST)
-
-#         if form.is_valid():
-#             user = form.save(commit=False)
-#             user.username = user.username.lower()
-#             user.email = user.email.lower()
-#             user.save()
-#             login(request,user)
-#             return redirect('') 
-
 @api_view(['POST'])
-# @login_required(login_url = login)
 def registerUser(request):
-    data = request.data
-    form = UserForm(data)
-
-    if form.is_valid():
-
-        user = form.save(commit=False)
-
-        user.username = user.username.lower()
-        user.email = user.email.lower()
-        user.save()
-        login(request,user)
+    if request.method == 'POST':
+        data = request.data 
+        user = User.objects.create(
+            username = data['username'],
+            email = data['email'],
+            password = data['password']
+        )
         serializer = UserSerializer(user)
-        return Response(serializer)
+        return Response(serializer.data)
     return Response('not registered')
+
+# @api_view(['POST'])
+# # @login_required(login_url = login)
+# def registerUser(request):
+#     data = request.data
+#     form = UserForm(data)
+
+#     if form.is_valid():
+
+#         user = form.save(commit=False)
+
+#         user.username = user.username.lower()
+#         user.email = user.email.lower()
+#         user.save()
+#         login(request,user)
+#         serializer = UserSerializer(user)
+#         return Response(serializer)
+#     return Response('not registered')
    
 
 
