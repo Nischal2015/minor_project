@@ -1,17 +1,14 @@
-from contextlib import nullcontext
-import email
 from django.shortcuts import render, redirect
-from .models import DummyUser, User, Room, Message
+from .models import User
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from .serializers import UserSerializer, RoomSerializer, MessageSerializer, DummyUserSerializer
-from django.contrib.auth.decorators import login_required
-from .forms import UserForm, RoomForm
+from .serializers import UserSerializer
 from api import serializers
 
 from django.contrib.auth import authenticate,login,logout
 
 from django.contrib import messages
+
 
 @api_view(['GET'])
 def api(request):
@@ -31,14 +28,13 @@ def api(request):
     ]
     return Response(routes)
 
-def index(request):
-    return render(request, 'index.html')
 
+@api_view(['GET'])
 def home(request):
     users = User.objects.all()
-    # rooms = Room.objects.all()
-    context = {'users':users}
-    return render(request, 'api/home.html',context)
+    context = {'users': users}
+    return render(request, 'api/home.html', context)
+
 
 
 
@@ -79,101 +75,13 @@ def login(request):
 def getUsers(request):
 
     users = User.objects.all()
-    profiles = UserSerializer(users,many = True)
+    profiles = UserSerializer(users, many=True)
 
     return Response(profiles.data)
+
 
 @api_view(['GET'])
 def getUser(request, pk):
     note = User.objects.get(id=pk)
     serializer = UserSerializer(note, many=False)
-    return Response(serializer.data)
-
-# @api_view(['POST'])
-# def registerUser(request):
-#     form = UserForm()
-
-#     if request.method == 'POST':
-#         form = UserForm(request.POST)
-
-#         if form.is_valid():
-#             user = form.save(commit=False)
-#             user.username = user.username.lower()
-#             user.email = user.email.lower()
-#             user.save()
-#             login(request,user)
-#             return redirect('') 
-
-@api_view(['POST'])
-# @login_required(login_url = login)
-def registerUser(request):
-    data = request.data
-    form = UserForm(data)
-
-    print(data)
-    print(form.is_valid())
-    if form.is_valid():
-        print("valid data received")
-        user = form.save(commit=False)
-
-        user.username = user.username.lower()
-        user.email = user.email.lower()
-        user.save()
-        login(request,user)
-        serializer = UserSerializer(user)
-        return Response(serializer.data)
-    return Response('not registered')
-
-# @api_view(['POST'])
-# def createNote(request):
-#     data = request.data
-#     note = User.objects.create(
-#         body = data['body']
-#     )
-#     serializer = UserSerializer(note, many=False)
-#     return Response(serializer.data)
-   
-
-
-@api_view(['GET'])
-def getRoom(request,pk):
-    room = Room.objects.get(id = pk)
-    serializer = RoomSerializer(room)
-    return Response(serializer.data)
-
-@api_view(['POST'])
-def sendMessage(request,pk):
-    #id should be room id , kun room ma pathako vanera
-    room = Room.objects.get(id = pk)
-    if request.method == 'POST':
-        data = request.data
-        message = Message.objects.create( 
-            user = request.user,
-            room = room,
-            body = data['body']
-        )
-
-        serializer = MessageSerializer(message)
-        return Response(serializer.data)
-
-@api_view(['POST'])
-# @login_required(login_url = login)
-def createRomm(request):
-    data = request.data
-    room = Room.objects.create(
-        clientUser = data['clientUser'],
-        title = data['title']
-    )
-
-    serializer = RoomSerializer(room)
-    return Response(serializer.data)
-@api_view(['POST'])
-def dummyUserCreation(request):
-    data = request.data
-    note = DummyUser.objects.create(
-        # username = data['username'],
-        email = data['email'],
-        password = data['password']
-    )
-    serializer = DummyUserSerializer(note, many=False)
     return Response(serializer.data)
