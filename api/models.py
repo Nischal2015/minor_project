@@ -1,9 +1,13 @@
 from ast import mod
+from fileinput import filename
 from re import T
 from statistics import mode
 from tkinter import CASCADE
+from django.conf import settings
 from django.db import models
 from django.contrib.auth.models import AbstractUser, AbstractBaseUser, BaseUserManager
+import os
+os.environ['DJANGO_SETTINGS_MODULE'] = 'kamao.settings'
 
 
 # model_manager for User
@@ -38,8 +42,8 @@ class Account_manager(BaseUserManager):
         return user
 
 
-def get_profile_location(self):
-    return f'profile_images/{self.pk}/{"profile_image.png"}'
+# def get_profile_image_filepath(self):
+#     return f'profile_images/{self.pk}/{"profile_image.png"}'
 
 # Create your models here.
 
@@ -77,12 +81,12 @@ class Profile(models.Model):
     user = models.OneToOneField(
         User, on_delete=models.CASCADE, primary_key=True)
 
-    avatar = models.ImageField(
-        max_length=255, upload_to=get_profile_location, null=True, blank=True)
-
     first_name = models.CharField(max_length=255, null=False)
     middle_name = models.CharField(max_length=512, null=True)
     last_name = models.CharField(max_length=255, null=False)
+
+    avatar = models.ImageField(
+        max_length=255, upload_to=settings.MEDIA_ROOT/'profile_images/', null=True, blank=True)
 
     profile_title = models.TextField(null=True)
     bio = models.TextField(null=True)
@@ -96,11 +100,11 @@ class Profile(models.Model):
 
     created = models.DateTimeField(auto_now_add=True)
 
+    # def get_profile_image_filename(self):
+    #     return str(self.avatar)[str(self.avatar).index(f'profile_images/{self.pk}/'):]
+
     field1 = models.CharField(max_length=255, null=False, blank=True)
     field2 = models.CharField(max_length=255, null=False, blank=True)
-
-    def get_avatar_filename(self):
-        return str(self.avatar)[str(self.avatar).index(f'profile_images/{self.pk}/'):]
 
 
 class Skill(models.Model):
@@ -126,6 +130,8 @@ class Project_define(models.Model):
 
     project_title = models.CharField(max_length=255, null=False)
     project_description = models.TextField(null=True)
+    job_category = models.ForeignKey(
+        Job_category, null=True, on_delete=models.SET_NULL)
     creation_date = models.DateTimeField(auto_now_add=True)
     project_length = models.PositiveIntegerField(null=True)
     budget_min = models.DecimalField(max_digits=7, decimal_places=2)
@@ -198,7 +204,8 @@ class Project_document(models.Model):
     project = models.ForeignKey(Project_define, on_delete=models.CASCADE)
 
     document_name = models.CharField(max_length=255, null=False)
-    document = models.FileField(null=True)
+    document = models.FileField(
+        null=True, upload_to=settings.MEDIA_ROOT/'project_documents/')
 
 
 class Bid_document(models.Model):
@@ -206,4 +213,5 @@ class Bid_document(models.Model):
     project_bid = models.ForeignKey(Project_bid, on_delete=models.CASCADE)
 
     document_name = models.CharField(max_length=255, null=False)
-    document = models.FileField(null=True)
+    document = models.FileField(
+        null=True, upload_to=settings.MEDIA_ROOT/'bid_documents/')
