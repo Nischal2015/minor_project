@@ -1,6 +1,7 @@
 // import styles from "./App.module.scss";
 import React, { Suspense, lazy } from "react";
 
+import LoadingSpinner from "./components/UI/LoadingSpinner/LoadingSpinner";
 import Navbar from "./components/Navigation/Navbar";
 import { Routes, Route, Outlet } from "react-router-dom";
 import ScrollToTop from "./components/ScrollToTop";
@@ -19,7 +20,7 @@ const Talent = lazy(() => import("./pages/Talent/Talent"));
 const App = () => {
   return (
     <React.Fragment>
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<LoadingSpinner />}>
         <ScrollToTop />
         <Navbar />
         <Routes>
