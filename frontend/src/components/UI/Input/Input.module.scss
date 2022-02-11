@@ -7,6 +7,10 @@
   &::-webkit-input-placeholder {
     font-size: inherit;
   }
+
+  &:focus {
+    outline: 2px solid rgba(var(--tint-primary-color), 0.5);
+  }
 }
 
 .input__text {

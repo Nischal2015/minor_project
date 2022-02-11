@@ -16,4 +16,4 @@ const Input = ({ type, placeholder, id, variant, ariaRequired, required }) => {
   );
 };
 
-export default Input;
+export default React.memo(Input);

@@ -44,14 +44,11 @@
 }
 
 // *:focus {
-//   outline: 3px solid rgba(var(--tint-primary-color), 0.5);
+//   outline: 2px solid rgba(var(--tint-primary-color), 0.7);
 // }
 
 html {
   font-size: 62.5%;
-  &:focus {
-    outline: 4px solid rgba(var(--tint-primary-color), 0.5);
-  }
 }
 
 body {
