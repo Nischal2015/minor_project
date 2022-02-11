@@ -1,0 +1,18 @@
+.header {
+  display: flex;
+  align-items: center;
+
+  height: 6.4rem;
+  background: var(--nav-background);
+  box-shadow: 0 4px 12px rgba(98, 99, 168, 0.06);
+  position: sticky;
+  top: 0;
+  z-index: 999;
+}
+
+.navigation {
+  display: grid;
+  grid-template-columns: 1fr 2fr 2fr 1fr;
+  align-items: center;
+  column-gap: 3.6rem;
+}

@@ -1,0 +1,33 @@
+.main-nav {
+  &__link {
+    &:link,
+    &:visited {
+      color: var(--color-grey-dark-2);
+      padding: 0.8rem 2.4rem;
+      display: block;
+      border-radius: 100px;
+      text-decoration: none;
+
+      transition: all 0.2s;
+    }
+
+    &:hover,
+    &:active {
+      color: var(--primary-color);
+      text-shadow: var(--color-grey-light-3) 0 0 2px;
+    }
+
+    // &:focus {
+    //   outline: 4px solid rgba(var(--tint-primary-color), 0.5);
+    // }
+
+    &--active {
+      @extend .main-nav__link;
+      color: var(--primary-color) !important;
+
+      &:hover {
+        text-shadow: none !important;
+      }
+    }
+  }
+}

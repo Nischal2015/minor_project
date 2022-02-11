@@ -1,0 +1,30 @@
+.list {
+  &__heading {
+    color: var(--primary-color);
+    font-size: 1.8rem;
+    font-weight: 600;
+  }
+  &__description {
+    color: var(--color-grey-dark-2);
+    line-height: 1.4;
+  }
+}
+
+.link {
+  transition: all 0.2s;
+
+  &:link,
+  &:visited {
+    align-self: flex-start;
+    text-decoration: none;
+    border-bottom: 1px solid var(--primary-color);
+    color: var(--primary-color);
+    font-size: 1.8rem;
+  }
+
+  &:hover,
+  &:active {
+    color: var(--shade-primary-color);
+    border-bottom: 1px solid var(--shade-primary-color);
+  }
+}

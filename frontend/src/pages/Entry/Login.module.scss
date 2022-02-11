@@ -1,0 +1,149 @@
+.login {
+  background: url("../../assets/svg/login_box.svg");
+  background-repeat: no-repeat;
+  max-width: 50rem;
+  margin: 0 auto;
+  margin-top: 3.6rem;
+  margin-bottom: 6.4rem;
+  padding: 4.8rem 3.6rem;
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  gap: 2.8rem;
+
+  &__header {
+    text-align: center;
+    margin: 1.6rem 0 3.2rem 0;
+    font-weight: 500;
+
+    & > span {
+      font-size: 2rem;
+    }
+  }
+
+  &__description {
+    display: flex;
+    flex-direction: column;
+    gap: 1.6rem;
+
+    &--password {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      right: 10px;
+      height: 2.4rem;
+      width: 2.4rem;
+      transition: all 0.2s;
+      border-radius: 50%;
+      cursor: pointer;
+
+      &:hover {
+        background: var(--color-grey-light-3);
+      }
+
+      svg {
+        height: 75%;
+        width: 75%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+    }
+
+    &--error {
+      color: red;
+      margin-top: 0.8rem;
+    }
+  }
+
+  &__constraints {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    span {
+      font-size: 1.4rem;
+
+      input {
+        height: 18px;
+        width: 18px;
+      }
+    }
+
+    & > span:first-child {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+  }
+
+  &__footer {
+    display: flex;
+    flex-direction: column;
+    gap: 3.6rem;
+
+    & > :first-child {
+      align-self: flex-start;
+    }
+
+    &--other {
+      display: grid;
+      row-gap: 1.2rem;
+    }
+  }
+
+  &__signup {
+    text-align: center;
+
+    &--link {
+      &:link,
+      &:visited,
+      &:hover,
+      &:active {
+        color: var(--primary-color);
+      }
+    }
+  }
+
+  &::after {
+    content: "";
+    height: 110%;
+    width: 110%;
+    background-image: url("../../assets/svg/background.svg");
+    background-size: contain;
+    background-repeat: no-repeat;
+    position: absolute;
+    top: 1%;
+    left: -5%;
+    z-index: -9;
+    opacity: 0.2;
+    filter: blur(6px);
+  }
+}
+
+.password {
+  padding: 1rem !important;
+  border: none !important;
+  outline: none !important;
+}
+
+.form-control {
+  &__select {
+    padding: 0.2rem 0.6rem;
+    border-radius: var(--input-radius);
+    background: #fff;
+    outline: 2px solid rgba(var(--tint-primary-color), 0.6);
+    border: 1px solid var(--primary-color);
+    position: relative;
+  }
+
+  &__select-none {
+    padding: 0.2rem 0.6rem;
+    border-radius: var(--input-radius);
+    background: #fff;
+    border: 1px solid var(--primary-color);
+    position: relative;
+  }
+}
