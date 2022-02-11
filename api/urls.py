@@ -8,6 +8,8 @@ urlpatterns = [
     path('home/',views.home,name = "home"),
     path('users/',views.getUsers),
     path('users/<str:pk>/',views.getUser),
+    path('profile/<str:pk>/',views.getProfile),
+    path('profiles/',views.getProfiles),
     path('login/',views.login, name = 'login'),
     # path('room/<str:pk>',views.getRoom,name = "room"),
     # path('register/',views.dummyUserCreation,name = 'register'),

@@ -17,7 +17,7 @@ const NotFound = lazy(() => import("./pages/NotFound/NotFound"));
 const Profile = lazy(() => import("./pages/Profile/Profile"));
 const Signup = lazy(() => import("./pages/Entry/Signup"));
 const Talent = lazy(() => import("./pages/Talent/Talent"));
-const UserDetails = lazy(() => import("./pages/Entry/UserDetails"));
+const UserDetails = lazy(() => import("./pages/Entry/Username"));
 
 const App = () => {
   return (

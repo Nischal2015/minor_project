@@ -3,6 +3,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import Button from "../../components/UI/Button/Button";
 import Card from "../../components/UI/Card/Card";
 import CircularRatings from "../../components/UI/Ratings/CircularRatings/CircularRatings";
+import LoadingSpinner from "../../components/UI/LoadingSpinner/LoadingSpinner";
 import Container from "../../components/UI/Container/Container";
 import NotFound from "../NotFound/NotFound";
 import {
@@ -25,6 +26,7 @@ const Profile = () => {
   const { id } = useParams();
 
   const [user, setUser] = useState([]);
+  const [profile, setProfile] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
@@ -42,8 +44,13 @@ const Profile = () => {
     setError(null);
     setLoading(true);
     try {
-      const response = await axios.get(`/users/${id}`);
-      setUser(response.data);
+      const responseProfile = await axios.get(`/profile/${id}`);
+      const responseUser = await axios.get(
+        `/users/${responseProfile.data.user}`
+      );
+
+      setUser(responseUser.data);
+      setProfile(responseProfile.data);
     } catch (error) {
       setError(true);
       console.log("Server error");
@@ -52,7 +59,6 @@ const Profile = () => {
   }, [id]);
 
   useEffect(() => {
-    // console.log("fetch function running");
     fetchUserHandler();
   }, [fetchUserHandler]);
 
@@ -64,15 +70,19 @@ const Profile = () => {
 
   if (error) return <NotFound />;
 
-  return (
+  return loading ? (
+    <LoadingSpinner />
+  ) : (
     <React.Fragment>
+      {console.log("user", user)}
+      {console.log("profile", profile)}
       <Container className={styles.profile__top}>
         <Card className={styles.profile__summary} variant='boxy'>
           <figure className={styles["summary__image"]}>
             <div>
-              {user.avatar === undefined || null ? (
+              {profile.avatar === null ? (
                 <Avatar
-                  name={`${user.first_name} ${user.last_name}`}
+                  name={`${profile.first_name} ${profile.last_name}`}
                   round={true}
                   size='100%'
                   textSizeRatio={2.5}
@@ -81,7 +91,7 @@ const Profile = () => {
                 />
               ) : (
                 <Avatar
-                  src={user.avatar}
+                  src={profile.avatar}
                   round={true}
                   size='100%'
                   textSizeRatio={2.5}
@@ -89,7 +99,7 @@ const Profile = () => {
                 />
               )}
             </div>
-            <figcaption>{`${user.first_name} ${user.last_name}`}</figcaption>
+            <figcaption>{`${profile.first_name} ${profile.last_name}`}</figcaption>
           </figure>
           <div className={styles["summary__rating"]}>
             <div>
@@ -158,18 +168,18 @@ const Profile = () => {
             <div className={styles.info__heading}>
               <div className={styles.info__heading__user}>
                 <h4>
-                  {`${user.first_name} ${user.last_name} `}
+                  {`${profile.first_name} ${profile.last_name} `}
                   <span className={styles["info__heading__user--username"]}>
                     @{user.username}
                   </span>
                 </h4>
                 <span className={styles["info__heading__user--project-title"]}>
-                  {user.profile_title}
+                  {profile.profile_title}
                 </span>
               </div>
               <div className={styles["info__heading--review"]}></div>
             </div>
-            <p className={styles.info__body}>{user.bio}</p>
+            <p className={styles.info__body}>{profile.bio}</p>
             <div className={styles.info__footer}>
               <Button variant='small'>Edit Info</Button>
             </div>
