@@ -1,12 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import Button from "../../components/UI/Button/Button";
 import Card from "../../components/UI/Card/Card";
+import usePassword from "../../hooks/usePassword";
 
 // import axios from "axios";
 
 import { useForm } from "react-hook-form";
 
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 import styles from "./Login.module.scss";
 import styles2 from "../../components/UI/Input/Input.module.scss";
@@ -34,8 +37,14 @@ const Login = () => {
   // };
 
   const [focus, setFocus] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
-  const [hiddenMode, setHiddenMode] = useState(true);
+  const [hidePassword, setHidePassword] = usePassword(true);
+  const [hideRetypePassword, setHideRetypePassword] = usePassword(true);
+  const [containsSignup, setContainsSignup] = useState(false);
+
+  let location = useLocation();
+  const navigate = useNavigate();
+
+  const locationPath = useMemo(() => location.pathname, [location]);
 
   // This is used to reset the form on succesful submission
   useEffect(() => {
@@ -47,10 +56,9 @@ const Login = () => {
     }
   }, [reset, isSubmitSuccessful]);
 
-  const showPasswordHandler = () => {
-    setShowPassword((prevValue) => !prevValue);
-    setHiddenMode((prevValue) => !prevValue);
-  };
+  useEffect(() => {
+    setContainsSignup(locationPath.includes("signup"));
+  }, [locationPath]);
 
   return (
     <form
@@ -67,6 +75,7 @@ const Login = () => {
           <span>Welcome to you</span>
         </div>
         <div className={styles.login__description}>
+          {/* Email */}
           <div className={styles["form-control"]}>
             <input
               className={styles2.input__text}
@@ -83,6 +92,8 @@ const Login = () => {
               </p>
             )}
           </div>
+
+          {/* Password */}
           <div className={styles["form-control"]}>
             <div
               className={
@@ -93,7 +104,7 @@ const Login = () => {
             >
               <input
                 className={`${styles2.input__text} ${styles.password}`}
-                type={hiddenMode ? "password" : "text"}
+                type={hidePassword ? "password" : "text"}
                 name='password'
                 placeholder='Password'
                 onFocus={() => setFocus(true)}
@@ -111,9 +122,9 @@ const Login = () => {
               <div
                 role='button'
                 className={styles["login__description--password"]}
-                onClick={showPasswordHandler}
+                onClick={setHidePassword}
               >
-                {showPassword ? (
+                {!hidePassword ? (
                   <FaEye aria-label='Hides password' />
                 ) : (
                   <FaEyeSlash aria-label='Shows password' />
@@ -126,6 +137,56 @@ const Login = () => {
               </p>
             )}
           </div>
+
+          {containsSignup && (
+            <div className={styles["form-control"]}>
+              <div
+                className={
+                  focus
+                    ? styles["form-control__select"]
+                    : styles["form-control__select-none"]
+                }
+              >
+                <input
+                  className={`${styles2.input__text} ${styles.password}`}
+                  type={hideRetypePassword ? "password" : "text"}
+                  name='repassword'
+                  placeholder='Retype Password'
+                  onFocus={() => setFocus(true)}
+                  aria-required='true'
+                  {...register("repassword", {
+                    onBlur: () => setFocus(false),
+                    required: {
+                      value: true,
+                      message: "This field is required",
+                    },
+                    minLength: {
+                      value: 7,
+                      message: "Password must be greater than 6 characters",
+                    },
+                  })}
+                />
+
+                <div
+                  role='button'
+                  className={styles["login__description--password"]}
+                  onClick={setHideRetypePassword}
+                >
+                  {!hideRetypePassword ? (
+                    <FaEye aria-label='Hides password' />
+                  ) : (
+                    <FaEyeSlash aria-label='Shows password' />
+                  )}
+                </div>
+              </div>
+              {errors.password && (
+                <p className={styles["login__description--error"]}>
+                  {errors.password.message}
+                </p>
+              )}
+            </div>
+          )}
+
           <div className={styles.login__constraints}>
             <span>
               <input type='checkbox' id='remember' />
@@ -135,13 +196,40 @@ const Login = () => {
           </div>
         </div>
         <div className={styles.login__footer}>
-          <Button type='submit'>Login</Button>
-
+          {containsSignup ? (
+            <Button
+              onClick={() => {
+                console.log("hey");
+                navigate("username");
+              }}
+            >
+              Signup
+            </Button>
+          ) : (
+            <Button type='submit'>Login</Button>
+          )}
           <div className={styles["login__footer--other"]}>
             <Button>Continue with Google</Button>
             <Button variant='small secondary'>Continue with Facebook</Button>
           </div>
         </div>
+        <p className={styles.login__signup}>
+          {containsSignup ? (
+            <>
+              Already have an account?{" "}
+              <Link to='/login' className={styles["login__signup--link"]}>
+                Login
+              </Link>
+            </>
+          ) : (
+            <>
+              Don't have an account?{" "}
+              <Link to='/signup' className={styles["login__signup--link"]}>
+                Signup
+              </Link>
+            </>
+          )}
+        </p>
       </Card>
     </form>
   );

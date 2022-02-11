@@ -177,7 +177,7 @@ const Talent = () => {
 
   const getUsers = async () => {
     try {
-      const response = await axios.get("users/");
+      const response = await axios.get("profiles/");
       setUsers(response.data);
     } catch (error) {
       console.log(error);
@@ -277,11 +277,11 @@ const Talent = () => {
             })} */}
 
             {/* FROM API */}
-            {users.map(({ id, rating, avatar, ...otherList }) => {
+            {users.map(({ user, rating, avatar, ...otherList }) => {
               return (
-                <div className={styles.list} key={id}>
+                <div className={styles.list} key={user}>
                   <picture className={styles.list__picture}>
-                    {avatar === undefined || null ? (
+                    {avatar === null ? (
                       <Avatar
                         name={`${otherList.first_name} ${otherList.last_name}`}
                         round={true}
@@ -309,7 +309,7 @@ const Talent = () => {
                     <CircularRating>{rating}</CircularRating>
                     <CustomNavLink
                       className={styles.list__more}
-                      to={`/talent/${id}`}
+                      to={`/talent/${user}`}
                       variant='small primary'
                       ariaLabel='See more detail about the freelancer'
                     >

@@ -1,7 +1,7 @@
 from unittest.util import _MAX_LENGTH
 from rest_framework import serializers
 from rest_framework.serializers import ModelSerializer
-from .models import  User
+from .models import  User, Profile
 
 
 class UserSerializer(ModelSerializer):
@@ -42,4 +42,7 @@ class RegisterSerializer(ModelSerializer):
     #     user.save()
     #     return user
 
-        
+class ProfileSerializer(ModelSerializer):
+    class Meta:
+        model = Profile 
+        fields = '__all__'

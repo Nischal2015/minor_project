@@ -17,9 +17,9 @@
       text-shadow: var(--color-grey-light-3) 0 0 2px;
     }
 
-    &:focus {
-      outline: 4px solid rgba(var(--tint-primary-color), 0.5);
-    }
+    // &:focus {
+    //   outline: 4px solid rgba(var(--tint-primary-color), 0.5);
+    // }
 
     &--active {
       @extend .main-nav__link;

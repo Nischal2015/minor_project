@@ -15,7 +15,9 @@ const Landing = lazy(() => import("./pages/Landing/Landing"));
 const Login = lazy(() => import("./pages/Entry/Login"));
 const NotFound = lazy(() => import("./pages/NotFound/NotFound"));
 const Profile = lazy(() => import("./pages/Profile/Profile"));
+const Signup = lazy(() => import("./pages/Entry/Signup"));
 const Talent = lazy(() => import("./pages/Talent/Talent"));
+const UserDetails = lazy(() => import("./pages/Entry/Username"));
 
 const App = () => {
   return (
@@ -25,6 +27,7 @@ const App = () => {
         <Navbar />
         <Routes>
           <Route path='/' element={<Landing />} />
+          <Route path='loading' element={<LoadingSpinner />} />
           <Route path='about' element={<About />} />
           <Route path='jobs' element={<Outlet />}>
             <Route index element={<Jobs />} />
@@ -34,6 +37,10 @@ const App = () => {
           <Route path='talent' element={<Outlet />}>
             <Route index element={<Talent />} />
             <Route path=':id' element={<Profile />} />
+          </Route>
+          <Route path='signup' element={<Outlet />}>
+            <Route index element={<Signup />} />
+            <Route path='username' element={<UserDetails />} />
           </Route>
           <Route path='*' element={<NotFound />} />
         </Routes>

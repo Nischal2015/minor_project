@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
-from .models import User
+from .models import User, Profile
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from .serializers import UserSerializer
+from .serializers import UserSerializer, ProfileSerializer
 from api import serializers
 from rest_framework import status
 from django.contrib.auth import authenticate,login,logout
@@ -90,3 +90,16 @@ def getUser(request, pk):
 
     serializer = UserSerializer(note, many=False)
     return Response(serializer.data)
+
+@api_view(['GET'])
+def getProfile(request, pk):
+    note = Profile.objects.get(user=pk)
+    serializer = ProfileSerializer(note, many=False)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def getProfiles(request):
+    profiles = Profile.objects.all()
+    serializer = ProfileSerializer(profiles, many=True)
+    return Response(serializer.data)
+
