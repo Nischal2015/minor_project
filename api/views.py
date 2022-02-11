@@ -23,6 +23,7 @@ def api(request):
         'GET /',
         'GET /user',
         'GET /users',
+        'GET /login',
         'GET /room/:id',
         # 'GET /login',
         'POST /register',
@@ -54,25 +55,25 @@ def login(request):
         return Response('logged in')
 
 
-    if request.method == 'POST':
-        username = request.POST.get('username').lower()
+    elif request.method == 'POST':
+        email = request.POST.get('email').lower()
         password = request.POST.get('password')
-        print(username)
+        print(email)
         
         #check is user exists or not
         try:
-            user = User.objects.get(username = username)
+            email = User.objects.get(email = email)
         except:
             messages.error(request,'user doesnot exist')
         
         #if user exists
-        user = authenticate(request,username = username, password=password)
+        user = authenticate(request,email = email, password=password)
 
         #if user is valid
         if user is not None:
             login(request,user)
             serializer = UserSerializer(user)
-            return redirect(serializer.data)
+            return Response(serializer.data)
         else:
             print('password is incorrect')
             messages.error(request,'incorrect password')
