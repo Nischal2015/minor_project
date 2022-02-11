@@ -13,6 +13,7 @@ from .forms import UserForm, RoomForm
 from api import serializers
 from rest_framework import status
 from django.contrib.auth import authenticate,login,logout
+from django.shortcuts import get_object_or_404
 
 from django.contrib import messages
 
@@ -89,7 +90,9 @@ def getUsers(request):
 
 @api_view(['GET'])
 def getUser(request, pk):
-    note = User.objects.get(id=pk)
+    note = get_object_or_404(User, id = pk)
+    # note = User.objects.get(id=pk)
+
     serializer = UserSerializer(note, many=False)
     return Response(serializer.data)
 
@@ -111,7 +114,6 @@ def registerUser(request):
         return Response(data)
 
 class RegisterView(generics.GenericAPIView):
-
     serializer_class = RegisterSerializer
 
     def post(self,request):
@@ -124,7 +126,6 @@ class RegisterView(generics.GenericAPIView):
         user_data = serializer.data 
 
         return Response(user_data, status = status.HTTP_201_CREATED)
-
 
 
 
