@@ -1,0 +1,47 @@
+@import "../Input/Input.module.scss";
+
+.input {
+  position: relative;
+
+  &__search {
+    @include input__base;
+    border: 1px solid var(--color-grey-light-3);
+    padding: 1rem 1.6rem 1rem 4.2rem;
+    transition: all 0.15s;
+    font-size: 1.6rem;
+
+    // SHAPE
+    &[data-variant~="rounded"] {
+      border-radius: 500px;
+    }
+
+    // SIZE
+    &[data-variant~="small"] {
+      font-size: 1.4rem;
+      padding: 0.6rem 1rem 0.6rem 3.2rem;
+      border: 1px solid var(--color-grey-dark-3);
+
+      & + .span--icon {
+        left: 8px;
+
+        svg {
+          height: 1.8rem;
+          width: 1.8rem;
+        }
+      }
+    }
+  }
+}
+
+.span--icon {
+  position: absolute;
+  top: 50%;
+  left: 12px;
+  transform: translateY(-45%);
+
+  svg {
+    height: 2.4rem;
+    width: 2.4rem;
+    fill: var(--color-grey-dark-3);
+  }
+}

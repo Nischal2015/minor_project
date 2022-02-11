@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+
+{% load static %}
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{% static 'styles/main.css' %}" />
+    <title>Kamao template</title>
+  </head>
+  <body>
+    <h1>Kamao Template</h1>
+    <img src="{% static 'assets/nepal.png' %}" alt="nepal image" />
+    <div>
+      {% for user in users %}
+
+      <h2>{{user.username}}</h2>
+      <h2>{{user.email}}</h2>
+      <h2>{{user.password}}</h2>
+      <h2>{{user.description}}</h2>
+      <h2>{{user.price}}</h2>
+      <h2>{{user.created}}</h2>
+
+      {% endfor %}
+    </div>
+    <div>
+      <!-- {% for room in rooms %}
+        
+            <h2>{{room}}</h2>
+            <h2>{{user.clientUser}}</h2>
+            <h2>{{user.freelancerUser}}</h2>
+
+        {% endfor %} -->
+    </div>
+    <!-- <div>
+      {% for room in rooms %}
+
+      <h2>{{room}}</h2>
+      <h2>{{user.clientUser}}</h2>
+      <h2>{{user.freelancerUser}}</h2>
+
+      {% endfor %}
+    </div> -->
+  </body>
+</html>

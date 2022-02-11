@@ -1,0 +1,8 @@
+.card {
+  box-shadow: 0px 2px 12px rgba(0, 0, 0, 0.05);
+  border-radius: var(--layout-radius);
+}
+
+.card[data-variant="boxy"] {
+  border-radius: 3px;
+}
