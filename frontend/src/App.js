@@ -3,13 +3,13 @@ import React, { Suspense, lazy } from "react";
 
 import LoadingSpinner from "./components/UI/Loading/LoadingSpinner";
 import Navbar from "./components/Navigation/Navbar";
+import Footer from "./components/Footer/Footer";
 import { Routes, Route, Outlet } from "react-router-dom";
 import ScrollToTop from "./components/ScrollToTop";
 
 // Routing pages
 const About = lazy(() => import("./pages/About/About"));
 const Bidding = lazy(() => import("./pages/Bidding/Bidding"));
-const Footer = lazy(() => import("./components/Footer/Footer"));
 const Jobs = lazy(() => import("./pages/Jobs/Jobs"));
 const Landing = lazy(() => import("./pages/Landing/Landing"));
 const Login = lazy(() => import("./pages/Entry/Login"));
