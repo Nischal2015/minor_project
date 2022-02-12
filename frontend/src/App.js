@@ -1,7 +1,7 @@
 // import styles from "./App.module.scss";
 import React, { Suspense, lazy } from "react";
 
-import LoadingSpinner from "./components/UI/LoadingSpinner/LoadingSpinner";
+import LoadingSpinner from "./components/UI/Loading/LoadingSpinner";
 import Navbar from "./components/Navigation/Navbar";
 import { Routes, Route, Outlet } from "react-router-dom";
 import ScrollToTop from "./components/ScrollToTop";

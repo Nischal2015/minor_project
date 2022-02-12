@@ -8,6 +8,7 @@ import Price from "../../components/Price/Price";
 import Searchbar from "../../components/UI/Searchbar/Searchbar";
 import List from "../../components/List/List";
 import Slider from "../../components/UI/Slider/Slider";
+import LoadingBouncer from "../../components/UI/Loading/LoadingBouncer";
 
 import profilePic from "../../assets/png/user_hero.png";
 import Avatar from "react-avatar";
@@ -170,18 +171,21 @@ const Talent = () => {
   // const QUALITYWORK_WEIGHT = 0.45;
 
   const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     getUsers();
   }, []);
 
   const getUsers = async () => {
+    setLoading(true);
     try {
       const response = await axios.get("profiles/");
       setUsers(response.data);
     } catch (error) {
       console.log(error);
     }
+    setLoading(false);
   };
 
   return (
@@ -199,14 +203,6 @@ const Talent = () => {
             {ratingsCriteria.map(({ id, name }) => (
               <Slider key={id} text={name} />
             ))}
-
-            {/* <Slider text='Reliability' />
-            <br />
-            <Slider text='Punctual' />
-            <br />
-            <Slider text='Communication Skill' />
-            <br />
-            <Slider text='Rating Criteria' /> */}
           </div>
 
           <div className={styles.filter__skills}>
@@ -222,106 +218,57 @@ const Talent = () => {
             <h3 className='heading--tertiary'>Top Results</h3>
           </div>
           <div className={styles.results__list}>
-            {/* {talentLists.map(({ id, rating, img, ...jobList }) => {
-              const { reliability, punctual, communication, qualityWork } =
-                rating;
-              const avgRating = parseInt(
-                RELIABILITY_WEIGHT * reliability +
-                  PUCNTUAL_WEIGHT * punctual +
-                  COMMUNICATION_WEIGHT * communication +
-                  QUALITYWORK_WEIGHT * qualityWork
-              );
-              return (
-                <div className={styles.list} key={id}>
-                  <picture className={styles.list__picture}>
-                    {img === null ? (
-                      <Avatar
-                        name={jobList.jobheading}
-                        round={true}
-                        size='100%'
-                        textSizeRatio={2.25}
-                        alt='Name Initials Avatar'
-                        maxInitials={3}
-                      />
-                    ) : (
-                      <Avatar
-                        src={img}
-                        round={true}
-                        size='100%'
-                        textSizeRatio={2.25}
-                        alt='Profile Avatar'
-                      />
-                    )}
-                  </picture>
-
-                  <div className={styles.list__text}>
-                    <List {...jobList} />
-                  </div>
-
-                  <div className={styles.list__number}>
-                    <CircularRating>{avgRating}</CircularRating>
-                    <CustomNavLink
-                      className={styles.list__more}
-                      to={`${id}`}
-                      variant='small primary'
-                      ariaLabel='See more detail about the freelancer'
-                    >
-                      See More{" "}
-                      <span>
-                        <HiArrowNarrowRight />
-                      </span>
-                    </CustomNavLink>
-                  </div>
-                </div>
-              );
-            })} */}
-
             {/* FROM API */}
-            {users.map(({ user, rating, avatar, ...otherList }) => {
-              return (
-                <div className={styles.list} key={user}>
-                  <picture className={styles.list__picture}>
-                    {avatar === null ? (
-                      <Avatar
-                        name={`${otherList.first_name} ${otherList.last_name}`}
-                        round={true}
-                        size='100%'
-                        textSizeRatio={2.25}
-                        alt='Name Initials Avatar'
-                        maxInitials={3}
-                      />
-                    ) : (
-                      <Avatar
-                        src={avatar}
-                        round={true}
-                        size='100%'
-                        textSizeRatio={2.25}
-                        alt='Profile Avatar'
-                      />
-                    )}
-                  </picture>
 
-                  <div className={styles.list__text}>
-                    <List {...otherList} />
-                  </div>
+            {loading ? (
+              <LoadingBouncer />
+            ) : (
+              users.map(({ user, rating, avatar, ...otherList }) => {
+                return (
+                  <div className={styles.list} key={user}>
+                    <picture className={styles.list__picture}>
+                      {avatar === null ? (
+                        <Avatar
+                          name={`${otherList.first_name} ${otherList.last_name}`}
+                          round={true}
+                          size='100%'
+                          textSizeRatio={2.25}
+                          alt='Name Initials Avatar'
+                          maxInitials={3}
+                        />
+                      ) : (
+                        <Avatar
+                          src={avatar}
+                          round={true}
+                          size='100%'
+                          textSizeRatio={2.25}
+                          alt='Profile Avatar'
+                        />
+                      )}
+                    </picture>
 
-                  <div className={styles.list__number}>
-                    <CircularRating>{rating}</CircularRating>
-                    <CustomNavLink
-                      className={styles.list__more}
-                      to={`/talent/${user}`}
-                      variant='small primary'
-                      ariaLabel='See more detail about the freelancer'
-                    >
-                      See More{" "}
-                      <span>
-                        <HiArrowNarrowRight />
-                      </span>
-                    </CustomNavLink>
+                    <div className={styles.list__text}>
+                      <List {...otherList} />
+                    </div>
+
+                    <div className={styles.list__number}>
+                      <CircularRating>{rating}</CircularRating>
+                      <CustomNavLink
+                        className={styles.list__more}
+                        to={`/talent/${user}`}
+                        variant='small primary'
+                        ariaLabel='See more detail about the freelancer'
+                      >
+                        See More{" "}
+                        <span>
+                          <HiArrowNarrowRight />
+                        </span>
+                      </CustomNavLink>
+                    </div>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })
+            )}
           </div>
           <div className={styles.results__pagination}></div>
         </Card>
