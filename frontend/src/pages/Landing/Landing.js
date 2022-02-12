@@ -1,8 +1,8 @@
-import React, { lazy } from "react";
+import React from "react";
 
-const HeroSection = lazy(() => import("./HeroSection"));
-const PopularSection = lazy(() => import("./PopularSection"));
-const AboutSection = lazy(() => import("./AboutSection"));
+import HeroSection from "./HeroSection";
+import PopularSection from "./PopularSection";
+import AboutSection from "./AboutSection";
 
 const Landing = () => {
   return (
