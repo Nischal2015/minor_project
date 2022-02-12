@@ -10,7 +10,7 @@ const AboutSection = () => {
     <section className={styles["section__about"]}>
       <Container className={styles.about}>
         <picture className={styles["about__img-box"]}>
-          <About />
+          <About className={styles.about__svg} />
         </picture>
         <div className={styles["about__text-box"]}>
           <h2 className='heading--secondary'>About Us</h2>
