@@ -8,9 +8,9 @@ const CTAList = () => {
     <React.Fragment>
       <li>
         <CustomNavLink
-          to='/login'
-          ariaLabel='Signup for our website'
-          variant='outline rounded'
+          to="/login"
+          ariaLabel="Signup for our website"
+          variant="outline rounded"
           style={ctaStyle}
         >
           Login
@@ -18,9 +18,9 @@ const CTAList = () => {
       </li>
       <li>
         <CustomNavLink
-          to='/signup'
-          variant='tertiary rounded'
-          ariaLabel='Login into our website'
+          to="/signup"
+          variant="tertiary rounded"
+          ariaLabel="Login into our website"
           style={ctaStyle}
         >
           Signup

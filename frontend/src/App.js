@@ -26,23 +26,23 @@ const App = () => {
         <ScrollToTop />
         <Navbar />
         <Routes>
-          <Route path='/' element={<Landing />} />
-          <Route path='loading' element={<LoadingSpinner />} />
-          <Route path='about' element={<About />} />
-          <Route path='jobs' element={<Outlet />}>
+          <Route path="/" element={<Landing />} />
+          <Route path="loading" element={<LoadingSpinner />} />
+          <Route path="about" element={<About />} />
+          <Route path="jobs" element={<Outlet />}>
             <Route index element={<Jobs />} />
-            <Route path=':id' element={<Bidding />} />
+            <Route path=":id" element={<Bidding />} />
           </Route>
-          <Route path='login' element={<Login />} />
-          <Route path='talent' element={<Outlet />}>
+          <Route path="login" element={<Login />} />
+          <Route path="talent" element={<Outlet />}>
             <Route index element={<Talent />} />
-            <Route path=':id' element={<Profile />} />
+            <Route path=":id" element={<Profile />} />
           </Route>
-          <Route path='signup' element={<Outlet />}>
+          <Route path="signup" element={<Outlet />}>
             <Route index element={<Signup />} />
-            <Route path='username' element={<UserDetails />} />
+            <Route path="username" element={<UserDetails />} />
           </Route>
-          <Route path='*' element={<NotFound />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
         <Footer />
       </Suspense>
