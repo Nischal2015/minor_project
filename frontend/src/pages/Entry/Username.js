@@ -7,7 +7,7 @@ import Card from "../../components/UI/Card/Card";
 import { useForm } from "react-hook-form";
 
 import styles from "./Login.module.scss";
-import styles2 from "../../components/UI/Input/Input.module.scss";
+import LoginInput from "../../components/UI/Input/LoginInput";
 
 const UserDetails = () => {
   const {
@@ -16,8 +16,7 @@ const UserDetails = () => {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      email: "",
-      password: "",
+      username: "",
     },
   });
 
@@ -34,25 +33,15 @@ const UserDetails = () => {
             Kamao
           </h2>
         </div>
-        <div className={styles.login__description}>
-          {/* Username */}
-          <div className={styles["form-control"]}>
-            <input
-              className={styles2.input__text}
-              type='text'
-              name='username'
-              placeholder='Username'
-              aria-required='true'
-              {...register("username", { required: true })}
-            />
 
-            {errors.username && (
-              <p className={styles["login__description--error"]}>
-                This field is required
-              </p>
-            )}
-          </div>
-        </div>
+        {/* Username */}
+        <LoginInput
+          type='text'
+          name='username'
+          placeholder='Username'
+          register={register}
+          errors={errors}
+        />
         <div className={styles.login__footer}>
           <Button type='submit'>Register</Button>
         </div>

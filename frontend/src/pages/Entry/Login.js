@@ -1,18 +1,16 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect } from "react";
 import Button from "../../components/UI/Button/Button";
 import Card from "../../components/UI/Card/Card";
-import usePassword from "../../hooks/usePassword";
+import LoginInput from "../../components/UI/Input/LoginInput";
+import PasswordInput from "../../components/UI/Input/PasswordInput";
 
 // import axios from "axios";
 
 import { useForm } from "react-hook-form";
 
-import { FaEye, FaEyeSlash } from "react-icons/fa";
-
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
 import styles from "./Login.module.scss";
-import styles2 from "../../components/UI/Input/Input.module.scss";
 
 const Login = () => {
   const {
@@ -24,6 +22,7 @@ const Login = () => {
     defaultValues: {
       email: "",
       password: "",
+      repassword: "",
     },
   });
 
@@ -36,15 +35,12 @@ const Login = () => {
   //   }
   // };
 
-  const [focus, setFocus] = useState(false);
-  const [hidePassword, setHidePassword] = usePassword(true);
-  const [hideRetypePassword, setHideRetypePassword] = usePassword(true);
   const [containsSignup, setContainsSignup] = useState(false);
 
   let location = useLocation();
   const navigate = useNavigate();
 
-  const locationPath = useMemo(() => location.pathname, [location]);
+  const locationPath = location.pathname;
 
   // This is used to reset the form on succesful submission
   useEffect(() => {
@@ -76,115 +72,30 @@ const Login = () => {
         </div>
         <div className={styles.login__description}>
           {/* Email */}
-          <div className={styles["form-control"]}>
-            <input
-              className={styles2.input__text}
-              type='email'
-              name='email'
-              placeholder='Email address'
-              aria-required='true'
-              {...register("email", { required: true })}
-            />
-
-            {errors.email && (
-              <p className={styles["login__description--error"]}>
-                This field is required
-              </p>
-            )}
-          </div>
+          <LoginInput
+            type='email'
+            name='email'
+            placeholder='Email address'
+            register={register}
+            errors={errors}
+          />
 
           {/* Password */}
-          <div className={styles["form-control"]}>
-            <div
-              className={
-                focus
-                  ? styles["form-control__select"]
-                  : styles["form-control__select-none"]
-              }
-            >
-              <input
-                className={`${styles2.input__text} ${styles.password}`}
-                type={hidePassword ? "password" : "text"}
-                name='password'
-                placeholder='Password'
-                onFocus={() => setFocus(true)}
-                aria-required='true'
-                {...register("password", {
-                  onBlur: () => setFocus(false),
-                  required: { value: true, message: "This field is required" },
-                  minLength: {
-                    value: 7,
-                    message: "Password must be greater than 6 characters",
-                  },
-                })}
-              />
+          <PasswordInput
+            name='password'
+            placeholder='Password'
+            errors={errors}
+            register={register}
+          />
 
-              <div
-                role='button'
-                className={styles["login__description--password"]}
-                onClick={setHidePassword}
-              >
-                {!hidePassword ? (
-                  <FaEye aria-label='Hides password' />
-                ) : (
-                  <FaEyeSlash aria-label='Shows password' />
-                )}
-              </div>
-            </div>
-            {errors.password && (
-              <p className={styles["login__description--error"]}>
-                {errors.password.message}
-              </p>
-            )}
-          </div>
-
+          {/* Retype password */}
           {containsSignup && (
-            <div className={styles["form-control"]}>
-              <div
-                className={
-                  focus
-                    ? styles["form-control__select"]
-                    : styles["form-control__select-none"]
-                }
-              >
-                <input
-                  className={`${styles2.input__text} ${styles.password}`}
-                  type={hideRetypePassword ? "password" : "text"}
-                  name='repassword'
-                  placeholder='Retype Password'
-                  onFocus={() => setFocus(true)}
-                  aria-required='true'
-                  {...register("repassword", {
-                    onBlur: () => setFocus(false),
-                    required: {
-                      value: true,
-                      message: "This field is required",
-                    },
-                    minLength: {
-                      value: 7,
-                      message: "Password must be greater than 6 characters",
-                    },
-                  })}
-                />
-
-                <div
-                  role='button'
-                  className={styles["login__description--password"]}
-                  onClick={setHideRetypePassword}
-                >
-                  {!hideRetypePassword ? (
-                    <FaEye aria-label='Hides password' />
-                  ) : (
-                    <FaEyeSlash aria-label='Shows password' />
-                  )}
-                </div>
-              </div>
-              {errors.password && (
-                <p className={styles["login__description--error"]}>
-                  {errors.password.message}
-                </p>
-              )}
-            </div>
+            <PasswordInput
+              name='repassword'
+              placeholder='Retype Password'
+              errors={errors}
+              register={register}
+            />
           )}
 
           <div className={styles.login__constraints}>
@@ -199,7 +110,6 @@ const Login = () => {
           {containsSignup ? (
             <Button
               onClick={() => {
-                console.log("hey");
                 navigate("username");
               }}
             >
@@ -209,8 +119,8 @@ const Login = () => {
             <Button type='submit'>Login</Button>
           )}
           <div className={styles["login__footer--other"]}>
-            <Button>Continue with Google</Button>
-            <Button variant='small secondary'>Continue with Facebook</Button>
+            <Button variant='tertiary'>Continue with Google</Button>
+            <Button>Continue with Facebook</Button>
           </div>
         </div>
         <p className={styles.login__signup}>
