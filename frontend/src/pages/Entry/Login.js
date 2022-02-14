@@ -63,9 +63,9 @@ const Login = () => {
         // Later will be handled for fetching data from database
       })}
     >
-      <Card className={styles.login} role='group' ariaLabelledBy='kamao'>
+      <Card className={styles.login} role="group" ariaLabelledBy="kamao">
         <div className={styles.login__header}>
-          <h2 className='heading--secondary' id='kamao'>
+          <h2 className="heading--secondary" id="kamao">
             Kamao
           </h2>
           <span>Welcome to you</span>
@@ -73,17 +73,17 @@ const Login = () => {
         <div className={styles.login__description}>
           {/* Email */}
           <LoginInput
-            type='email'
-            name='email'
-            placeholder='Email address'
+            type="email"
+            name="email"
+            placeholder="Email address"
             register={register}
             errors={errors}
           />
 
           {/* Password */}
           <PasswordInput
-            name='password'
-            placeholder='Password'
+            name="password"
+            placeholder="Password"
             errors={errors}
             register={register}
           />
@@ -91,8 +91,8 @@ const Login = () => {
           {/* Retype password */}
           {containsSignup && (
             <PasswordInput
-              name='repassword'
-              placeholder='Retype Password'
+              name="repassword"
+              placeholder="Retype Password"
               errors={errors}
               register={register}
             />
@@ -100,8 +100,8 @@ const Login = () => {
 
           <div className={styles.login__constraints}>
             <span>
-              <input type='checkbox' id='remember' />
-              <label htmlFor='remember'>Remember me</label>
+              <input type="checkbox" id="remember" />
+              <label htmlFor="remember">Remember me</label>
             </span>
             <span>Forgot Password?</span>
           </div>
@@ -116,10 +116,10 @@ const Login = () => {
               Signup
             </Button>
           ) : (
-            <Button type='submit'>Login</Button>
+            <Button type="submit">Login</Button>
           )}
           <div className={styles["login__footer--other"]}>
-            <Button variant='tertiary'>Continue with Google</Button>
+            <Button variant="tertiary">Continue with Google</Button>
             <Button>Continue with Facebook</Button>
           </div>
         </div>
@@ -127,14 +127,14 @@ const Login = () => {
           {containsSignup ? (
             <>
               Already have an account?{" "}
-              <Link to='/login' className={styles["login__signup--link"]}>
+              <Link to="/login" className={styles["login__signup--link"]}>
                 Login
               </Link>
             </>
           ) : (
             <>
               Don't have an account?{" "}
-              <Link to='/signup' className={styles["login__signup--link"]}>
+              <Link to="/signup" className={styles["login__signup--link"]}>
                 Signup
               </Link>
             </>

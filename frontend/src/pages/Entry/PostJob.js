@@ -2,13 +2,10 @@ import React, { useState, useEffect } from "react";
 import Button from "../../components/UI/Button/Button";
 import Card from "../../components/UI/Card/Card";
 import LoginInput from "../../components/UI/Input/LoginInput";
-import PasswordInput from "../../components/UI/Input/PasswordInput";
 
-// import axios from "axios";
+import axios from "axios";
 
 import { useForm } from "react-hook-form";
-
-import { Link, useLocation, useNavigate } from "react-router-dom";
 
 import styles from "./Login.module.scss";
 
@@ -20,46 +17,48 @@ const PostJob = () => {
     formState: { errors, isSubmitSuccessful },
   } = useForm({
     defaultValues: {
-      email: "",
-      password: "",
-      repassword: "",
+      title: "",
+      category: "",
+      projectLength: null,
+      MinBudget: null,
+      MaxBudget: null,
+      BidDeadline: null,
+      BidDeadTime: null,
+      Description: "",
+      ProjectFile: "",
+      Skills: "",
     },
   });
 
-  // const registerUser = async (formData) => {
-  //   try {
-  //     const response = await axios.post("/register/", formData);
-  //     console.log(response);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
-  const [containsSignup, setContainsSignup] = useState(false);
-
-  let location = useLocation();
-  const navigate = useNavigate();
-
-  const locationPath = location.pathname;
+  const registerUser = async (formData) => {
+    try {
+      const response = await axios.post("/register/", formData);
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   // This is used to reset the form on succesful submission
-  useEffect(() => {
-    if (isSubmitSuccessful) {
-      reset({
-        email: "",
-        password: "",
-      });
-    }
-  }, [reset, isSubmitSuccessful]);
+  // useEffect(() => {
+  //   if (isSubmitSuccessful) {
+  //     reset({
+  //       email: "",
+  //       password: "",
+  //     });
+  //   }
+  // }, [reset, isSubmitSuccessful]);
 
-  useEffect(() => {
-    setContainsSignup(locationPath.includes("signup"));
-  }, [locationPath]);
+  // const file = e.target.files[0];
+  // if (file.size > 1 * 1024 * 1024) alert("File size is large");
 
   return (
     <form
       onSubmit={handleSubmit((data) => {
         console.log(data);
+        registerUser(data);
+        if (data.ProjectFile[0].size > 1 * 1024 * 1024)
+          alert("File size is large");
         // Later will be handled for fetching data from database
       })}
     >
@@ -68,78 +67,110 @@ const PostJob = () => {
           <h2 className="heading--secondary" id="kamao">
             Kamao
           </h2>
-          <span>Welcome to you</span>
+          <span>Project Posting</span>
         </div>
         <div className={styles.login__description}>
           {/* Email */}
           <LoginInput
-            type="email"
-            name="email"
-            placeholder="Email address"
+            type="text"
+            name="title"
+            placeholder="Enter the title"
             register={register}
             errors={errors}
           />
 
-          {/* Password */}
-          <PasswordInput
-            name="password"
-            placeholder="Password"
-            errors={errors}
+          <LoginInput
+            type="text"
+            name="category"
+            placeholder="Enter the category"
             register={register}
+            errors={errors}
           />
 
-          {/* Retype password */}
-          {containsSignup && (
-            <PasswordInput
-              name="repassword"
-              placeholder="Retype Password"
-              errors={errors}
-              register={register}
-            />
+          <LoginInput
+            type="number"
+            name="projectLength"
+            placeholder="Project length in months"
+            register={register}
+            errors={errors}
+          />
+
+          <LoginInput
+            type="number"
+            name="MinBudget"
+            placeholder="Enter the minimum budget"
+            register={register}
+            errors={errors}
+          />
+
+          <LoginInput
+            type="number"
+            name="MaxBudget"
+            placeholder="Enter the maximum budget"
+            register={register}
+            errors={errors}
+          />
+
+          <LoginInput
+            type="date"
+            name="BidDeadline"
+            placeholder="Enter the deadline for bid"
+            register={register}
+            errors={errors}
+          />
+
+          <LoginInput
+            type="time"
+            name="BidDeadTime"
+            placeholder="Enter the deadline for time"
+            register={register}
+            errors={errors}
+          />
+
+          <textarea
+            name="Description"
+            rows="4"
+            cols="50"
+            placeholder="Enter the description for the project"
+            {...register("Description", {
+              required: true,
+            })}
+          />
+          {errors.Description && (
+            <p style={{ color: "red", marginTop: "0.8rem" }}>
+              This field is required
+            </p>
           )}
 
-          <div className={styles.login__constraints}>
-            <span>
-              <input type="checkbox" id="remember" />
-              <label htmlFor="remember">Remember me</label>
-            </span>
-            <span>Forgot Password?</span>
-          </div>
+          {/* <LoginInput
+            type="text"
+            name="Description"
+            placeholder="Enter the description for project"
+            register={register}
+            errors={errors}
+          /> */}
+
+          <LoginInput
+            type="file"
+            name="ProjectFile"
+            placeholder="Add File"
+            register={register}
+            errors={errors}
+          />
+
+          <LoginInput
+            type="text"
+            name="Skills"
+            placeholder="Enter the skills"
+            register={register}
+            errors={errors}
+          />
+
+          <Button type="submit">Post</Button>
         </div>
-        <div className={styles.login__footer}>
-          {containsSignup ? (
-            <Button
-              onClick={() => {
-                navigate("username");
-              }}
-            >
-              Signup
-            </Button>
-          ) : (
-            <Button type="submit">Login</Button>
-          )}
-          <div className={styles["login__footer--other"]}>
-            <Button variant="tertiary">Continue with Google</Button>
-            <Button>Continue with Facebook</Button>
-          </div>
-        </div>
-        <p className={styles.login__signup}>
-          {containsSignup ? (
-            <>
-              Already have an account?{" "}
-              <Link to="/login" className={styles["login__signup--link"]}>
-                Login
-              </Link>
-            </>
-          ) : (
-            <>
-              Don't have an account?{" "}
-              <Link to="/signup" className={styles["login__signup--link"]}>
-                Signup
-              </Link>
-            </>
-          )}
-        </p>
+        {/* <div className={styles.login__footer}>
+          <Button type="submit">Post</Button>
+        </div> */}
       </Card>
     </form>
   );
