@@ -27,7 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
+CORS_ORIGIN_ALLOW_ALL=True
 # Application definition
 
 INSTALLED_APPS = [
@@ -146,3 +146,6 @@ MEDIA_ROOT = BASE_DIR / 'static/assets/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ALLOW_ALL_ORIGINS: True
+REST_FRAMEWORK = {
+    'COERCE_DECIMAL_TO_STRING' : False,
+}

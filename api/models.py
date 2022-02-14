@@ -137,6 +137,9 @@ class Project_define(models.Model):
     budget_max = models.DecimalField(max_digits=7, decimal_places=2)
     bid_deadline = models.DateTimeField(auto_now=False)
 
+    # def __str__(self):
+    #     return self.project_title
+
 
 class Project(models.Model):
     STATUS_COMPLETED = 'C'

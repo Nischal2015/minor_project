@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect
-from .models import User, Profile
+from .models import User, Profile, Project_define
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from .serializers import UserSerializer, ProfileSerializer
+from rest_framework import status
+from .serializers import UserSerializer, ProfileSerializer, ProjectDefineSerializer
 from api import serializers
 
 from django.contrib.auth import authenticate,login,logout
@@ -97,4 +98,20 @@ def getProfiles(request):
     profiles = Profile.objects.all()
     serializer = ProfileSerializer(profiles, many=True)
     return Response(serializer.data)
+
+@api_view(['POST','GET'])
+def postJob(request):
+    if request.method == 'GET':
+        project_define = Project_define.objects.all()
+        serializer = ProjectDefineSerializer(project_define, many=True)
+        return Response(serializer.data)
+    elif request.method == 'POST':
+        serializer = ProjectDefineSerializer(data=request.data)
+        print("milan")
+        print(serializer.initial_data)
+        if serializer.is_valid():
+            return Response(serializer.validated_data)
+        else:
+            print("milan")
+            return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
 
