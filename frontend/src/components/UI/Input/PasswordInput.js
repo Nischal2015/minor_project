@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import usePassword from "../../../hooks/usePassword";
 import ShowPasswordIcon from "./ShowPasswordIcon";
+import { FaExclamationTriangle } from "react-icons/fa";
 
 import styles from "./PasswordInput.module.scss";
 import styles2 from "./Input.module.scss";
@@ -27,11 +28,6 @@ const PasswordInput = ({ name, placeholder, errors, register }) => {
           aria-required='true'
           {...register(name, {
             onBlur: () => setFocus(false),
-            required: { value: true, message: "This field is required" },
-            minLength: {
-              value: 7,
-              message: "Password must be greater than 6 characters",
-            },
           })}
         />
 
@@ -40,7 +36,14 @@ const PasswordInput = ({ name, placeholder, errors, register }) => {
           setHidePassword={setHidePassword}
         />
       </div>
-      {errors[name] && <p className={styles.error}>{errors[name].message}</p>}
+      {errors[name] && (
+        <p className={styles.error}>
+          <span>
+            <FaExclamationTriangle />
+          </span>
+          {errors[name]?.message}
+        </p>
+      )}
     </div>
   );
 };

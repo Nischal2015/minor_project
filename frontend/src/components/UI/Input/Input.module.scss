@@ -30,6 +30,15 @@
 }
 
 .error {
-  color: red;
+  color: rgb(240, 40, 28);
   margin-top: 0.8rem;
+
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+
+  svg {
+    height: 1.6rem;
+    width: 1.6rem;
+  }
 }

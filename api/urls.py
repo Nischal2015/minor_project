@@ -10,7 +10,6 @@ urlpatterns = [
     path('users/<str:pk>/',views.getUser),
     path('profile/<str:pk>/',views.getProfile),
     path('profiles/',views.getProfiles),
-    path('login/',views.login, name = 'login'),
     # path('room/<str:pk>',views.getRoom,name = "room"),
     # path('register/',views.dummyUserCreation,name = 'register'),
     # path('send-message/',views.sendMessage,name = 'send-message'),

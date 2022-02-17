@@ -52,7 +52,7 @@
       width: 12.8rem;
       bottom: 14.4rem;
       background: conic-gradient(var(--primary-color) 80%, transparent 80%);
-      animation: rotateInvert 2.25s linear infinite;
+      animation: rotateInvert 2s linear infinite;
     }
 
     &:nth-child(3) {
@@ -60,7 +60,7 @@
       width: 9.6rem;
       bottom: 25.6rem;
       background: conic-gradient(#dac425 30%, transparent 30% 45%, #dac425 45%);
-      animation: rotate 2s linear infinite;
+      animation: rotate 1.5s linear infinite;
     }
 
     &::after {

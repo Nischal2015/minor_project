@@ -7,48 +7,60 @@ import PasswordInput from "../../components/UI/Input/PasswordInput";
 // import axios from "axios";
 
 import { useForm } from "react-hook-form";
-
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as Yup from "yup";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useLocation, Navigate } from "react-router-dom";
+import { createUser, login } from "../../store/auth-actions";
 
 import styles from "./Login.module.scss";
 
 const Login = () => {
+  const [containsSignup, setContainsSignup] = useState(false);
+  const validationSchema = Yup.object().shape(
+    containsSignup
+      ? {
+          email: Yup.string()
+            .required("Email is required")
+            .email("Email is invalid"),
+          username: Yup.string().required("Username is required"),
+          password: Yup.string()
+            .min(6, "Password must be at least 6 characters")
+            .required("Password is required"),
+          re_password: Yup.string()
+            .oneOf([Yup.ref("password"), null], "Passwords must match")
+            .required("Confirm Password is required"),
+        }
+      : {
+          email: Yup.string()
+            .required("Email is required")
+            .email("Email is invalid"),
+          password: Yup.string()
+            .min(6, "Password must be at least 6 characters")
+            .required("Password is required"),
+        }
+  );
+
+  const formOptions = { resolver: yupResolver(validationSchema) };
+
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors, isSubmitSuccessful },
-  } = useForm({
-    defaultValues: {
-      email: "",
-      password: "",
-      repassword: "",
-    },
-  });
+  } = useForm(formOptions);
 
-  // const registerUser = async (formData) => {
-  //   try {
-  //     const response = await axios.post("/register/", formData);
-  //     console.log(response);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
-  const [containsSignup, setContainsSignup] = useState(false);
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const dispatch = useDispatch();
 
   let location = useLocation();
-  const navigate = useNavigate();
 
   const locationPath = location.pathname;
 
   // This is used to reset the form on succesful submission
   useEffect(() => {
     if (isSubmitSuccessful) {
-      reset({
-        email: "",
-        password: "",
-      });
+      reset();
     }
   }, [reset, isSubmitSuccessful]);
 
@@ -56,11 +68,16 @@ const Login = () => {
     setContainsSignup(locationPath.includes("signup"));
   }, [locationPath]);
 
+  if (isAuthenticated) {
+    return <Navigate to='/' />;
+  }
+
+  // Return Statement
   return (
     <form
       onSubmit={handleSubmit((data) => {
-        console.log(data);
-        // Later will be handled for fetching data from database
+        containsSignup && dispatch(createUser(data));
+        !containsSignup && dispatch(login(data));
       })}
     >
       <Card className={styles.login} role='group' ariaLabelledBy='kamao'>
@@ -80,6 +97,17 @@ const Login = () => {
             errors={errors}
           />
 
+          {/* Username */}
+          {containsSignup && (
+            <LoginInput
+              type='text'
+              name='username'
+              placeholder='Username'
+              register={register}
+              errors={errors}
+            />
+          )}
+
           {/* Password */}
           <PasswordInput
             name='password'
@@ -91,8 +119,8 @@ const Login = () => {
           {/* Retype password */}
           {containsSignup && (
             <PasswordInput
-              name='repassword'
-              placeholder='Retype Password'
+              name='re_password'
+              placeholder='Confirm Password'
               errors={errors}
               register={register}
             />
@@ -103,18 +131,12 @@ const Login = () => {
               <input type='checkbox' id='remember' />
               <label htmlFor='remember'>Remember me</label>
             </span>
-            <span>Forgot Password?</span>
+            <Link to='/reset-password'>Forgot Password?</Link>
           </div>
         </div>
         <div className={styles.login__footer}>
           {containsSignup ? (
-            <Button
-              onClick={() => {
-                navigate("username");
-              }}
-            >
-              Signup
-            </Button>
+            <Button type='submit'>Signup</Button>
           ) : (
             <Button type='submit'>Login</Button>
           )}

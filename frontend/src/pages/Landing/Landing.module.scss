@@ -14,12 +14,12 @@
 .hero,
 .about {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
   align-items: center;
   column-gap: 9.6rem;
 }
 
 .hero {
+  grid-template-columns: 5fr 7fr;
   &__description {
     margin-bottom: 4.8rem;
     font-size: 2.4rem;
@@ -33,15 +33,23 @@
       content: "";
       position: absolute;
       bottom: 50%;
-      left: 41%;
+      left: 50%;
       transform: translate(-50%, 40%) scale(1.9);
       height: 100%;
       width: 100%;
       background-size: 100% 100%;
       background-repeat: no-repeat;
       background-image: url("../../assets/svg/hero_svg.svg");
-      opacity: 0.25;
+      opacity: 0.1;
+      filter: blur(0.5px);
       z-index: -9;
+    }
+  }
+
+  &__img-box {
+    svg {
+      width: 100%;
+      height: 100%;
     }
   }
 
@@ -62,6 +70,7 @@
 }
 
 .about {
+  grid-template-columns: 7.5fr 4.5fr;
   &__svg {
     height: 100%;
     width: 100%;

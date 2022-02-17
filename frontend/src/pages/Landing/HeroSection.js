@@ -1,7 +1,7 @@
 import React from "react";
 import { CustomLink } from "../../components/UI/CustomLink/CustomLink";
 import Container from "../../components/UI/Container/Container";
-import { ReactComponent as Hero } from "../../assets/svg/Logo.svg";
+import { ReactComponent as Hero } from "../../assets/svg/about.svg";
 
 import styles from "./Landing.module.scss";
 
