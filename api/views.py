@@ -36,49 +36,17 @@ def home(request):
     return render(request, 'api/home.html', context)
 
 
-
-
-@api_view(['POST'])
-def login(request):
-    #to prevent re-logging in if user is already logged in
-    if request.user.is_authenticated:
-        return Response('logged in')
-
-
-    if request.method == 'POST':
-        username = request.POST.get('username').lower()
-        password = request.POST.get('password')
-        print(username)
-        
-        #check is user exists or not
-        try:
-            user = User.objects.get(username = username)
-        except:
-            messages.error(request,'user doesnot exist')
-        
-        #if user exists
-        user = authenticate(request,username = username, password=password)
-
-        #if user is valid
-        if user is not None:
-            login(request,user)
-            serializer = UserSerializer(user)
-            return redirect(serializer.data)
-        else:
-            print('password is incorrect')
-            messages.error(request,'incorrect password')
-            return Response('user is not valid')
-
-    # return Response(request,'base/login_register.html',context)
-
 @api_view(['GET'])
 def getUsers(request):
-
     users = User.objects.all()
-    profiles = UserSerializer(users, many=True)
+    serializer = UserSerializer(users, many=True)
+    return Response(serializer.data)
 
-    return Response(profiles.data)
-
+@api_view(['GET'])
+def getProfiles(request):
+    profiles = Profile.objects.all()
+    serializer = ProfileSerializer(profiles, many=True)
+    return Response(serializer.data)
 
 @api_view(['GET'])
 def getUser(request, pk):
@@ -92,9 +60,4 @@ def getProfile(request, pk):
     serializer = ProfileSerializer(note, many=False)
     return Response(serializer.data)
 
-@api_view(['GET'])
-def getProfiles(request):
-    profiles = Profile.objects.all()
-    serializer = ProfileSerializer(profiles, many=True)
-    return Response(serializer.data)
 

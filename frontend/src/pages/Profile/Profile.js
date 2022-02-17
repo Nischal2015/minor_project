@@ -3,7 +3,6 @@ import React, { useState, useEffect, useCallback } from "react";
 import Button from "../../components/UI/Button/Button";
 import Card from "../../components/UI/Card/Card";
 import CircularRatings from "../../components/UI/Ratings/CircularRatings/CircularRatings";
-import LoadingSpinner from "../../components/UI/LoadingSpinner/LoadingSpinner";
 import Container from "../../components/UI/Container/Container";
 import NotFound from "../NotFound/NotFound";
 import {
@@ -21,6 +20,7 @@ import { useParams } from "react-router-dom";
 // This is the data to be received from the backend
 // import { talentLists } from "../Talent/Talent";
 import axios from "axios";
+import LoadingSpinner from "../../components/UI/Loading/LoadingSpinner";
 
 const Profile = () => {
   const { id } = useParams();
@@ -74,8 +74,6 @@ const Profile = () => {
     <LoadingSpinner />
   ) : (
     <React.Fragment>
-      {console.log("user", user)}
-      {console.log("profile", profile)}
       <Container className={styles.profile__top}>
         <Card className={styles.profile__summary} variant='boxy'>
           <figure className={styles["summary__image"]}>
