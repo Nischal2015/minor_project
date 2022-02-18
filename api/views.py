@@ -1,9 +1,11 @@
 from django.shortcuts import render, redirect
-from .models import User, Profile, Project_define
+from django.shortcuts import get_object_or_404
+from .models import User, Profile, Project_define, Skill, Job_category
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
-from .serializers import UserSerializer, ProfileSerializer, ProjectDefineSerializer
+from rest_framework.parsers import JSONParser
+from .serializers import UserSerializer, ProfileSerializer, ProjectDefineSerializer, SkillSerializer, CategorySerializer
 from api import serializers
 
 from django.contrib.auth import authenticate,login,logout
@@ -18,6 +20,8 @@ def api(request):
         'GET /user',
         'GET /users',
         'GET /room/:id',
+        'GET/project_define/',
+        'GET/project_define/:id',
         # 'GET /login',
         'POST /register',
         'POST /create-room',
@@ -99,8 +103,21 @@ def getProfiles(request):
     serializer = ProfileSerializer(profiles, many=True)
     return Response(serializer.data)
 
+@api_view(['GET'])
+def getSkills(request):
+    skillslist = Skill.objects.all()
+    serializer = SkillSerializer(skillslist, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def getCategories(request):
+    categories = Job_category.objects.all()
+    serializer = CategorySerializer(categories, many=True)
+    return Response(serializer.data)
+
 @api_view(['POST','GET'])
 def postJob(request):
+    parser_classes = [JSONParser]
     if request.method == 'GET':
         project_define = Project_define.objects.all()
         serializer = ProjectDefineSerializer(project_define, many=True)
@@ -110,8 +127,38 @@ def postJob(request):
         print("milan")
         print(serializer.initial_data)
         if serializer.is_valid():
-            return Response(serializer.validated_data)
-        else:
             print("milan")
+            serializer.save()
+            return Response({'received data': request.data})
+        else:
             return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET'])
+def JobList(request):
+    if request.method == 'GET':
+        project_define = Project_define.objects.all()
+        serializer = ProjectDefineSerializer(project_define,context={'request': request}, many=True)
+        return Response(serializer.data)
+
+@api_view(['GET'])
+def Job_detail(request, pk):
+    project_define = get_object_or_404(Project_define, pk=pk)
+    # if request.method == 'GET':
+    #     serializer = ProjectDefineSerializer(project_define, many=True)
+    #     return Response(serializer.data)
+    
+    if request.method == 'GET':
+        serializer = ProjectDefineSerializer(project_define,context={'request': request})
+        return Response(serializer.data)
+
+    elif request.method == 'PUT':
+        serializer = ProjectDefineSerializer(project_define, data=request.data,context={'request': request})
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    elif request.method == 'DELETE':
+        project_define.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 

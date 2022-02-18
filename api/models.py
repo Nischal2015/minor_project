@@ -139,14 +139,15 @@ class Project_define(models.Model):
     project_description = models.TextField(null=True)
     job_category = models.ForeignKey(
         Job_category, null=True, on_delete=models.SET_NULL)
-    creation_date = models.DateTimeField(auto_now_add=True)
+    # creation_date = models.DateTimeField(auto_now_add=True)
     project_length = models.PositiveIntegerField(null=True)
     budget_min = models.DecimalField(max_digits=7, decimal_places=2)
     budget_max = models.DecimalField(max_digits=7, decimal_places=2)
-    bid_deadline = models.DateTimeField(auto_now=False)
+    # bid_deadline = models.DateTimeField(auto_now=False)
 
     def __str__(self):
         return self.project_title
+
 
 
 class Project(models.Model):

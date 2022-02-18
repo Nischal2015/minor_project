@@ -15,6 +15,7 @@ const LoginInput = ({ type, name, placeholder, register, errors }) => {
                 placeholder={placeholder} // Email address
                 aria-required="true"
                 min="1"
+                step="any"
                 {...register(name, { required: true, valueAsNumber: true })}
               />
 
