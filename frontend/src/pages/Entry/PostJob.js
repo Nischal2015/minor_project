@@ -114,12 +114,6 @@ const PostJob = () => {
   // const file = e.target.files[0];
   // if (file.size > 1 * 1024 * 1024) alert("File size is large");
 
-  const handleChange = () => {
-    setSkillArr(
-      skillArr.filter((item) => categoryArr["skills"].includes(item.id))
-    );
-  };
-
   return (
     <form
       onSubmit={handleSubmit((data) => {
@@ -157,7 +151,6 @@ const PostJob = () => {
                 getOptionLabel={(option) => option.job_name}
                 getOptionValue={(option) => option.id}
                 options={categoryArr}
-                onChange={handleChange}
               />
             )}
             rules={{ required: true }}
