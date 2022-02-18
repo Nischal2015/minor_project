@@ -1,13 +1,15 @@
 from unittest.util import _MAX_LENGTH
 from rest_framework import serializers
 from rest_framework.serializers import ModelSerializer
+from djoser.serializers import UserCreateSerializer
+from django.contrib.auth import get_user_model
+User = get_user_model()
 from .models import  User, Profile
 
-
-class UserSerializer(ModelSerializer):
+class UserSerializer(UserCreateSerializer):
     class Meta:
         model = User 
-        fields = ['username']
+        fields = ('id', 'email', 'username', 'password')
 
 class RegisterSerializer(ModelSerializer):
 

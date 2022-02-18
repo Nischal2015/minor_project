@@ -42,6 +42,7 @@ def home(request):
     return render(request, 'api/home.html', context)
 
 
+<<<<<<< HEAD
 
 
 @api_view(['POST'])
@@ -77,14 +78,19 @@ def login(request):
 
     # return Response(request,'base/login_register.html',context)
 
+=======
+>>>>>>> 3427e58bb3df6b7d60ed57e097370462e866f562
 @api_view(['GET'])
 def getUsers(request):
-
     users = User.objects.all()
-    profiles = UserSerializer(users, many=True)
+    serializer = UserSerializer(users, many=True)
+    return Response(serializer.data)
 
-    return Response(profiles.data)
-
+@api_view(['GET'])
+def getProfiles(request):
+    profiles = Profile.objects.all()
+    serializer = ProfileSerializer(profiles, many=True)
+    return Response(serializer.data)
 
 @api_view(['GET'])
 def getUser(request, pk):
@@ -100,11 +106,6 @@ def getProfile(request, pk):
     serializer = ProfileSerializer(profile, many=False)
     return Response(serializer.data)
 
-@api_view(['GET'])
-def getProfiles(request):
-    profiles = Profile.objects.all()
-    serializer = ProfileSerializer(profiles, many=True)
-    return Response(serializer.data)
 
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):

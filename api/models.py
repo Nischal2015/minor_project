@@ -4,14 +4,13 @@ from re import T
 from statistics import mode
 from django.conf import settings
 from django.db import models
-from django.contrib.auth.models import AbstractUser, AbstractBaseUser, BaseUserManager
+from django.contrib.auth.models import PermissionsMixin, AbstractBaseUser, BaseUserManager
 import os
 os.environ['DJANGO_SETTINGS_MODULE'] = 'kamao.settings'
 
 
 # model_manager for User
 class Account_manager(BaseUserManager):
-
     def create_user(self, email, username, password):
         if not email:
             raise ValueError("User must have email address")
@@ -45,12 +44,10 @@ class Account_manager(BaseUserManager):
 #     return f'profile_images/{self.pk}/{"profile_image.png"}'
 
 # Create your models here.
-
-
-class User(AbstractBaseUser):
-    username = models.CharField(max_length=200, unique=True)
+class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(verbose_name='email',
                               max_length=150, unique=True)
+    username = models.CharField(max_length=200, unique=True)
     hide_email = models.BooleanField(default=True)
 
     is_admin = models.BooleanField(default=False)
