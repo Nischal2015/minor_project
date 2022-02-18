@@ -27,14 +27,14 @@ const Login = () => {
     },
   });
 
-  // const registerUser = async (formData) => {
-  //   try {
-  //     const response = await axios.post("/register/", formData);
-  //     console.log(response);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
+  const registerUser = async (formData) => {
+    try {
+      const response = await axios.post("/register/", formData);
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const [focus, setFocus] = useState(false);
   const [hidePassword, setHidePassword] = usePassword(true);

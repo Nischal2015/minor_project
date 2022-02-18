@@ -61,7 +61,7 @@ class User(AbstractBaseUser):
     objects = Account_manager()
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['username']
+    REQUIRED_FIELDS = []
 
     def __str__(self):
         return self.username
@@ -76,6 +76,7 @@ class User(AbstractBaseUser):
 class Profile(models.Model):
 
     # manytomany column skill_set
+
 
     user = models.OneToOneField(
         User, on_delete=models.CASCADE, primary_key=True)
@@ -94,6 +95,8 @@ class Profile(models.Model):
     state = models.CharField(max_length=255, null=True)
     city = models.CharField(max_length=255, null=True)
 
+    # skills = models.ManyToManyField('Skill')
+
     hourly_rate = models.PositiveIntegerField(null=True)
     hours_per_week = models.PositiveIntegerField(null=True)
 
@@ -106,20 +109,29 @@ class Profile(models.Model):
     field2 = models.CharField(max_length=255, null=False, blank=True)
 
 
+    def __str__(self):
+        return self.first_name
+
 class Skill(models.Model):
 
     # manytomany column job_category_set
     # manytomany column project_define_set
-    users = models.ManyToManyField(User)
+    # users = models.ManyToManyField(User)
+    profile = models.ManyToManyField(Profile)
 
     skill_name = models.CharField(max_length=255, null=False)
 
+    def __str__(self):
+        return self.skill_name
 
 class Job_category(models.Model):
 
     skills = models.ManyToManyField(Skill)
 
     job_name = models.CharField(max_length=255, null=False)
+
+    def __str__(self):
+        return self.job_name
 
 
 class Project_define(models.Model):
@@ -137,6 +149,8 @@ class Project_define(models.Model):
     budget_max = models.DecimalField(max_digits=7, decimal_places=2)
     bid_deadline = models.DateTimeField(auto_now=False)
 
+    def __str__(self):
+        return self.project_title
 
 class Project(models.Model):
     STATUS_COMPLETED = 'C'
@@ -156,6 +170,9 @@ class Project(models.Model):
     completion_date = models.DateTimeField(auto_now=False, null=True)
     status = models.CharField(
         max_length=1, choices=STATUS_CHOICES, default=STATUS_RUNNING)
+
+    # def __str__(self):
+    #     return self.freelancer
 
 
 class Project_bid(models.Model):
@@ -181,6 +198,8 @@ class Project_bid(models.Model):
     bid_status = models.CharField(
         max_length=1, choices=BID_CHOICES, default=BID_PENDING)
 
+    def __str__(self):
+        return  f'{self.bidder}' + ' - ' + f'{self.project_define}'
 
 class Rating(models.Model):
 
@@ -196,6 +215,9 @@ class Rating(models.Model):
     communication = models.PositiveSmallIntegerField()
     quality_work = models.PositiveSmallIntegerField()
     comment = models.TextField()
+
+    def __str__(self):
+        return self.freelancer
 
 
 class Project_document(models.Model):

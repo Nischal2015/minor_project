@@ -8,6 +8,8 @@ from rest_framework import status
 from django.contrib.auth import authenticate,login,logout
 from django.shortcuts import get_object_or_404
 
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from rest_framework_simplejwt.views import TokenObtainPairView
 from django.contrib import messages
 
 
@@ -32,6 +34,7 @@ def api(request):
     return Response(routes)
 
 
+
 @api_view(['GET'])
 def home(request):
     users = User.objects.all()
@@ -48,7 +51,7 @@ def login(request):
         return Response('logged in')
 
 
-    elif request.method == 'POST':
+    elif request.method == 'POST': 
         email = request.POST.get('email').lower()
         password = request.POST.get('password')
         print(email)
@@ -85,16 +88,16 @@ def getUsers(request):
 
 @api_view(['GET'])
 def getUser(request, pk):
-    note = get_object_or_404(User, id = pk)
+    user = get_object_or_404(User, id = pk)
     # note = User.objects.get(id=pk)
 
-    serializer = UserSerializer(note, many=False)
+    serializer = UserSerializer(user, many=False)
     return Response(serializer.data)
 
 @api_view(['GET'])
 def getProfile(request, pk):
-    note = Profile.objects.get(user=pk)
-    serializer = ProfileSerializer(note, many=False)
+    profile = Profile.objects.get(user=pk)
+    serializer = ProfileSerializer(profile, many=False)
     return Response(serializer.data)
 
 @api_view(['GET'])
@@ -102,4 +105,21 @@ def getProfiles(request):
     profiles = Profile.objects.all()
     serializer = ProfileSerializer(profiles, many=True)
     return Response(serializer.data)
+
+
+class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
+    @classmethod
+    def get_token(cls, user):
+        token = super().get_token(user)
+
+        # Add custom claims
+        token['username'] = user.username
+        token['email'] = user.email
+        # token['password'] = user.password
+        # ...
+
+        return token
+
+class MyTokenObtainPairView(TokenObtainPairView):
+    serializer_class = MyTokenObtainPairSerializer
 

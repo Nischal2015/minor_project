@@ -1,21 +1,22 @@
 from django.contrib import admin
 from django.urls import path
 
+from rest_framework_simplejwt.views import (
+    TokenRefreshView,
+)
+   
 from .import views
+from .views import MyTokenObtainPairView
 
 urlpatterns = [
-
-    path('admin/', admin.site.urls),
     path('',views.api),
     path('users/',views.getUsers),
     path('users/<str:pk>/',views.getUser),
     path('profile/<str:pk>/',views.getProfile),
     path('profiles/',views.getProfiles),
     path('login/',views.login, name = 'login'),
-    # path('room/<str:pk>',views.getRoom,name = "room"),
-    # path('register/',views.dummyUserCreation,name = 'register'),
-    # path('send-message/',views.sendMessage,name = 'send-message'),
-    # path('create-room/',views.createRomm,name = 'create-room'),
+    path('token/', MyTokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 
 
 ]

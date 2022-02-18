@@ -1,0 +1,27 @@
+PREDICATES
+mammal(STRING)
+horse(STRING)
+offspring_of(STRING, STRING)
+parent_of(STRING, STRING)
+has_parent(STRING)
+
+CLAUSES
+mammal(X):-
+	horse(X).
+mammal("Cow").
+mammal("Pig").
+offspring_of(X, Y):-
+	parent_of(Y, X).
+offspring_of(X, Y):-
+	parent_of(Y, X).
+offspring_of("Horse", "Horse").
+horse("Bluebeard").
+horse(X):-
+	offspring_of(X, Y),
+	horse(Y).	
+has_parent(X):-
+	mammal(X).
+parent_of("Bluebeard", "Charlie").
+	
+GOAL
+horse("Charlie").

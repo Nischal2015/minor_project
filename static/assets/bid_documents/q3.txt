@@ -1,0 +1,26 @@
+PREDICATES
+roman(STRING)
+loyal_caesar(STRING)
+hate_caesar(STRING)
+IsLoyal(STRING, STRING)
+assassinate(STRING, STRING)
+pompeian(STRING)
+
+CLAUSES
+pompeian("marcus").
+assassinate("marcus", "caesar").
+
+roman(X):-
+pompeian(X).
+
+loyal_caesar(X):-
+roman(X), IsLoyal(X, "caesar").
+
+hate_caesar(X):-
+roman(X), not (IsLoyal(X, "caesar")).
+
+IsLoyal(X, Y):-
+not (assassinate(X, Y)).
+
+GOAL
+hate_caesar("marcus").
