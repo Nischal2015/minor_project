@@ -1,5 +1,6 @@
 import axios from "axios";
 import { authActions } from "./auth-slice";
+import { alertActions } from "./alert-slice";
 
 export const createUser = (body) => async (dispatch) => {
   const config = {
@@ -11,8 +12,10 @@ export const createUser = (body) => async (dispatch) => {
   try {
     await axios.post("auth/users/", body, config);
     dispatch(authActions.signupSuccess());
+    dispatch(alertActions.success("You have successfully signed up"));
   } catch (error) {
     dispatch(authActions.signupFail());
+    dispatch(alertActions.error("Username or email already exists"));
   }
 };
 
@@ -89,11 +92,14 @@ export const login = (body) => async (dispatch) => {
 
   try {
     const response = await axios.post("auth/jwt/create/", body, config);
-
+    dispatch(alertActions.loggingState());
     dispatch(authActions.loginSuccess(response.data));
     dispatch(loadUser());
+    dispatch(alertActions.success("You have succesfully logged in"));
   } catch (error) {
-    dispatch(authActions.loginSuccess());
+    dispatch(alertActions.loggingState());
+    dispatch(authActions.loginFail());
+    dispatch(alertActions.error("Username or password is incorrect"));
   }
 };
 
@@ -107,8 +113,12 @@ export const resetPassword = (body) => async (dispatch) => {
   try {
     await axios.post("auth/users/reset_password/", body, config);
     dispatch(authActions.passwordResetSuccess());
+    dispatch(
+      alertActions.success(`Email has been sent successfully to ${body.email}`)
+    );
   } catch (error) {
     dispatch(authActions.passwordResetFail());
+    dispatch(alertActions.error("Sorry, the email doesn't exist"));
   }
 };
 
@@ -122,7 +132,9 @@ export const resetPasswordConfirm = (body) => async (dispatch) => {
   try {
     await axios.post("/auth/users/reset_password_confirm/", body, config);
     dispatch(authActions.passwordResetConfirmSuccess());
+    dispatch(alertActions.success("Your password has been reset successfully"));
   } catch (error) {
     dispatch(authActions.passwordResetConfirmFail());
+    dispatch(alertActions.error("Failed to reset password"));
   }
 };

@@ -11,6 +11,7 @@ import { resetPasswordConfirm } from "../../store/auth-actions";
 
 import styles from "./Login.module.scss";
 import PasswordInput from "../../components/UI/Input/PasswordInput";
+import { alertActions } from "../../store/alert-slice";
 
 const ResetPasswordConfirm = () => {
   const validationSchema = Yup.object().shape({
@@ -49,6 +50,7 @@ const ResetPasswordConfirm = () => {
   return (
     <form
       onSubmit={handleSubmit((data) => {
+        dispatch(alertActions.clear());
         const formData = { uid, token, ...data };
         dispatch(resetPasswordConfirm(formData));
       })}

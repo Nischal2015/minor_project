@@ -8,6 +8,10 @@ import Navbar from "./components/Navigation/Navbar";
 import Footer from "./components/Footer/Footer";
 import { Routes, Route, Outlet } from "react-router-dom";
 import ScrollToTop from "./components/ScrollToTop";
+import Alert from "./components/UI/Alert/Alert";
+
+import { useSelector } from "react-redux";
+import LoadingSlider from "./components/UI/Loading/LoadingSlider";
 
 // Routing pages
 const About = lazy(() => import("./pages/About/About"));
@@ -27,6 +31,7 @@ const ResetPasswordConfirm = lazy(() =>
 
 const App = () => {
   const dispatch = useDispatch();
+  const alert = useSelector((state) => state.alert.message);
 
   useEffect(() => {
     dispatch(checkAuthenticated());
@@ -38,9 +43,10 @@ const App = () => {
       <Suspense fallback={<LoadingSpinner />}>
         <ScrollToTop />
         <Navbar />
+        {alert && <Alert />}
         <Routes>
           <Route path='/' element={<Landing />} />
-          <Route path='loading' element={<LoadingSpinner />} />
+          <Route path='loading' element={<LoadingSlider />} />
           <Route path='about' element={<About />} />
           <Route path='jobs' element={<Outlet />}>
             <Route index element={<Jobs />} />

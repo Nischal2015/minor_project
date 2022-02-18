@@ -1,6 +1,7 @@
 .card {
   box-shadow: 0px 2px 12px rgba(0, 0, 0, 0.05);
   border-radius: var(--layout-radius);
+  overflow: hidden;
 }
 
 .card[data-variant="boxy"] {

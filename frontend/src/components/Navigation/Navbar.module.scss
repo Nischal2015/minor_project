@@ -2,7 +2,7 @@
   display: flex;
   align-items: center;
 
-  height: 6.4rem;
+  height: var(--nav-height);
   background: var(--nav-background);
   box-shadow: 0 4px 12px rgba(98, 99, 168, 0.06);
   position: sticky;

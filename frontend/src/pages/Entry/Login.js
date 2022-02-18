@@ -12,8 +12,10 @@ import * as Yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, Navigate } from "react-router-dom";
 import { createUser, login } from "../../store/auth-actions";
+import { alertActions } from "../../store/alert-slice";
 
 import styles from "./Login.module.scss";
+import LoadingSlider from "../../components/UI/Loading/LoadingSlider";
 
 const Login = () => {
   const [containsSignup, setContainsSignup] = useState(false);
@@ -25,8 +27,12 @@ const Login = () => {
             .email("Email is invalid"),
           username: Yup.string().required("Username is required"),
           password: Yup.string()
-            .min(6, "Password must be at least 6 characters")
-            .required("Password is required"),
+            .min(8, "Password must be at least 8 characters")
+            .required("Password is required")
+            .matches(
+              /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/,
+              "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character"
+            ),
           re_password: Yup.string()
             .oneOf([Yup.ref("password"), null], "Passwords must match")
             .required("Confirm Password is required"),
@@ -36,8 +42,12 @@ const Login = () => {
             .required("Email is required")
             .email("Email is invalid"),
           password: Yup.string()
-            .min(6, "Password must be at least 6 characters")
-            .required("Password is required"),
+            .min(8, "Password must be at least 8 characters")
+            .required("Password is required")
+            .matches(
+              /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/,
+              "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character"
+            ),
         }
   );
 
@@ -51,6 +61,9 @@ const Login = () => {
   } = useForm(formOptions);
 
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const alert = useSelector((state) => state.alert.alertType);
+  console.log(alert);
+  const isLogging = useSelector((state) => state.alert.logging);
   const dispatch = useDispatch();
 
   let location = useLocation();
@@ -58,11 +71,11 @@ const Login = () => {
   const locationPath = location.pathname;
 
   // This is used to reset the form on succesful submission
-  useEffect(() => {
-    if (isSubmitSuccessful) {
-      reset();
-    }
-  }, [reset, isSubmitSuccessful]);
+  // useEffect(() => {
+  //   if (isSubmitSuccessful && alert) {
+  //     reset();
+  //   }
+  // }, [reset, isSubmitSuccessful, alert]);
 
   useEffect(() => {
     setContainsSignup(locationPath.includes("signup"));
@@ -76,11 +89,13 @@ const Login = () => {
   return (
     <form
       onSubmit={handleSubmit((data) => {
+        dispatch(alertActions.clear());
         containsSignup && dispatch(createUser(data));
         !containsSignup && dispatch(login(data));
       })}
     >
       <Card className={styles.login} role='group' ariaLabelledBy='kamao'>
+        {isLogging && <LoadingSlider />}
         <div className={styles.login__header}>
           <h2 className='heading--secondary' id='kamao'>
             Kamao
@@ -131,7 +146,12 @@ const Login = () => {
               <input type='checkbox' id='remember' />
               <label htmlFor='remember'>Remember me</label>
             </span>
-            <Link to='/reset-password'>Forgot Password?</Link>
+            <Link
+              to='/reset-password'
+              className={styles["login__signup--link"]}
+            >
+              Forgot Password?
+            </Link>
           </div>
         </div>
         <div className={styles.login__footer}>
