@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.shortcuts import get_object_or_404
-from .models import User, Profile, Project_define, Skill, Job_category
+from .models import User, Profile, Project_define, Skill, Job_category, Project_bid
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
@@ -8,7 +8,7 @@ from rest_framework.decorators import parser_classes
 from rest_framework import viewsets
 from rest_framework.parsers import JSONParser, MultiPartParser, FormParser
 from rest_framework.utils import encoders
-from .serializers import UserSerializer, ProfileSerializer, ProjectDefineSerializer, SkillSerializer, CategorySerializer
+from .serializers import UserSerializer, ProfileSerializer, ProjectDefineSerializer, SkillSerializer, CategorySerializer, ProjectBidSerializer
 from api import serializers
 
 from django.contrib.auth import authenticate,login,logout
@@ -118,35 +118,76 @@ def getCategories(request):
     serializer = CategorySerializer(categories, many=True)
     return Response(serializer.data)
 
-@api_view(['POST','GET'])
-@parser_classes([MultiPartParser,FormParser])
+@api_view(['POST'])
+# @parser_classes([MultiPartParser,FormParser])
 def postJob(request):
-    if request.method == 'GET':
-        project_define = Project_define.objects.all()
-        serializer = ProjectDefineSerializer(project_define, many=True)
-        return Response(serializer.data)
-    elif request.method == 'POST':
+    # if request.method == 'GET':
+    #     project_define = Project_define.objects.all()
+    #     serializer = ProjectDefineSerializer(project_define, many=True)
+    #     return Response(serializer.data)
+    # elif request.method == 'POST':
+    #     print(request.data)
+    #     serializer = ProjectDefineSerializer(data=request.data)
+    #     print("milan")
+    #     print(request.FILES)
+    #     print(serializer.initial_data)
+    #     if serializer.is_valid():
+    #         print("milan")
+    #         serializer.save()
+    #         return Response({'received data': request.data})
+    #     else:
+    #         return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+    if request.method == 'POST':
         print(request.data)
         serializer = ProjectDefineSerializer(data=request.data)
-        print("milan")
-        print(request.FILES)
-        print(serializer.initial_data)
+        # print(request.FILES)
+        # print(serializer.initial_data)
         if serializer.is_valid():
-            print("milan")
             serializer.save()
             return Response({'received data': request.data})
         else:
             return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
 
-# class postJob(viewsets.ModelViewSet):
-#     queryset = Project_define.objects.all()
-#     serializer_class = ProjectDefineSerializer
+@api_view(['POST'])
+# @parser_classes([MultiPartParser,FormParser])
+def postBid(request):
+    # if request.method == 'GET':
+    #     project_bid = Project_bid.objects.all()
+    #     serializer = ProjectBidSerializer(project_bid, many=True)
+    #     return Response(serializer.data)
+    # elif request.method == 'POST':
+    #     print(request.data)
+    #     serializer = ProjectBidSerializer(data=request.data)
+    #     print("milan")
+    #     print(serializer.initial_data)
+    #     if serializer.is_valid():
+    #         print("milan")
+    #         serializer.save()
+    #         return Response({'received data': request.data})
+    #     else:
+    #         return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+    if request.method == 'POST':
+        print(request.data)
+        serializer = ProjectBidSerializer(data=request.data)
+        # print(serializer.initial_data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({'received data': request.data})
+        else:
+            return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET'])
 def JobList(request):
     if request.method == 'GET':
         project_define = Project_define.objects.all()
         serializer = ProjectDefineSerializer(project_define,context={'request': request}, many=True)
+        return Response(serializer.data)
+
+@api_view(['GET'])
+def BidList(request):
+    if request.method == 'GET':
+        project_bid = Project_bid.objects.all()
+        serializer = ProjectBidSerializer(project_bid, many=True)
         return Response(serializer.data)
 
 @api_view(['GET'])

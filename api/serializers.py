@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import  User, Profile, Project_define, Skill, Job_category
+from .models import  User, Profile, Project_define, Skill, Job_category, Project_bid
 
 
 
@@ -26,4 +26,9 @@ class SkillSerializer(serializers.ModelSerializer):
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Job_category
+        fields = '__all__'
+
+class ProjectBidSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Project_bid
         fields = '__all__'

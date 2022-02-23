@@ -229,7 +229,7 @@ const PostJob = () => {
             name="projectFile"
             accept="image/*,.pdf,.doc,.docx"
             {...register("projectFile", {
-              required: false,
+              required: true,
             })}
             // onChange={(e) => {
             //   if (e.target.name === "projectFile") {
