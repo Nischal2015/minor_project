@@ -14,6 +14,7 @@ const Jobs = lazy(() => import("./pages/Jobs/Jobs"));
 const Landing = lazy(() => import("./pages/Landing/Landing"));
 const Login = lazy(() => import("./pages/Entry/Login"));
 const PostJob = lazy(() => import("./pages/Entry/PostJob"));
+const PostBid = lazy(() => import("./pages/Entry/PostBid"));
 const NotFound = lazy(() => import("./pages/NotFound/NotFound"));
 const Profile = lazy(() => import("./pages/Profile/Profile"));
 const Signup = lazy(() => import("./pages/Entry/Signup"));
@@ -36,6 +37,7 @@ const App = () => {
           </Route>
           <Route path="login" element={<Login />} />
           <Route path="postjob" element={<PostJob />} />
+          <Route path="postbid" element={<PostBid />} />
           <Route path="talent" element={<Outlet />}>
             <Route index element={<Talent />} />
             <Route path=":id" element={<Profile />} />

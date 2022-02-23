@@ -12,7 +12,7 @@ import { useForm, Controller } from "react-hook-form";
 
 import styles from "./Login.module.scss";
 
-const PostJob = () => {
+const PostBid = () => {
   const [categoryArr, setCategoryArr] = useState([]);
   const [skillArr, setSkillArr] = useState([]);
   const [fileUpload, setfileUpload] = useState(null);
@@ -134,7 +134,7 @@ const PostJob = () => {
           <h2 className="heading--secondary" id="kamao">
             Kamao
           </h2>
-          <span>Project Posting</span>
+          <span>Bid For Project</span>
         </div>
         <div className={styles.login__description}>
           <LoginInput
@@ -274,4 +274,4 @@ const PostJob = () => {
   );
 };
 
-export default PostJob;
+export default PostBid;

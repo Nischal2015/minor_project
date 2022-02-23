@@ -63,38 +63,6 @@ const LoginInput = ({ type, name, placeholder, register, errors }) => {
           );
         }
       })()}
-      {/* {type === "number" ? (
-        <React.Fragment>
-          <input
-            className={styles.input__text}
-            type={type || "text"} // email
-            name={name} // email
-            placeholder={placeholder} // Email address
-            aria-required="true"
-            min="1"
-            {...register(name, { required: true })}
-          />
-
-          {errors[name] && (
-            <p className={styles.error}>This field is required</p>
-          )}
-        </React.Fragment>
-      ) : (
-        <React.Fragment>
-          <input
-            className={styles.input__text}
-            type={type || "text"} // email
-            name={name} // email
-            placeholder={placeholder} // Email address
-            aria-required="true"
-            {...register(name, { required: true })}
-          />
-
-          {errors[name] && (
-            <p className={styles.error}>This field is required</p>
-          )}
-        </React.Fragment>
-      )} */}
     </div>
   );
 };
