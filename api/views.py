@@ -4,7 +4,10 @@ from .models import User, Profile, Project_define, Skill, Job_category
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
-from rest_framework.parsers import JSONParser
+from rest_framework.decorators import parser_classes
+from rest_framework import viewsets
+from rest_framework.parsers import JSONParser, MultiPartParser, FormParser
+from rest_framework.utils import encoders
 from .serializers import UserSerializer, ProfileSerializer, ProjectDefineSerializer, SkillSerializer, CategorySerializer
 from api import serializers
 
@@ -116,15 +119,17 @@ def getCategories(request):
     return Response(serializer.data)
 
 @api_view(['POST','GET'])
+@parser_classes([MultiPartParser,FormParser])
 def postJob(request):
-    parser_classes = [JSONParser]
     if request.method == 'GET':
         project_define = Project_define.objects.all()
         serializer = ProjectDefineSerializer(project_define, many=True)
         return Response(serializer.data)
     elif request.method == 'POST':
+        print(request.data)
         serializer = ProjectDefineSerializer(data=request.data)
         print("milan")
+        print(request.FILES)
         print(serializer.initial_data)
         if serializer.is_valid():
             print("milan")
@@ -132,6 +137,10 @@ def postJob(request):
             return Response({'received data': request.data})
         else:
             return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+
+# class postJob(viewsets.ModelViewSet):
+#     queryset = Project_define.objects.all()
+#     serializer_class = ProjectDefineSerializer
 
 @api_view(['GET'])
 def JobList(request):

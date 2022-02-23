@@ -1,6 +1,8 @@
 from rest_framework import serializers
 from .models import  User, Profile, Project_define, Skill, Job_category
 
+
+
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User 
