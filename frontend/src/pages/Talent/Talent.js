@@ -68,7 +68,7 @@ const Talent = () => {
   const getUsers = async () => {
     setLoading(true);
     try {
-      const response = await axios.get("profiles/");
+      const response = await axios.get("api/profiles/");
       setUsers(response.data);
     } catch (error) {
       console.log(error);
@@ -111,7 +111,8 @@ const Talent = () => {
             {loading ? (
               <LoadingBouncer />
             ) : (
-              users.map(({ user, rating, avatar, ...otherList }) => {
+              users.map((props) => {
+                const { user, rating, avatar, ...otherList } = props;
                 return (
                   <div className={styles.list} key={user}>
                     <picture className={styles.list__picture}>

@@ -10,6 +10,7 @@ import { useDispatch } from "react-redux";
 import { resetPassword } from "../../store/auth-actions";
 
 import styles from "./Login.module.scss";
+import { alertActions } from "../../store/alert-slice";
 
 const PasswordReset = () => {
   const validationSchema = Yup.object().shape({
@@ -38,6 +39,7 @@ const PasswordReset = () => {
   return (
     <form
       onSubmit={handleSubmit((data) => {
+        dispatch(alertActions.clear());
         dispatch(resetPassword(data));
       })}
     >

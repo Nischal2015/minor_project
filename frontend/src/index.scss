@@ -7,6 +7,11 @@
   --secondary-color: #1e7cae;
   --shade-tertiary-color: #ae1e66;
   --tertiary-color: #da2580;
+  --success-color: #edf7ed;
+  --success-icon-color: #4caf50;
+  --error-color: #fdeded;
+  --error-icon-color: #ef5350;
+  --information-color: #e5f6fd;
   // #14b1ff
   // #13a8f2
   --input-radius: 4px;
@@ -33,6 +38,7 @@
   // --body-background: 229, 231, 235;
   --body-background: #fbfbfd;
   // --body-background: #f8fbfe;
+  --nav-height: 6.4rem;
 }
 
 *,
@@ -60,6 +66,7 @@ body {
   color: var(--color-grey-dark-2);
   background: var(--body-background);
   background-attachment: fixed;
+  overflow-x: hidden;
 }
 
 // ::-webkit-scrollbar {

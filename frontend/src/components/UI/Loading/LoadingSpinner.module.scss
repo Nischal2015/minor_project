@@ -81,6 +81,19 @@
   }
 }
 
+.loader3 {
+  width: 50rem;
+  height: 0.6rem;
+  transform: translate(-3.6rem, -4.8rem);
+
+  background: linear-gradient(
+    to right,
+    var(--primary-color) 60%,
+    transparent 60%
+  );
+  animation: slider 1.25s ease-in-out infinite alternate;
+}
+
 @keyframes bounce {
   50% {
     transform: translate(0, -40px);
@@ -96,5 +109,11 @@
 @keyframes rotateInvert {
   to {
     transform: rotate(-360deg);
+  }
+}
+
+@keyframes slider {
+  to {
+    transform: translate(calc(40% - 3.6rem), -4.8rem);
   }
 }
