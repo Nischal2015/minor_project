@@ -1,16 +1,13 @@
-from ast import mod
-from fileinput import filename
-from re import T
-from statistics import mode
 from django.conf import settings
 from django.db import models
-from django.contrib.auth.models import PermissionsMixin, AbstractBaseUser, BaseUserManager
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 import os
 os.environ['DJANGO_SETTINGS_MODULE'] = 'kamao.settings'
 
 
 # model_manager for User
 class Account_manager(BaseUserManager):
+
     def create_user(self, email, username, password):
         if not email:
             raise ValueError("User must have email address")
@@ -44,10 +41,12 @@ class Account_manager(BaseUserManager):
 #     return f'profile_images/{self.pk}/{"profile_image.png"}'
 
 # Create your models here.
+
+
 class User(AbstractBaseUser, PermissionsMixin):
+    username = models.CharField(max_length=200, unique=True)
     email = models.EmailField(verbose_name='email',
                               max_length=150, unique=True)
-    username = models.CharField(max_length=200, unique=True)
     hide_email = models.BooleanField(default=True)
 
     is_admin = models.BooleanField(default=False)
@@ -78,21 +77,23 @@ class Profile(models.Model):
         User, on_delete=models.CASCADE, primary_key=True)
 
     first_name = models.CharField(max_length=255, null=False)
-    middle_name = models.CharField(max_length=512, null=True)
+    middle_name = models.CharField(max_length=512, null=True, blank=True)
     last_name = models.CharField(max_length=255, null=False)
 
     avatar = models.ImageField(
         max_length=255, upload_to=settings.MEDIA_ROOT/'profile_images/', null=True, blank=True)
 
     profile_title = models.TextField(null=True)
-    bio = models.TextField(null=True)
-    dob = models.DateField(null=True)
-    country = models.CharField(max_length=255, null=True)
-    state = models.CharField(max_length=255, null=True)
-    city = models.CharField(max_length=255, null=True)
+    bio = models.TextField(null=True, blank=True)
+    dob = models.DateField(null=True, blank=True)
+    country = models.CharField(max_length=255, null=True, blank=True)
+    state = models.CharField(max_length=255, null=True, blank=True)
+    city = models.CharField(max_length=255, null=True, blank=True)
 
-    hourly_rate = models.PositiveIntegerField(null=True)
-    hours_per_week = models.PositiveIntegerField(null=True)
+    skills = models.ManyToManyField('Skill')
+
+    hourly_rate = models.PositiveIntegerField(null=True, blank=True)
+    hours_per_week = models.PositiveIntegerField(null=True, blank=True)
 
     created = models.DateTimeField(auto_now_add=True)
 
@@ -103,16 +104,20 @@ class Profile(models.Model):
     field2 = models.CharField(max_length=255, null=False, blank=True)
 
     def __str__(self):
-        return self.first_name + " " + self.last_name
+        return self.first_name + ' ' + self.last_name
 
 
 class Skill(models.Model):
 
     # manytomany column job_category_set
     # manytomany column project_define_set
-    users = models.ManyToManyField(User)
+
+    # users = models.ManyToManyField(Profile)
 
     skill_name = models.CharField(max_length=255, null=False)
+
+    def __str__(self):
+        return self.skill_name
 
 
 class Job_category(models.Model):
@@ -121,10 +126,13 @@ class Job_category(models.Model):
 
     job_name = models.CharField(max_length=255, null=False)
 
+    def __str__(self):
+        return self.job_name
+
 
 class Project_define(models.Model):
 
-    creator = models.ForeignKey(User, on_delete=models.PROTECT)
+    creator = models.ForeignKey(Profile, on_delete=models.PROTECT)
     skills = models.ManyToManyField(Skill)
 
     project_title = models.CharField(max_length=255, null=False)
@@ -136,6 +144,11 @@ class Project_define(models.Model):
     budget_min = models.DecimalField(max_digits=7, decimal_places=2)
     budget_max = models.DecimalField(max_digits=7, decimal_places=2)
     bid_deadline = models.DateTimeField(auto_now=False)
+    projectFile = models.FileField(upload_to='project_files/',null=True, blank=True)
+
+    def __str__(self):
+        return self.project_title
+
 
 
 class Project(models.Model):
@@ -149,7 +162,7 @@ class Project(models.Model):
 
     project_description = models.OneToOneField(
         Project_define, on_delete=models.CASCADE, primary_key=True)
-    freelancer = models.ForeignKey(User, on_delete=models.PROTECT)
+    freelancer = models.ForeignKey(Profile, on_delete=models.PROTECT)
 
     project_start_date = models.DateTimeField(auto_now=False)
     running_duration = models.PositiveIntegerField()
@@ -172,10 +185,10 @@ class Project_bid(models.Model):
 
     project_define = models.ForeignKey(
         Project_define, on_delete=models.CASCADE)
-    bidder = models.ForeignKey(User, on_delete=models.CASCADE)
+    bidder = models.ForeignKey(
+        Profile, on_delete=models.CASCADE)
 
-    min_offer = models.DecimalField(max_digits=7, decimal_places=2)
-    max_offer = models.DecimalField(max_digits=7, decimal_places=2)
+    offered_amount = models.DecimalField(max_digits=7, decimal_places=2, null=True)
     offered_duration = models.PositiveIntegerField()
     bid_description = models.TextField(null=True)
     bid_status = models.CharField(
@@ -187,9 +200,9 @@ class Rating(models.Model):
     project = models.OneToOneField(
         Project, on_delete=models.CASCADE, primary_key=True)
     critic = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name='rating_given')
+        Profile, on_delete=models.CASCADE, related_name='rating_given')
     freelancer = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name='rating_received')
+        Profile, on_delete=models.CASCADE, related_name='rating_received')
 
     reliability = models.PositiveSmallIntegerField()
     punctuality = models.PositiveSmallIntegerField()
@@ -202,7 +215,6 @@ class Project_document(models.Model):
 
     project = models.ForeignKey(Project_define, on_delete=models.CASCADE)
 
-    document_name = models.CharField(max_length=255, null=False)
     document = models.FileField(
         null=True, upload_to=settings.MEDIA_ROOT/'project_documents/')
 
@@ -211,6 +223,5 @@ class Bid_document(models.Model):
 
     project_bid = models.ForeignKey(Project_bid, on_delete=models.CASCADE)
 
-    document_name = models.CharField(max_length=255, null=False)
     document = models.FileField(
         null=True, upload_to=settings.MEDIA_ROOT/'bid_documents/')

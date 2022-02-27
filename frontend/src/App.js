@@ -29,6 +29,8 @@ const PasswordReset = lazy(() => import("./pages/Entry/PasswordReset"));
 const ResetPasswordConfirm = lazy(() =>
   import("./pages/Entry/ResetPasswordConfirm")
 );
+const PostBid = lazy(() => import("./pages/Entry/PostBid"));
+const PostJob = lazy(() => import("./pages/Entry/PostJob"));
 
 const App = () => {
   const dispatch = useDispatch();
@@ -81,6 +83,8 @@ const App = () => {
               }
             />
           </Route>
+          <Route path='postjob' element={<PostJob />} />
+          <Route path='postbid' element={<PostBid />} />
           <Route path='signup' element={<Outlet />}>
             <Route index element={<Signup />} />
           </Route>

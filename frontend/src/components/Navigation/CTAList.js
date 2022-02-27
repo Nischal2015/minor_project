@@ -26,6 +26,26 @@ const CTAList = () => {
           Signup
         </CustomNavLink>
       </li>
+      <li>
+        <CustomNavLink
+          to='/postjob'
+          variant='outline rounded'
+          ariaLabel='Post Job into website'
+          style={ctaStyle}
+        >
+          PostJob
+        </CustomNavLink>
+      </li>
+      <li>
+        <CustomNavLink
+          to='/postbid'
+          variant='outline rounded'
+          ariaLabel='Post Bid for Project'
+          style={ctaStyle}
+        >
+          PostBid
+        </CustomNavLink>
+      </li>
     </React.Fragment>
   );
 };
