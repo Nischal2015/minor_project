@@ -5,8 +5,6 @@ import LoginInput from "../../components/UI/Input/LoginInput";
 import Select from "react-select";
 
 import axios from "axios";
-import { serialize } from "object-to-formdata";
-// import FileBase64 from "react-file-base64";
 
 import { useForm, Controller } from "react-hook-form";
 
@@ -14,8 +12,6 @@ import styles from "./Login.module.scss";
 
 const PostBid = () => {
   const [JobArr, setJobArr] = useState([]);
-  //   const [skillArr, setSkillArr] = useState([]);
-  //   const [fileUpload, setfileUpload] = useState(null);
   const {
     control,
     register,
@@ -108,15 +104,6 @@ const PostBid = () => {
       onSubmit={handleSubmit((data) => {
         console.log(data);
         registerBid(data);
-        // if (
-        //   data.projectFile.length != 0 &&
-        //   data.projectFile[0].size > 1 * 1024 * 1024
-        // ) {
-        //   alert("File size shouldn't exceed 1MB");
-        // } else {
-        //   registerJob(data);
-        // }
-        // Later will be handled for fetching data from database
       })}
     >
       <Card className={styles.login} role="group" ariaLabelledBy="kamao">
