@@ -1,6 +1,5 @@
 // import styles from "./App.module.scss";
 import React, { Suspense, lazy, useEffect } from "react";
-import { useDispatch } from "react-redux";
 import { checkAuthenticated, loadUser } from "./store/auth-actions";
 
 import LoadingSpinner from "./components/UI/Loading/LoadingSpinner";
@@ -10,8 +9,10 @@ import { Routes, Route, Outlet } from "react-router-dom";
 import ScrollToTop from "./components/ScrollToTop";
 import Alert from "./components/UI/Alert/Alert";
 
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { alertActions } from "./store/alert-slice";
 import LoadingSlider from "./components/UI/Loading/LoadingSlider";
+import RequireAuth from "./components/RequireAuth";
 
 // Routing pages
 const About = lazy(() => import("./pages/About/About"));
@@ -38,6 +39,15 @@ const App = () => {
     dispatch(loadUser());
   }, [dispatch]);
 
+  useEffect(() => {
+    let interval = setTimeout(() => {
+      if (alert) {
+        dispatch(alertActions.clear());
+      }
+    }, 6500);
+    return () => clearTimeout(interval);
+  }, [alert, dispatch]);
+
   return (
     <React.Fragment>
       <Suspense fallback={<LoadingSpinner />}>
@@ -50,12 +60,26 @@ const App = () => {
           <Route path='about' element={<About />} />
           <Route path='jobs' element={<Outlet />}>
             <Route index element={<Jobs />} />
-            <Route path=':id' element={<Bidding />} />
+            <Route
+              path=':id'
+              element={
+                <RequireAuth>
+                  <Bidding />
+                </RequireAuth>
+              }
+            />
           </Route>
           <Route path='login' element={<Login />} />
           <Route path='talent' element={<Outlet />}>
             <Route index element={<Talent />} />
-            <Route path=':id' element={<Profile />} />
+            <Route
+              path=':id'
+              element={
+                <RequireAuth>
+                  <Profile />
+                </RequireAuth>
+              }
+            />
           </Route>
           <Route path='signup' element={<Outlet />}>
             <Route index element={<Signup />} />

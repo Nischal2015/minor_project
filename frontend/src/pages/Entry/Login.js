@@ -61,9 +61,7 @@ const Login = () => {
   } = useForm(formOptions);
 
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
-  const alert = useSelector((state) => state.alert.alertType);
-  console.log(alert);
-  const isLogging = useSelector((state) => state.alert.logging);
+  const isProcessing = useSelector((state) => state.auth.isProcessing);
   const dispatch = useDispatch();
 
   let location = useLocation();
@@ -95,7 +93,7 @@ const Login = () => {
       })}
     >
       <Card className={styles.login} role='group' ariaLabelledBy='kamao'>
-        {isLogging && <LoadingSlider />}
+        {isProcessing && <LoadingSlider />}
         <div className={styles.login__header}>
           <h2 className='heading--secondary' id='kamao'>
             Kamao
@@ -156,9 +154,13 @@ const Login = () => {
         </div>
         <div className={styles.login__footer}>
           {containsSignup ? (
-            <Button type='submit'>Signup</Button>
+            <Button type='submit' disabled={isProcessing}>
+              Signup
+            </Button>
           ) : (
-            <Button type='submit'>Login</Button>
+            <Button type='submit' disabled={isProcessing}>
+              Login
+            </Button>
           )}
           <div className={styles["login__footer--other"]}>
             <Button variant='tertiary'>Continue with Google</Button>

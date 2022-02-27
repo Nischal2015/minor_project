@@ -5,21 +5,28 @@ const initialState = {
   refresh: localStorage.getItem("refresh"),
   isAuthenticated: null,
   user: null,
+  isProcessing: false,
 };
 
 const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
+    processingRequest(state) {
+      state.isProcessing = true;
+    },
     loginSuccess(state, action) {
       state.isAuthenticated = true;
       state.access = action.payload.access;
       state.refresh = action.payload.refresh;
+      state.isProcessing = false;
     },
     userLoadedSuccess(state, action) {
+      state.isProcessing = false;
       state.user = action.payload;
     },
     userLoadedFail(state) {
+      state.isProcessing = false;
       state.user = null;
     },
     loginFail(state) {
@@ -27,17 +34,21 @@ const authSlice = createSlice({
       state.refresh = null;
       state.isAuthenticated = false;
       state.user = null;
+      state.isProcessing = false;
     },
     authenticationSuccess(state) {
+      state.isProcessing = false;
       state.isAuthenticated = true;
     },
     authenticationFail(state) {
+      state.isProcessing = false;
       state.isAuthenticated = false;
     },
-    logOut(state) {
+    logout(state) {
       state.access = null;
       state.refresh = null;
       state.isAuthenticated = false;
+      state.isProcessing = false;
       state.user = null;
     },
     passwordResetSuccess() {},
@@ -46,9 +57,11 @@ const authSlice = createSlice({
     passwordResetConfirmFail() {},
     signupSuccess(state) {
       state.isAuthenticated = false;
+      state.isProcessing = false;
     },
     signupFail(state) {
       state.isAuthenticated = false;
+      state.isProcessing = false;
     },
     activationSuccess() {},
     activationFail() {},

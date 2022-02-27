@@ -3,16 +3,12 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   alertType: null,
   message: null,
-  logging: false,
 };
 
 const alertSlice = createSlice({
   name: "alert",
   initialState,
   reducers: {
-    loggingState(state) {
-      state.logging = true;
-    },
     success(state, action) {
       state.alertType = "alert--success";
       state.message = action.payload;

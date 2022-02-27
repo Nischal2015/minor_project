@@ -5,7 +5,7 @@ export const authMiddleware = (store) => (next) => (action) => {
     localStorage.setItem("access", action.payload.access);
     localStorage.setItem("refresh", action.payload.refresh);
   } else if (
-    authActions.logOut.match(action) ||
+    authActions.logout.match(action) ||
     authActions.loginFail.match(action)
   ) {
     localStorage.removeItem("access");

@@ -44,16 +44,15 @@ const Profile = () => {
     setError(null);
     setLoading(true);
     try {
-      const responseProfile = await axios.get(`/profile/${id}`);
+      const responseProfile = await axios.get(`/api/profile/${id}/`);
       const responseUser = await axios.get(
-        `/users/${responseProfile.data.user}`
+        `/api/users/${responseProfile.data.user}/`
       );
 
       setUser(responseUser.data);
       setProfile(responseProfile.data);
     } catch (error) {
       setError(true);
-      console.log("Server error");
     }
     setLoading(false);
   }, [id]);
@@ -61,9 +60,6 @@ const Profile = () => {
   useEffect(() => {
     fetchUserHandler();
   }, [fetchUserHandler]);
-
-  // if (profileHolder === undefined)
-  //   return <div>Navako user lai kina khojeko ho kunni</div>;
 
   // const { jobheading, description, img, rating, hourlyRate } = profileHolder;
   // const { reliability, punctual, communication, qualityWork } = rating;

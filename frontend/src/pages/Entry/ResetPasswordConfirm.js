@@ -6,12 +6,13 @@ import { Navigate, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { resetPasswordConfirm } from "../../store/auth-actions";
 
 import styles from "./Login.module.scss";
 import PasswordInput from "../../components/UI/Input/PasswordInput";
 import { alertActions } from "../../store/alert-slice";
+import LoadingSlider from "../../components/UI/Loading/LoadingSlider";
 
 const ResetPasswordConfirm = () => {
   const validationSchema = Yup.object().shape({
@@ -24,6 +25,8 @@ const ResetPasswordConfirm = () => {
   });
 
   const formOptions = { resolver: yupResolver(validationSchema) };
+
+  const isLogging = useSelector((state) => state.alert.logging);
 
   const {
     register,
@@ -56,6 +59,7 @@ const ResetPasswordConfirm = () => {
       })}
     >
       <Card className={styles.login} role='group' ariaLabelledBy='reset'>
+        {isLogging && <LoadingSlider />}
         <div className={styles.login__header}>
           <h2 className='heading--secondary' id='reset'>
             Confirm Password

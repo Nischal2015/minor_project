@@ -3,7 +3,7 @@ import Avatar from "react-avatar";
 import Button from "../UI/Button/Button";
 
 import { useSelector, useDispatch } from "react-redux";
-import { authActions } from "../../store/auth-slice";
+import { logout } from "../../store/auth-actions";
 
 const LoggedInList = () => {
   const style = { fontSize: "1.4rem" };
@@ -11,7 +11,7 @@ const LoggedInList = () => {
   const dispatch = useDispatch();
 
   const logOutHandler = () => {
-    dispatch(authActions.logOut());
+    dispatch(logout());
   };
 
   return (
