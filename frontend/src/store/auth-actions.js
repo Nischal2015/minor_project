@@ -79,7 +79,6 @@ export const loadUser = () => async (dispatch) => {
 
     try {
       const response = await axios.get("auth/users/me/", config);
-      console.log(response.data);
       dispatch(authActions.userLoadedSuccess(response.data));
     } catch (error) {
       dispatch(authActions.userLoadedFail());
@@ -89,7 +88,7 @@ export const loadUser = () => async (dispatch) => {
   }
 };
 
-export const login = (body) => async (dispatch) => {
+export const login = (body, callback) => async (dispatch) => {
   const config = {
     headers: {
       "Content-Type": "application/json",
@@ -102,6 +101,7 @@ export const login = (body) => async (dispatch) => {
     dispatch(authActions.loginSuccess(response.data));
     dispatch(loadUser());
     dispatch(alertActions.success("You have succesfully logged in"));
+    callback();
   } catch (error) {
     dispatch(authActions.loginFail());
     dispatch(alertActions.error("Username or password is incorrect"));
@@ -116,8 +116,8 @@ export const resetPassword = (body) => async (dispatch) => {
   };
 
   try {
+    dispatch(authActions.processingRequest());
     await axios.post("auth/users/reset_password/", body, config);
-
     dispatch(authActions.passwordResetSuccess());
     dispatch(
       alertActions.success(`Email has been sent successfully to ${body.email}`)
@@ -136,6 +136,7 @@ export const resetPasswordConfirm = (body) => async (dispatch) => {
   };
 
   try {
+    dispatch(authActions.processingRequest());
     await axios.post("/auth/users/reset_password_confirm/", body, config);
     dispatch(authActions.passwordResetConfirmSuccess());
     dispatch(alertActions.success("Your password has been reset successfully"));

@@ -4,7 +4,7 @@
   transform: translateX(100%);
   position: fixed;
   right: 0;
-  top: calc(var(--nav-height) + 12px);
+  top: calc(var(--nav-height) + 6px);
 
   display: flex;
   align-items: center;
@@ -53,12 +53,12 @@
 }
 
 @keyframes slideFromRight {
-  5% {
-    transform: translateX(-20px);
+  4% {
+    transform: translateX(-4px);
     opacity: 1;
   }
-  95% {
-    transform: translateX(-20px);
+  96% {
+    transform: translateX(-4px);
     opacity: 1;
   }
 }

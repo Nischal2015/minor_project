@@ -25,8 +25,7 @@ const ResetPasswordConfirm = () => {
   });
 
   const formOptions = { resolver: yupResolver(validationSchema) };
-
-  const isLogging = useSelector((state) => state.alert.logging);
+  const isProcessing = useSelector((state) => state.auth.isProcessing);
 
   const {
     register,
@@ -59,7 +58,7 @@ const ResetPasswordConfirm = () => {
       })}
     >
       <Card className={styles.login} role='group' ariaLabelledBy='reset'>
-        {isLogging && <LoadingSlider />}
+        {isProcessing && <LoadingSlider />}
         <div className={styles.login__header}>
           <h2 className='heading--secondary' id='reset'>
             Confirm Password

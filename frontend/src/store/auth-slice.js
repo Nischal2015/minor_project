@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   access: localStorage.getItem("access"),
   refresh: localStorage.getItem("refresh"),
-  isAuthenticated: null,
+  isAuthenticated: localStorage.getItem("isAuthenticated"),
   user: null,
   isProcessing: false,
 };
@@ -51,10 +51,18 @@ const authSlice = createSlice({
       state.isProcessing = false;
       state.user = null;
     },
-    passwordResetSuccess() {},
-    passwordResetFail() {},
-    passwordResetConfirmSuccess() {},
-    passwordResetConfirmFail() {},
+    passwordResetSuccess(state) {
+      state.isProcessing = false;
+    },
+    passwordResetFail(state) {
+      state.isProcessing = false;
+    },
+    passwordResetConfirmSuccess(state) {
+      state.isProcessing = false;
+    },
+    passwordResetConfirmFail(state) {
+      state.isProcessing = false;
+    },
     signupSuccess(state) {
       state.isAuthenticated = false;
       state.isProcessing = false;

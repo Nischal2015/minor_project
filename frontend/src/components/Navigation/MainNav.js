@@ -33,9 +33,13 @@ const MainNav = () => {
       <Searchbar variant='rounded' />
 
       {/* This div is for the CTA section */}
-      <ul className={styles["main-nav__list--cta"]}>
-        {isAuthenticated ? <LoggedInList /> : <CTAList />}
-      </ul>
+      {isAuthenticated ? (
+        <LoggedInList />
+      ) : (
+        <ul className={styles["main-nav__list--cta"]}>
+          <CTAList />
+        </ul>
+      )}
     </React.Fragment>
   );
 };

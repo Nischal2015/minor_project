@@ -10,9 +10,8 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useLocation, Navigate } from "react-router-dom";
+import { Link, useLocation, Navigate, useNavigate } from "react-router-dom";
 import { createUser, login } from "../../store/auth-actions";
-import { alertActions } from "../../store/alert-slice";
 
 import styles from "./Login.module.scss";
 import LoadingSlider from "../../components/UI/Loading/LoadingSlider";
@@ -56,8 +55,7 @@ const Login = () => {
   const {
     register,
     handleSubmit,
-    reset,
-    formState: { errors, isSubmitSuccessful },
+    formState: { errors },
   } = useForm(formOptions);
 
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
@@ -65,31 +63,31 @@ const Login = () => {
   const dispatch = useDispatch();
 
   let location = useLocation();
+  let from = location.state?.from?.pathname || "/";
+  let navigate = useNavigate();
 
   const locationPath = location.pathname;
-
-  // This is used to reset the form on succesful submission
-  // useEffect(() => {
-  //   if (isSubmitSuccessful && alert) {
-  //     reset();
-  //   }
-  // }, [reset, isSubmitSuccessful, alert]);
 
   useEffect(() => {
     setContainsSignup(locationPath.includes("signup"));
   }, [locationPath]);
 
   if (isAuthenticated) {
-    return <Navigate to='/' />;
+    return <Navigate to='/' replace={true} />;
   }
 
   // Return Statement
   return (
     <form
       onSubmit={handleSubmit((data) => {
-        dispatch(alertActions.clear());
+        console.log(from);
         containsSignup && dispatch(createUser(data));
-        !containsSignup && dispatch(login(data));
+        !containsSignup &&
+          dispatch(
+            login(data, () => {
+              navigate(from, { replace: true });
+            })
+          );
       })}
     >
       <Card className={styles.login} role='group' ariaLabelledBy='kamao'>
