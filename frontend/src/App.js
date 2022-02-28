@@ -14,6 +14,8 @@ import { alertActions } from "./store/alert-slice";
 import LoadingSlider from "./components/UI/Loading/LoadingSlider";
 import RequireAuth from "./components/RequireAuth";
 
+import Payment from "./pages/payment/payment";
+
 // Routing pages
 const About = lazy(() => import("./pages/About/About"));
 const ActivateUser = lazy(() => import("./pages/Entry/ActivateUser"));
@@ -94,6 +96,12 @@ const App = () => {
             path='password/reset/confirm/:uid/:token'
             element={<ResetPasswordConfirm />}
           />
+
+          <Route
+            path='payment'
+            element={<Payment />}
+          />
+
           <Route path='*' element={<NotFound />} />
         </Routes>
         <Footer />
