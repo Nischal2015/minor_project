@@ -45,8 +45,6 @@ def home(request):
     return render(request, 'api/home.html', context)
 
 
-
-
 @api_view(['POST'])
 def login(request):
     #to prevent re-logging in if user is already logged in
@@ -180,8 +178,9 @@ def postBid(request):
 @api_view(['GET'])
 def JobList(request):
     if request.method == 'GET':
-        project_define = Project_define.objects.all()
+        project_define = Project_define.objects.select_related()
         serializer = ProjectDefineSerializer(project_define,context={'request': request}, many=True)
+        print(serializer.data)
         return Response(serializer.data)
 
 @api_view(['GET'])

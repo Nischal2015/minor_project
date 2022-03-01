@@ -24,8 +24,6 @@ import LoadingSpinner from "../../components/UI/Loading/LoadingSpinner";
 
 const Profile = () => {
   const { id } = useParams();
-
-  const [user, setUser] = useState([]);
   const [profile, setProfile] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -45,11 +43,11 @@ const Profile = () => {
     setLoading(true);
     try {
       const responseProfile = await axios.get(`/api/profile/${id}/`);
-      const responseUser = await axios.get(
-        `/api/users/${responseProfile.data.user}/`
-      );
+      // const responseUser = await axios.get(
+      //   `/api/users/${responseProfile.data.user}/`
+      // );
 
-      setUser(responseUser.data);
+      // setUser(responseUser.data);
       setProfile(responseProfile.data);
     } catch (error) {
       setError(true);
@@ -164,7 +162,7 @@ const Profile = () => {
                 <h4>
                   {`${profile.first_name} ${profile.last_name} `}
                   <span className={styles["info__heading__user--username"]}>
-                    @{user.username}
+                    @{profile.user?.username}
                   </span>
                 </h4>
                 <span className={styles["info__heading__user--project-title"]}>

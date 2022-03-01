@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import Budget from "../../components/SideList/Budget";
 import Container from "../../components/UI/Container/Container";
@@ -12,6 +12,8 @@ import PostedTime from "../../components/SideList/PostedTime";
 import { HiArrowNarrowRight } from "react-icons/hi";
 
 import styles from "./Jobs.module.scss";
+import axios from "axios";
+import LoadingBouncer from "../../components/UI/Loading/LoadingBouncer";
 
 // DUMMY data for skills
 // will be replaced by data obtained from API
@@ -95,6 +97,23 @@ const Work = () => {
   // const searchDataHandler = (event) => {
   //   setSearchTerm(event.target.value);
   // };
+  const [loading, setLoading] = useState(false);
+  const [jobs, setJobs] = useState([]);
+
+  const fetchJobList = async () => {
+    setLoading(true);
+    try {
+      const response = await axios.get("api/jobList/");
+      setJobs(response.data);
+      console.log(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+    setLoading(false);
+  };
+  useEffect(() => {
+    fetchJobList();
+  }, []);
 
   return (
     <section className={styles.section__work}>
@@ -128,29 +147,35 @@ const Work = () => {
             <h3 className='heading--tertiary'>Top Results</h3>
           </div>
           <div className={styles.results__list}>
-            {jobLists.map(({ id, budget, posted, ...jobList }) => (
-              <div className={styles.list} key={id}>
-                <div className={styles.list__text}>
-                  <List id={id} {...jobList} />
-                </div>
+            {loading ? (
+              <LoadingBouncer />
+            ) : (
+              jobs.map(
+                ({ id, budget_min, budget_max, creation_date, ...jobList }) => (
+                  <div className={styles.list} key={id}>
+                    <div className={styles.list__text}>
+                      <List id={id} {...jobList} />
+                    </div>
 
-                <div className={styles.list__number}>
-                  <Budget budget={budget} />
-                  <PostedTime posted={posted} />
-                  <CustomNavLink
-                    className={styles.list__more}
-                    to={`${id}`}
-                    variant='small primary'
-                    ariaLabel='See more detail about the freelancer'
-                  >
-                    See More{" "}
-                    <span>
-                      <HiArrowNarrowRight />
-                    </span>
-                  </CustomNavLink>
-                </div>
-              </div>
-            ))}
+                    <div className={styles.list__number}>
+                      <Budget budgetMin={budget_min} budgetMax={budget_max} />
+                      <PostedTime posted={creation_date} />
+                      <CustomNavLink
+                        className={styles.list__more}
+                        to={`${id}`}
+                        variant='small primary'
+                        ariaLabel='See more detail about the freelancer'
+                      >
+                        See More{" "}
+                        <span>
+                          <HiArrowNarrowRight />
+                        </span>
+                      </CustomNavLink>
+                    </div>
+                  </div>
+                )
+              )
+            )}
           </div>
           <div className={styles.results__pagination}></div>
         </Card>

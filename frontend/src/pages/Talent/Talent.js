@@ -114,7 +114,7 @@ const Talent = () => {
               users.map((props) => {
                 const { user, rating, avatar, ...otherList } = props;
                 return (
-                  <div className={styles.list} key={user}>
+                  <div className={styles.list} key={user.id}>
                     <picture className={styles.list__picture}>
                       {avatar === null ? (
                         <Avatar
@@ -144,7 +144,7 @@ const Talent = () => {
                       <CircularRating>{rating}</CircularRating>
                       <CustomNavLink
                         className={styles.list__more}
-                        to={`/talent/${user}`}
+                        to={`/talent/${user.id}`}
                         variant='small primary'
                         ariaLabel='See more detail about the freelancer'
                       >

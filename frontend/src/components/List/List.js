@@ -15,21 +15,22 @@ const getContent = (description) => {
 };
 
 const JobList = ({
-  jobheading,
+  project_title,
   first_name,
   last_name,
   bio,
-  description,
+  project_description,
   skills,
 }) => {
   return (
     <React.Fragment>
       <h3 className={styles.list__heading}>
-        {jobheading || `${first_name} ${last_name}`}
+        {project_title || `${first_name} ${last_name}`}
       </h3>
 
       <p className={styles.list__description}>
-        {(description && getContent(description)) || (bio && getContent(bio))}
+        {(project_description && getContent(project_description)) ||
+          (bio && getContent(bio))}
       </p>
       {skills ? <SkillsList skills={skills} /> : <></>}
     </React.Fragment>

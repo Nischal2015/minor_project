@@ -1,16 +1,15 @@
 from rest_framework import serializers
 from .models import  User, Profile, Project_define, Skill, Job_category, Project_bid
 
-
-
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User 
-        fields = ['username']
+        fields = ['username', 'id']
 
 class ProfileSerializer(serializers.ModelSerializer):
+    user = UserSerializer()
     class Meta:
-        model = Profile 
+        model = Profile
         fields = '__all__'
 
 class ProjectDefineSerializer(serializers.ModelSerializer):
