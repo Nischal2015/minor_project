@@ -42,8 +42,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'djoser',
-    'rest_framework_simplejwt.token_blacklist',
-    'khalti',
+    'rest_framework_simplejwt.token_blacklist'
 ]
 
 # to set our custom user model as authentication_user_model
