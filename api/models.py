@@ -1,3 +1,4 @@
+from operator import mod
 from django.conf import settings
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
@@ -144,11 +145,11 @@ class Project_define(models.Model):
     budget_min = models.DecimalField(max_digits=7, decimal_places=2)
     budget_max = models.DecimalField(max_digits=7, decimal_places=2)
     bid_deadline = models.DateTimeField(auto_now=False)
-    projectFile = models.FileField(upload_to='project_files/',null=True, blank=True)
+    projectFile = models.FileField(
+        upload_to='project_files/', null=True, blank=True)
 
     def __str__(self):
         return self.project_title
-
 
 
 class Project(models.Model):
@@ -188,7 +189,8 @@ class Project_bid(models.Model):
     bidder = models.ForeignKey(
         Profile, on_delete=models.CASCADE)
 
-    offered_amount = models.DecimalField(max_digits=7, decimal_places=2, null=True)
+    offered_amount = models.DecimalField(
+        max_digits=7, decimal_places=2, null=True)
     offered_duration = models.PositiveIntegerField()
     bid_description = models.TextField(null=True)
     bid_status = models.CharField(
@@ -225,3 +227,8 @@ class Bid_document(models.Model):
 
     document = models.FileField(
         null=True, upload_to=settings.MEDIA_ROOT/'bid_documents/')
+
+# class Payment_info(models.Model):
+
+#     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+#     khalti_name = models.

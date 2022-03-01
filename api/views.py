@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.shortcuts import get_object_or_404
+from django.conf import settings
 from .models import User, Profile, Project_define, Skill, Job_category, Project_bid
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -12,9 +13,15 @@ from .serializers import UserSerializer, ProfileSerializer, ProjectDefineSeriali
 from api import serializers
 from rest_framework.utils import encoders
 
-from django.contrib.auth import authenticate,login,logout
+from django.contrib.auth import authenticate, login, logout
 
+import requests
 from django.contrib import messages
+from rest_framework.views import APIView
+
+
+import os
+os.environ['DJANGO_SETTINGS_MODULE'] = 'kamao.settings'
 
 
 @api_view(['GET'])
@@ -47,36 +54,36 @@ def home(request):
 
 @api_view(['POST'])
 def login(request):
-    #to prevent re-logging in if user is already logged in
+    # to prevent re-logging in if user is already logged in
     if request.user.is_authenticated:
         return Response('logged in')
-
 
     if request.method == 'POST':
         username = request.POST.get('username').lower()
         password = request.POST.get('password')
         print(username)
-        
-        #check is user exists or not
-        try:
-            user = User.objects.get(username = username)
-        except:
-            messages.error(request,'user doesnot exist')
-        
-        #if user exists
-        user = authenticate(request,username = username, password=password)
 
-        #if user is valid
+        # check is user exists or not
+        try:
+            user = User.objects.get(username=username)
+        except:
+            messages.error(request, 'user doesnot exist')
+
+        # if user exists
+        user = authenticate(request, username=username, password=password)
+
+        # if user is valid
         if user is not None:
-            login(request,user)
+            login(request, user)
             serializer = UserSerializer(user)
             return redirect(serializer.data)
         else:
             print('password is incorrect')
-            messages.error(request,'incorrect password')
+            messages.error(request, 'incorrect password')
             return Response('user is not valid')
 
     # return Response(request,'base/login_register.html',context)
+
 
 @api_view(['GET'])
 def getUsers(request):
@@ -93,11 +100,13 @@ def getUser(request, pk):
     serializer = UserSerializer(note, many=False)
     return Response(serializer.data)
 
+
 @api_view(['GET'])
 def getProfile(request, pk):
     note = Profile.objects.get(user=pk)
     serializer = ProfileSerializer(note, many=False)
     return Response(serializer.data)
+
 
 @api_view(['GET'])
 def getProfiles(request):
@@ -105,17 +114,20 @@ def getProfiles(request):
     serializer = ProfileSerializer(profiles, many=True)
     return Response(serializer.data)
 
+
 @api_view(['GET'])
 def getSkills(request):
     skillslist = Skill.objects.all()
     serializer = SkillSerializer(skillslist, many=True)
     return Response(serializer.data)
 
+
 @api_view(['GET'])
 def getCategories(request):
     categories = Job_category.objects.all()
     serializer = CategorySerializer(categories, many=True)
     return Response(serializer.data)
+
 
 @api_view(['POST'])
 # @parser_classes([MultiPartParser,FormParser])
@@ -145,7 +157,8 @@ def postJob(request):
             serializer.save()
             return Response({'received data': request.data})
         else:
-            return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 @api_view(['POST'])
 # @parser_classes([MultiPartParser,FormParser])
@@ -173,15 +186,17 @@ def postBid(request):
             serializer.save()
             return Response({'received data': request.data})
         else:
-            return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 @api_view(['GET'])
 def JobList(request):
     if request.method == 'GET':
-        project_define = Project_define.objects.select_related()
+        project_define = Project_define.objects.all()
         serializer = ProjectDefineSerializer(project_define,context={'request': request}, many=True)
         print(serializer.data)
         return Response(serializer.data)
+
 
 @api_view(['GET'])
 def BidList(request):
@@ -190,19 +205,22 @@ def BidList(request):
         serializer = ProjectBidSerializer(project_bid, many=True)
         return Response(serializer.data)
 
+
 @api_view(['GET'])
 def Job_detail(request, pk):
     project_define = get_object_or_404(Project_define, pk=pk)
     # if request.method == 'GET':
     #     serializer = ProjectDefineSerializer(project_define, many=True)
     #     return Response(serializer.data)
-    
+
     if request.method == 'GET':
-        serializer = ProjectDefineSerializer(project_define,context={'request': request})
+        serializer = ProjectDefineSerializer(
+            project_define, context={'request': request})
         return Response(serializer.data)
 
     elif request.method == 'PUT':
-        serializer = ProjectDefineSerializer(project_define, data=request.data,context={'request': request})
+        serializer = ProjectDefineSerializer(
+            project_define, data=request.data, context={'request': request})
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
@@ -211,3 +229,38 @@ def Job_detail(request, pk):
     elif request.method == 'DELETE':
         project_define.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class VerifyKhaltiPayment(APIView):
+
+    def post(self, request, *args, **kwargs):
+        token = request.data["token"]
+        amount = request.data["amount"]
+
+        payload = {
+            "token": token,
+            "amount": amount,
+        }
+        headers = {
+            "Authorization": "Key {}".format(settings.KHALTI_SECRET_KEY)
+        }
+        try:
+            response = requests.post(
+                settings.KHALTI_VERIFY_URL, payload, headers=headers)
+            if response.status_code == 200:
+                return Response({
+                    'status': True,
+                    'details': response.json(),
+                })
+
+            else:
+                return Response({
+                    'status': False,
+                    'details': response.json(),
+                })
+
+        except requests.exceptions.HTTPError as e:
+            return Response({
+                'status': False,
+                'details': response.json(),
+            })

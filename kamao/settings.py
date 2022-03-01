@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'djoser',
-    'rest_framework_simplejwt.token_blacklist',
+    'rest_framework_simplejwt.token_blacklist'
 ]
 
 # to set our custom user model as authentication_user_model
@@ -157,7 +157,7 @@ SIMPLE_JWT = {
     # 'ROTATE_REFRESH_TOKENS': True,
     # 'BLACKLIST_AFTER_ROTATION': True,
 
-   'AUTH_HEADER_TYPES': ('JWT',),
+    'AUTH_HEADER_TYPES': ('JWT',),
 }
 
 DJOSER = {
@@ -198,3 +198,6 @@ EMAIL_USE_TLS = True
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ALLOW_ALL_ORIGINS: True
+
+KHALTI_SECRET_KEY = "test_secret_key_fff7d90db7cb405ea23533acf52cc4bf"
+KHALTI_VERIFY_URL = "https://khalti.com/api/v2/payment/verify/"

@@ -6,8 +6,15 @@ class UserSerializer(serializers.ModelSerializer):
         model = User 
         fields = ['username', 'id']
 
+class SkillSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Skill
+        fields = '__all__'
+
+
 class ProfileSerializer(serializers.ModelSerializer):
     user = UserSerializer()
+    skills = SkillSerializer(many=True)
     class Meta:
         model = Profile
         fields = '__all__'
@@ -17,10 +24,6 @@ class ProjectDefineSerializer(serializers.ModelSerializer):
         model = Project_define
         fields = '__all__'
 
-class SkillSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Skill
-        fields = '__all__'
 
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
