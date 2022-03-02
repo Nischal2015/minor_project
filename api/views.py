@@ -100,20 +100,51 @@ def getUser(request, pk):
     serializer = UserSerializer(note, many=False)
     return Response(serializer.data)
 
+@api_view(['POST'])
+def getCurrentUser(request, pk):
+    note = User.objects.get(id=pk)
+    serializer = UserSerializer(note, many=False)
+    return Response(serializer.data)
+
 
 @api_view(['GET'])
 def getProfile(request, pk):
-    note = Profile.objects.get(user=pk)
+    note = Profile.objects.select_related('user').prefetch_related('skills').get(user=pk)
     serializer = ProfileSerializer(note, many=False)
     return Response(serializer.data)
 
 
-@api_view(['GET'])
+@api_view(['GET', 'POST'])
 def getProfiles(request):
-    profiles = Profile.objects.all()
+    if request.method == 'GET':
+        profiles = Profile.objects.select_related('user').prefetch_related('skills').all()
+    elif request.method == 'POST':
+        id = request.data["uid"]
+        profiles = Profile.objects.select_related('user').prefetch_related('skills').exclude(user__id = id)
     serializer = ProfileSerializer(profiles, many=True)
     return Response(serializer.data)
 
+@api_view(['GET', 'POST'])
+def getUserProfile(request):
+    user_id = request.data['userId']
+    print(user_id)
+    query = Profile.objects.select_related('user').prefetch_related('skills').get(user=user_id)
+    serializer = ProfileSerializer(query, many=False)
+    return Response(serializer.data)
+
+@api_view(['POST'])
+def editUserProfile(request):
+    if request.method == 'POST':
+        print(request.data)
+        serializer = ProfileSerializer(data=request.POST)
+        print(serializer.is_valid())
+        if serializer.is_valid():
+            query = Profile.objects.get(user=request.data["userId"])
+            user_edit = ProfileSerializer(request.POST, instance=query)
+            user_edit.save()
+            return Response({'User Data Edited': request.data})
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET'])
 def getSkills(request):
@@ -189,14 +220,22 @@ def postBid(request):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-@api_view(['GET'])
-def JobList(request):
+@api_view(['GET', 'POST'])
+def getJobs(request):
     if request.method == 'GET':
-        project_define = Project_define.objects.all()
-        serializer = ProjectDefineSerializer(project_define,context={'request': request}, many=True)
-        print(serializer.data)
-        return Response(serializer.data)
+        project_define = Project_define.objects.select_related('creator').prefetch_related('skills').all()
+    elif request.method == 'POST':
+        id = request.data["creatorId"]
+        project_define = Project_define.objects.select_related('creator').prefetch_related('skills').exclude(creator__id = id)
+        
+    serializer = ProjectDefineSerializer(project_define,context={'request': request}, many=True)
+    return Response(serializer.data)
 
+@api_view(['GET'])
+def getJob(request, pk):
+    project_define = Project_define.objects.select_related('creator').prefetch_related('skills').get(id=pk)
+    serializer = ProjectDefineSerializer(project_define, many=False)
+    return Response(serializer.data)
 
 @api_view(['GET'])
 def BidList(request):

@@ -14,6 +14,7 @@ import { HiArrowNarrowRight } from "react-icons/hi";
 import styles from "./Jobs.module.scss";
 import axios from "axios";
 import LoadingBouncer from "../../components/UI/Loading/LoadingBouncer";
+import { useSelector } from "react-redux";
 
 // DUMMY data for skills
 // will be replaced by data obtained from API
@@ -40,53 +41,6 @@ const skills = [
   },
 ];
 
-export const jobLists = [
-  {
-    id: 111,
-    jobheading: "Youtube Thumbnail Creator Required",
-    description:
-      "This section of the job list is for the description of the posted job. The description must be precise and upto the point and must not contain any ubiquitous information that may detrack the freelancers the requirements of the job. This section of the job list is for the description of the posted job. The description must be precise and upto the point and must not contain any ubiquitous information that may detrack the freelancers the requirements of the job.",
-    skills: ["Photoshop", "Lightroom", "Photography"],
-    budget: "45-60",
-    posted: "Posted 15 days ago",
-  },
-  {
-    id: 112,
-    jobheading: "Frontend React Developer",
-    description:
-      "This section of the job list is for the descrioption of the posted job. The description must be precise and upto the point and must not contain any ubiquitous information that may detrack the freelancers the requirements of the job",
-    skills: [
-      "Javascript",
-      "React",
-      "HTML",
-      "CSS",
-      "Frontend Development",
-      "Responsive Design",
-      "Next JS",
-    ],
-    budget: "145-190",
-    posted: "Posted 6 days ago",
-  },
-  {
-    id: 113,
-    jobheading: "NodeJs Backend Developer",
-    description:
-      "This section of the job list is for the descrioption of the posted job. The description must be precise and upto the point and must not contain any ubiquitous information that may detrack the freelancers the requirements of the job",
-    skills: ["Skill 1", "Skill 2", "Skill 3", "Skill 4"],
-    budget: "600-750",
-    posted: "Posted 2 hours ago",
-  },
-  {
-    id: 114,
-    jobheading: "Advertisement Creator",
-    description:
-      "This section of the job list is for the descrioption of the posted job. The description must be precise and upto the point and must not contain any ubiquitous information that may detrack the freelancers the requirements of the job",
-    skills: ["Skill 1", "Skill 2", "Skill 3", "Skill 4"],
-    budget: "125-150",
-    posted: "Posted 5 days ago",
-  },
-];
-
 const Work = () => {
   // const [searchTerm, setSearchTerm] = useState("");
 
@@ -99,11 +53,14 @@ const Work = () => {
   // };
   const [loading, setLoading] = useState(false);
   const [jobs, setJobs] = useState([]);
+  const creatorId = useSelector((state) => state.auth.user?.id);
 
-  const fetchJobList = async () => {
+  const fetchJobList = async (creatorId) => {
     setLoading(true);
     try {
-      const response = await axios.get("api/jobList/");
+      const response = creatorId
+        ? await axios.post("api/jobs/", { creatorId })
+        : await axios.get("api/jobs/");
       setJobs(response.data);
       console.log(response.data);
     } catch (error) {
@@ -112,8 +69,8 @@ const Work = () => {
     setLoading(false);
   };
   useEffect(() => {
-    fetchJobList();
-  }, []);
+    fetchJobList(creatorId);
+  }, [creatorId]);
 
   return (
     <section className={styles.section__work}>
@@ -150,31 +107,39 @@ const Work = () => {
             {loading ? (
               <LoadingBouncer />
             ) : (
-              jobs.map(
-                ({ id, budget_min, budget_max, creation_date, ...jobList }) => (
-                  <div className={styles.list} key={id}>
-                    <div className={styles.list__text}>
-                      <List id={id} {...jobList} />
-                    </div>
+              jobs
+                .filter((props) => props.creator.id !== creatorId)
+                .map(
+                  ({
+                    id,
+                    budget_min,
+                    budget_max,
+                    creation_date,
+                    ...jobList
+                  }) => (
+                    <div className={styles.list} key={id}>
+                      <div className={styles.list__text}>
+                        <List id={id} {...jobList} />
+                      </div>
 
-                    <div className={styles.list__number}>
-                      <Budget budgetMin={budget_min} budgetMax={budget_max} />
-                      <PostedTime posted={creation_date} />
-                      <CustomNavLink
-                        className={styles.list__more}
-                        to={`${id}`}
-                        variant='small primary'
-                        ariaLabel='See more detail about the freelancer'
-                      >
-                        See More{" "}
-                        <span>
-                          <HiArrowNarrowRight />
-                        </span>
-                      </CustomNavLink>
+                      <div className={styles.list__number}>
+                        <Budget budgetMin={budget_min} budgetMax={budget_max} />
+                        <PostedTime posted={creation_date} />
+                        <CustomNavLink
+                          className={styles.list__more}
+                          to={`${id}`}
+                          variant='small primary'
+                          ariaLabel='See more detail about the freelancer'
+                        >
+                          See More{" "}
+                          <span>
+                            <HiArrowNarrowRight />
+                          </span>
+                        </CustomNavLink>
+                      </div>
                     </div>
-                  </div>
+                  )
                 )
-              )
             )}
           </div>
           <div className={styles.results__pagination}></div>

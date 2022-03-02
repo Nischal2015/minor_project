@@ -102,11 +102,11 @@ const LoginInput = ({ type, name, placeholder, register, errors }) => {
                 name={name} // email
                 placeholder={placeholder} // Email address
                 aria-required='true'
-                {...register(name, { required: true })}
+                {...register(name)}
               />
 
               {errors[name] && (
-                <p className={styles.error}>This field is required</p>
+                <p className={styles.error}>{errors[name]?.message}</p>
               )}
             </React.Fragment>
           );

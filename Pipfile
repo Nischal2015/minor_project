@@ -37,6 +37,7 @@ urllib3 = "==1.26.8"
 Jinja2 = "==3.0.3"
 MarkupSafe = "==2.0.1"
 PyJWT = "==2.3.0"
+django-debug-toolbar = "*"
 
 [dev-packages]
 

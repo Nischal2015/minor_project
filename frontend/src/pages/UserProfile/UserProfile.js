@@ -1,6 +1,5 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 
-import Button from "../../components/UI/Button/Button";
 import Card from "../../components/UI/Card/Card";
 import CircularRatings from "../../components/UI/Ratings/CircularRatings/CircularRatings";
 import Container from "../../components/UI/Container/Container";
@@ -12,21 +11,25 @@ import {
   FaEnvelope,
 } from "react-icons/fa";
 
-import styles from "./Profile.module.scss";
+import { useSelector } from "react-redux";
+
+import styles from "../Profile/Profile.module.scss";
 import Avatar from "react-avatar";
 
-import { useParams } from "react-router-dom";
+import { NavLink, Outlet } from "react-router-dom";
 
 // This is the data to be received from the backend
 // import { talentLists } from "../Talent/Talent";
 import axios from "axios";
 import LoadingSpinner from "../../components/UI/Loading/LoadingSpinner";
+import { CustomNavLink } from "../../components/UI/CustomLink/CustomLink";
 
-const Profile = () => {
-  const { id } = useParams();
+const UserProfile = () => {
   const [profile, setProfile] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+  const username = useSelector((state) => state.auth.user?.username);
+  const userId = useSelector((state) => state.auth.user?.id);
 
   const feature = {
     hoursPerWeek: 35,
@@ -38,26 +41,24 @@ const Profile = () => {
   //   (talentItem) => talentItem.id === +id
   // )[0];
 
-  const fetchUserHandler = useCallback(async () => {
+  const fetchUserHandler = async (userId) => {
     setError(null);
     setLoading(true);
     try {
-      const responseProfile = await axios.get(`/api/profile/${id}/`);
-      // const responseUser = await axios.get(
-      //   `/api/users/${responseProfile.data.user}/`
-      // );
-
-      // setUser(responseUser.data);
+      const responseProfile = await axios.post(`/api/user-profile/`, {
+        userId,
+      });
       setProfile(responseProfile.data);
     } catch (error) {
       setError(true);
     }
     setLoading(false);
-  }, [id]);
+  };
 
   useEffect(() => {
-    fetchUserHandler();
-  }, [fetchUserHandler]);
+    userId && fetchUserHandler(userId);
+    console.log("fetch user running");
+  }, [userId]);
 
   // const { jobheading, description, img, rating, hourlyRate } = profileHolder;
   // const { reliability, punctual, communication, qualityWork } = rating;
@@ -83,7 +84,7 @@ const Profile = () => {
                 />
               ) : (
                 <Avatar
-                  src={profile.avatar}
+                  src={`static/${profile.avatar}`}
                   round={true}
                   size='100%'
                   textSizeRatio={2.5}
@@ -162,7 +163,7 @@ const Profile = () => {
                 <h4>
                   {`${profile.first_name} ${profile.last_name} `}
                   <span className={styles["info__heading__user--username"]}>
-                    @{profile.user?.username}
+                    @{username}
                   </span>
                 </h4>
                 <span className={styles["info__heading__user--project-title"]}>
@@ -173,11 +174,17 @@ const Profile = () => {
             </div>
             <p className={styles.info__body}>{profile.bio}</p>
             <div className={styles.info__footer}>
-              <Button variant='small'>Edit Info</Button>
+              <CustomNavLink variant='small' to='edit'>
+                Edit Info
+              </CustomNavLink>
             </div>
           </Card>
           <Card className={styles.profile__projects} variant='boxy'>
-            Project Section
+            <NavLink to='one'>Link1</NavLink>
+            <NavLink to='two'>Link2</NavLink>
+            <NavLink to='three'>Link3</NavLink>
+            <NavLink to='four'>Link4</NavLink>
+            <Outlet />
           </Card>
         </section>
       </Container>
@@ -191,4 +198,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default UserProfile;

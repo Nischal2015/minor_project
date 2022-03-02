@@ -10,7 +10,6 @@ export const authMiddleware = (store) => (next) => (action) => {
   ) {
     localStorage.removeItem("access");
     localStorage.removeItem("refresh");
-    localStorage.removeItem("isAuthenticated");
   }
   return next(action);
 };

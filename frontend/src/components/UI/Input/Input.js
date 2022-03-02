@@ -11,7 +11,7 @@ const Input = ({ type, placeholder, id, variant, ariaRequired, required }) => {
       placeholder={placeholder || null}
       data-variant={variant || null}
       aria-required={ariaRequired || "false"}
-      required={required}
+      required={required || false}
     />
   );
 };

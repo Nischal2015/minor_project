@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "c714c89a0d6aa1b774ba06ddd588092d76e5a7c26afe4802ea41ab51ba7b7d7a"
+            "sha256": "cd017d4455de494c4f4fde60a1631507963a6550c3ef11e04ae2a3496347c150"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -183,6 +183,14 @@
             ],
             "index": "pypi",
             "version": "==3.11.0"
+        },
+        "django-debug-toolbar": {
+            "hashes": [
+                "sha256:644bbd5c428d3283aa9115722471769cac1bec189edf3a0c855fd8ff870375a9",
+                "sha256:6b633b6cfee24f232d73569870f19aa86c819d750e7f3e833f2344a9eb4b4409"
+            ],
+            "index": "pypi",
+            "version": "==3.2.4"
         },
         "django-templated-mail": {
             "hashes": [
@@ -444,14 +452,6 @@
             ],
             "index": "pypi",
             "version": "==0.4.2"
-        },
-        "tzdata": {
-            "hashes": [
-                "sha256:3eee491e22ebfe1e5cfcc97a4137cd70f092ce59144d81f8924a844de05ba8f5",
-                "sha256:68dbe41afd01b867894bbdfd54fa03f468cfa4f0086bfb4adcd8de8f24f3ee21"
-            ],
-            "markers": "sys_platform == 'win32'",
-            "version": "==2021.5"
         },
         "uritemplate": {
             "hashes": [

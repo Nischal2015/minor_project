@@ -34,7 +34,7 @@ const LoggedInList = () => {
         <div className={styles.dropdown__content}>
           <ul className={styles["dropdown__content--list"]}>
             <li>
-              <Link to='/' className={styles["dropdown__content--link"]}>
+              <Link to='/profile' className={styles["dropdown__content--link"]}>
                 <HiUser />
                 <p>Profile</p>
               </Link>
@@ -44,10 +44,6 @@ const LoggedInList = () => {
               <p onClick={logOutHandler}>Logout</p>
             </li>
           </ul>
-
-          {/* <Button style={style} variant='rounded' onClick={logOutHandler}>
-            Logout
-          </Button> */}
         </div>
       </div>
     )

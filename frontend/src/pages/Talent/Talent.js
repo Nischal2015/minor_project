@@ -16,6 +16,7 @@ import Avatar from "react-avatar";
 import { HiArrowNarrowRight } from "react-icons/hi";
 
 import axios from "axios";
+import { useSelector } from "react-redux";
 
 import styles from "./Talent.module.scss";
 
@@ -60,15 +61,18 @@ const Talent = () => {
 
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
+  const uid = useSelector((state) => state.auth.user?.id);
 
   useEffect(() => {
-    getUsers();
-  }, []);
+    getUsers(uid);
+  }, [uid]);
 
-  const getUsers = async () => {
+  const getUsers = async (uid) => {
     setLoading(true);
     try {
-      const response = await axios.get("api/profiles/");
+      const response = uid
+        ? await axios.post("api/profiles/", { uid })
+        : await axios.get("api/profiles/");
       setUsers(response.data);
     } catch (error) {
       console.log(error);
@@ -111,52 +115,55 @@ const Talent = () => {
             {loading ? (
               <LoadingBouncer />
             ) : (
-              users.map((props) => {
-                const { user, rating, avatar, ...otherList } = props;
-                return (
-                  <div className={styles.list} key={user.id}>
-                    <picture className={styles.list__picture}>
-                      {avatar === null ? (
-                        <Avatar
-                          name={`${otherList.first_name} ${otherList.last_name}`}
-                          round={true}
-                          size='100%'
-                          textSizeRatio={2.25}
-                          alt='Name Initials Avatar'
-                          maxInitials={3}
-                        />
-                      ) : (
-                        <Avatar
-                          src={avatar}
-                          round={true}
-                          size='100%'
-                          textSizeRatio={2.25}
-                          alt='Profile Avatar'
-                        />
-                      )}
-                    </picture>
+              users
+                .filter((props) => props.user.id !== uid)
+                .map((props) => {
+                  const { user, rating, avatar, ...otherList } = props;
+                  return (
+                    <div className={styles.list} key={user.id}>
+                      <picture className={styles.list__picture}>
+                        {console.log(avatar)}
+                        {avatar === null ? (
+                          <Avatar
+                            name={`${otherList.first_name} ${otherList.last_name}`}
+                            round={true}
+                            size='100%'
+                            textSizeRatio={2.25}
+                            alt='Name Initials Avatar'
+                            maxInitials={3}
+                          />
+                        ) : (
+                          <Avatar
+                            src={`static/${avatar}`}
+                            round={true}
+                            size='100%'
+                            textSizeRatio={2.25}
+                            alt='Profile Avatar'
+                          />
+                        )}
+                      </picture>
 
-                    <div className={styles.list__text}>
-                      <List {...otherList} />
-                    </div>
+                      <div className={styles.list__text}>
+                        <List {...otherList} />
+                      </div>
 
-                    <div className={styles.list__number}>
-                      <CircularRating>{rating}</CircularRating>
-                      <CustomNavLink
-                        className={styles.list__more}
-                        to={`/talent/${user.id}`}
-                        variant='small primary'
-                        ariaLabel='See more detail about the freelancer'
-                      >
-                        See More{" "}
-                        <span>
-                          <HiArrowNarrowRight />
-                        </span>
-                      </CustomNavLink>
+                      <div className={styles.list__number}>
+                        <CircularRating>{rating}</CircularRating>
+                        <CustomNavLink
+                          className={styles.list__more}
+                          to={`/talent/${user.id}`}
+                          variant='small primary'
+                          ariaLabel='See more detail about the freelancer'
+                        >
+                          See More{" "}
+                          <span>
+                            <HiArrowNarrowRight />
+                          </span>
+                        </CustomNavLink>
+                      </div>
                     </div>
-                  </div>
-                );
-              })
+                  );
+                })
             )}
           </div>
           <div className={styles.results__pagination}></div>

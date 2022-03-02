@@ -20,6 +20,8 @@ class ProfileSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class ProjectDefineSerializer(serializers.ModelSerializer):
+    creator = UserSerializer()
+    skills = SkillSerializer(many=True)
     class Meta:
         model = Project_define
         fields = '__all__'

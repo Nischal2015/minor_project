@@ -82,7 +82,7 @@ class Profile(models.Model):
     last_name = models.CharField(max_length=255, null=False)
 
     avatar = models.ImageField(
-        max_length=255, upload_to=settings.MEDIA_ROOT/'profile_images/', null=True, blank=True)
+        max_length=255, upload_to='profile_images/', null=True, blank=True)
 
     profile_title = models.TextField(null=True)
     bio = models.TextField(null=True, blank=True)
@@ -132,8 +132,7 @@ class Job_category(models.Model):
 
 
 class Project_define(models.Model):
-
-    creator = models.ForeignKey(Profile, on_delete=models.PROTECT)
+    creator = models.ForeignKey(User, on_delete=models.PROTECT)
     skills = models.ManyToManyField(Skill)
 
     project_title = models.CharField(max_length=255, null=False)
