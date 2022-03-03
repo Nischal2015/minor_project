@@ -9,7 +9,8 @@ const PostedTime = ({ posted }) => {
   const calculateTime = () => {
     let postedAgo = time - creationDate;
     if (postedAgo < 6e4) {
-      return [postedAgo, "seconds"];
+      let postedTime = Math.floor(postedAgo / 1000);
+      return [postedTime, "seconds"];
     } else if (postedAgo < 3.6e6) {
       let postedTime = Math.floor(postedAgo / 6e4);
       return [postedTime, postedTime === 1 ? "minute" : "minutes"];

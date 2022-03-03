@@ -1,18 +1,20 @@
 from django.shortcuts import render, redirect
+from django.http.request import QueryDict
 from django.shortcuts import get_object_or_404
 from django.conf import settings
 from .models import User, Profile, Project_define, Skill, Job_category, Project_bid
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.decorators import parser_classes
 from rest_framework import viewsets
 from rest_framework.parsers import JSONParser, MultiPartParser, FormParser
 from rest_framework.utils import encoders
-from .serializers import UserSerializer, ProfileSerializer, ProjectDefineSerializer, SkillSerializer, CategorySerializer, ProjectBidSerializer
+from .serializers import ProfileEditSerializer, UserSerializer, ProfileSerializer, ProjectDefineSerializer, SkillSerializer, CategorySerializer, ProjectViewSerializer, ProjectBidSerializer
 from api import serializers
 from rest_framework.utils import encoders
-
+import json
 from django.contrib.auth import authenticate, login, logout
 
 import requests
@@ -132,17 +134,27 @@ def getUserProfile(request):
     serializer = ProfileSerializer(query, many=False)
     return Response(serializer.data)
 
-@api_view(['POST'])
+@api_view(['POST', 'PUT'])
 def editUserProfile(request):
+    print(request.data)
+    new_request = QueryDict.copy(request.data)
+    skill = request.data['skills'].split(',')
+    new_request.setlist( 'skills', skill )
     if request.method == 'POST':
-        print(request.data)
-        serializer = ProfileSerializer(data=request.POST)
+        serializer = ProfileEditSerializer(data=new_request)
         print(serializer.is_valid())
         if serializer.is_valid():
-            query = Profile.objects.get(user=request.data["userId"])
-            user_edit = ProfileSerializer(request.POST, instance=query)
-            user_edit.save()
-            return Response({'User Data Edited': request.data})
+            serializer.save()
+            return Response({'User Data Edited': new_request})
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    elif request.method == 'PUT':
+        query = Profile.objects.get(user=new_request["user"])
+        serializer = ProfileEditSerializer(data=new_request, instance=query)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({'User Data Edited': new_request})
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -180,16 +192,37 @@ def postJob(request):
     #     else:
     #         return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
     if request.method == 'POST':
-        print(request.data)
-        serializer = ProjectDefineSerializer(data=request.data)
-        # print(request.FILES)
-        # print(serializer.initial_data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response({'received data': request.data})
-        else:
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        # if not request.POST._mutable:
+        #     request.POST._mutable = True
+        # data = request.POST
+        # split_data = data["skills"].split(",")
+        # while len(split_data) == 1 and isinstance(split_data[0], list):
+        #     split_data = split_data[0]
 
+
+        # data['skills'] = split_data
+        # serializer = ProjectDefineSerializer(data=data)
+        # print("serializer=", serializer)
+        # # print(request.FILES)
+        # # print(serializer.initial_data)
+        # if serializer.is_valid():
+        #     serializer.save()
+        #     return Response({'received data': request.data})
+        # else:
+        #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        if request.method == 'POST':
+            new_request = QueryDict.copy(request.data)
+            skill = request.data['skills'].split(',')
+            new_request.setlist( 'skills', skill )
+            serializer = ProjectDefineSerializer(data=new_request)
+            # print(request.FILES)
+            print(serializer.initial_data)
+            if serializer.is_valid():
+                print("milan")
+                serializer.save()
+                return Response({'received data': new_request})
+            else:
+                return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['POST'])
 # @parser_classes([MultiPartParser,FormParser])
@@ -222,18 +255,22 @@ def postBid(request):
 
 @api_view(['GET', 'POST'])
 def getJobs(request):
+    print(request)
     if request.method == 'GET':
         project_define = Project_define.objects.select_related('creator').prefetch_related('skills').all()
     elif request.method == 'POST':
         id = request.data["creatorId"]
-        project_define = Project_define.objects.select_related('creator').prefetch_related('skills').exclude(creator__id = id)
+        if 'username' in request.data:
+            project_define = Project_define.objects.select_related('creator').prefetch_related('skills').filter(creator__id = id)
+        else: 
+            project_define = Project_define.objects.select_related('creator').prefetch_related('skills').exclude(creator__id = id)
         
-    serializer = ProjectDefineSerializer(project_define,context={'request': request}, many=True)
+    serializer = ProjectViewSerializer(project_define,context={'request': request}, many=True)
     return Response(serializer.data)
 
 @api_view(['GET'])
 def getJob(request, pk):
-    project_define = Project_define.objects.select_related('creator').prefetch_related('skills').get(id=pk)
+    project_define = Project_define.objects.get(id=pk)
     serializer = ProjectDefineSerializer(project_define, many=False)
     return Response(serializer.data)
 
@@ -244,8 +281,16 @@ def BidList(request):
         serializer = ProjectBidSerializer(project_bid, many=True)
         return Response(serializer.data)
 
+# @api_view(['GET'])
+# def JobList(request):
+#     if request.method == 'GET':
+#         project_define = Project_define.objects.all()
+#         serializer = ProjectViewSerializer(project_define,context={'request': request}, many=True)
+#         print(serializer.data)
+#         return Response(serializer.data)
 
-@api_view(['GET'])
+
+@api_view(['GET', 'PUT'])
 def Job_detail(request, pk):
     project_define = get_object_or_404(Project_define, pk=pk)
     # if request.method == 'GET':
@@ -271,7 +316,6 @@ def Job_detail(request, pk):
 
 
 class VerifyKhaltiPayment(APIView):
-
     def post(self, request, *args, **kwargs):
         token = request.data["token"]
         amount = request.data["amount"]

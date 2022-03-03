@@ -80,7 +80,6 @@ export const loadUser = () => async (dispatch) => {
     try {
       const response = await axios.get("auth/users/me/", config);
       dispatch(authActions.userLoadedSuccess(response.data));
-      console.log("userlaoded");
     } catch (error) {
       dispatch(authActions.userLoadedFail());
     }

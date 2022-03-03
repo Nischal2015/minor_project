@@ -8,8 +8,8 @@ import Footer from "./components/Footer/Footer";
 import { Routes, Route, Outlet } from "react-router-dom";
 import ScrollToTop from "./components/ScrollToTop";
 import Alert from "./components/UI/Alert/Alert";
-import Pageone from "./pages/UserProfile/Pageone";
-import Pagetwo from "./pages/UserProfile/Pagetwo";
+import UserJobPosts from "./pages/UserProfile/UserJobPosts";
+import UserBids from "./pages/UserProfile/UserBids";
 import Pagethree from "./pages/UserProfile/Pagethree";
 import Pagefour from "./pages/UserProfile/Pagefour";
 
@@ -74,9 +74,9 @@ const App = () => {
               </RequireAuth>
             }
           >
-            <Route index element={<Pageone />} />
-            <Route path='one' element={<Pageone />} />
-            <Route path='two' element={<Pagetwo />} />
+            <Route index element={<UserBids />} />
+            <Route path='bids' element={<UserBids />} />
+            <Route path='job-posts' element={<UserJobPosts />} />
             <Route path='three' element={<Pagethree />} />
             <Route path='four' element={<Pagefour />} />
           </Route>

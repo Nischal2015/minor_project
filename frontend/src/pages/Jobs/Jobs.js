@@ -107,39 +107,31 @@ const Work = () => {
             {loading ? (
               <LoadingBouncer />
             ) : (
-              jobs
-                .filter((props) => props.creator.id !== creatorId)
-                .map(
-                  ({
-                    id,
-                    budget_min,
-                    budget_max,
-                    creation_date,
-                    ...jobList
-                  }) => (
-                    <div className={styles.list} key={id}>
-                      <div className={styles.list__text}>
-                        <List id={id} {...jobList} />
-                      </div>
-
-                      <div className={styles.list__number}>
-                        <Budget budgetMin={budget_min} budgetMax={budget_max} />
-                        <PostedTime posted={creation_date} />
-                        <CustomNavLink
-                          className={styles.list__more}
-                          to={`${id}`}
-                          variant='small primary'
-                          ariaLabel='See more detail about the freelancer'
-                        >
-                          See More{" "}
-                          <span>
-                            <HiArrowNarrowRight />
-                          </span>
-                        </CustomNavLink>
-                      </div>
+              jobs.map(
+                ({ id, budget_min, budget_max, creation_date, ...jobList }) => (
+                  <div className={styles.list} key={id}>
+                    <div className={styles.list__text}>
+                      <List id={id} {...jobList} />
                     </div>
-                  )
+
+                    <div className={styles.list__number}>
+                      <Budget budgetMin={budget_min} budgetMax={budget_max} />
+                      <PostedTime posted={creation_date} />
+                      <CustomNavLink
+                        className={styles.list__more}
+                        to={`${id}`}
+                        variant='small primary'
+                        ariaLabel='See more detail about the freelancer'
+                      >
+                        See More{" "}
+                        <span>
+                          <HiArrowNarrowRight />
+                        </span>
+                      </CustomNavLink>
+                    </div>
+                  </div>
                 )
+              )
             )}
           </div>
           <div className={styles.results__pagination}></div>

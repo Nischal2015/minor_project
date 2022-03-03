@@ -19,13 +19,22 @@ class ProfileSerializer(serializers.ModelSerializer):
         model = Profile
         fields = '__all__'
 
+class ProfileEditSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Profile
+        fields = '__all__'
+
 class ProjectDefineSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Project_define
+        fields = '__all__'
+
+class ProjectViewSerializer(serializers.ModelSerializer):
     creator = UserSerializer()
     skills = SkillSerializer(many=True)
     class Meta:
         model = Project_define
         fields = '__all__'
-
 
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:

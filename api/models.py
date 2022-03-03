@@ -71,7 +71,6 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 
 class Profile(models.Model):
-
     # manytomany column skill_set
 
     user = models.OneToOneField(

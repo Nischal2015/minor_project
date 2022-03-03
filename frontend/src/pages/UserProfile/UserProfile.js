@@ -57,7 +57,6 @@ const UserProfile = () => {
 
   useEffect(() => {
     userId && fetchUserHandler(userId);
-    console.log("fetch user running");
   }, [userId]);
 
   // const { jobheading, description, img, rating, hourlyRate } = profileHolder;
@@ -180,9 +179,12 @@ const UserProfile = () => {
             </div>
           </Card>
           <Card className={styles.profile__projects} variant='boxy'>
-            <NavLink to='one'>Link1</NavLink>
-            <NavLink to='two'>Link2</NavLink>
+            <NavLink to='bids'>Bids</NavLink>
+            {" | "}
+            <NavLink to='job-posts'>Job Posts</NavLink>
+            {" | "}
             <NavLink to='three'>Link3</NavLink>
+            {" | "}
             <NavLink to='four'>Link4</NavLink>
             <Outlet />
           </Card>

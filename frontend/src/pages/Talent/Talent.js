@@ -59,25 +59,23 @@ const Talent = () => {
   // const COMMUNICATION_WEIGHT = 0.15;
   // const QUALITYWORK_WEIGHT = 0.45;
 
-  const [users, setUsers] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [users, setUsers] = useState(null);
   const uid = useSelector((state) => state.auth.user?.id);
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
   useEffect(() => {
-    getUsers(uid);
-  }, [uid]);
+    getUsers(uid, isAuthenticated);
+  }, [uid, isAuthenticated]);
 
-  const getUsers = async (uid) => {
-    setLoading(true);
+  const getUsers = async (uid, isAuthenticated) => {
     try {
-      const response = uid
+      const response = isAuthenticated
         ? await axios.post("api/profiles/", { uid })
         : await axios.get("api/profiles/");
       setUsers(response.data);
     } catch (error) {
       console.log(error);
     }
-    setLoading(false);
   };
 
   return (
@@ -112,7 +110,7 @@ const Talent = () => {
           <div className={styles.results__list}>
             {/* FROM API */}
 
-            {loading ? (
+            {users === null ? (
               <LoadingBouncer />
             ) : (
               users
@@ -122,7 +120,6 @@ const Talent = () => {
                   return (
                     <div className={styles.list} key={user.id}>
                       <picture className={styles.list__picture}>
-                        {console.log(avatar)}
                         {avatar === null ? (
                           <Avatar
                             name={`${otherList.first_name} ${otherList.last_name}`}

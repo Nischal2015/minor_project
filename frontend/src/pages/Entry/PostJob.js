@@ -9,11 +9,12 @@ import axios from "axios";
 import { useForm, Controller } from "react-hook-form";
 
 import styles from "./Login.module.scss";
+import { useSelector } from "react-redux";
 
 const PostJob = () => {
   const [categoryArr, setCategoryArr] = useState([]);
   const [skillArr, setSkillArr] = useState([]);
-  // const [fileUpload, setfileUpload] = useState(null);
+  const uid = useSelector((state) => state.auth.user?.id);
   const {
     control,
     register,
@@ -28,16 +29,15 @@ const PostJob = () => {
       budget_max: null,
       bid_deadline: null,
       job_category: null,
-      projectFile: {},
+      projectFile: "",
       skills: [],
-      creator: 1,
+      creator: uid,
     },
   });
 
   const fetchCategory = async () => {
     const responseCategory = await axios.get("/api/categories/");
     setCategoryArr(responseCategory.data);
-    console.log(responseCategory.data);
     // try {
     //   // const responseUser = await axios.get(
     //   //   `/users/${responseProfile.data.user}`
@@ -59,18 +59,18 @@ const PostJob = () => {
     // console.log(categoryArr);
     // const skillsInProject = responseSkills.data.filter((item)=>categoryArr["skills"].includes(item.id))
     setSkillArr(responseSkills.data);
-    console.log(responseSkills.data);
   };
 
   const registerJob = async (formData) => {
     const skillFromForm = formData["skills"];
     const projectCatFromForm = formData["job_category"];
     const skillIdArr = skillFromForm.map((item) => item.id);
-    formData.skills = skillIdArr;
     formData.job_category = projectCatFromForm.id;
-    console.log(formData);
     const fData = new FormData();
-    fData.append("projectFile", formData.projectFile[0]);
+    fData.append(
+      "projectFile",
+      formData.projectFile?.length === 0 ? "" : formData.projectFile[0]
+    );
     fData.append("project_title", formData.project_title);
     fData.append("job_category", formData.job_category);
     fData.append("project_length", formData.project_length);
@@ -78,14 +78,17 @@ const PostJob = () => {
     fData.append("budget_max", formData.budget_max);
     fData.append("bid_deadline", formData.bid_deadline);
     fData.append("project_description", formData.project_description);
-    fData.append("skills", formData.skills);
-    fData.append("creator", 1);
+
+    // skillIdArr.forEach((item) => fData.append("skills", JSON.stringify(item)));
+    fData.append("skills", skillIdArr);
+    fData.append("creator", uid);
     console.log(fData);
 
     try {
       const response = await axios.post("/api/postJob/", fData, {
+        method: "POST",
         headers: {
-          "Content-Type": "multipart/form-data",
+          "Content-Type": "application/json",
         },
       });
       console.log(response);
@@ -117,7 +120,7 @@ const PostJob = () => {
         console.log(data);
         if (
           data.projectFile.length !== 0 &&
-          data.projectFile[0].size > 1 * 1024 * 1024
+          data.projectFile[0]?.size > 1 * 1024 * 1024
         ) {
           alert("File size shouldn't exceed 1MB");
         } else {
@@ -225,9 +228,7 @@ const PostJob = () => {
             type='file'
             name='projectFile'
             accept='image/*,.pdf,.doc,.docx'
-            {...register("projectFile", {
-              required: true,
-            })}
+            {...register("projectFile")}
             // onChange={(e) => {
             //   if (e.target.name === "projectFile") {
             //     setfileUpload(e.target.files[0]);
