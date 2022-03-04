@@ -80,7 +80,6 @@ const Login = () => {
   return (
     <form
       onSubmit={handleSubmit((data) => {
-        console.log(from);
         containsSignup && dispatch(createUser(data));
         !containsSignup &&
           dispatch(

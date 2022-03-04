@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import styles from "../Jobs/Jobs.module.scss";
 import LoadingBouncer from "../../components/UI/Loading/LoadingBouncer";
-import Card from "../../components/UI/Card/Card";
 import Budget from "../../components/SideList/Budget";
 import List from "../../components/List/List";
 import PostedTime from "../../components/SideList/PostedTime";
@@ -17,26 +16,26 @@ const UserJobPosts = () => {
   const creatorId = useSelector((state) => state.auth.user?.id);
   const username = useSelector((state) => state.auth.user?.username);
 
-  const fetchUserJobs = async (creatorId, username) => {
+  const fetchUserJobs = useCallback(async () => {
     setLoading(true);
     try {
-      const response = await axios.post("api/jobs/", { creatorId, username });
+      const response = await axios.post("/api/jobs/", { creatorId, username });
       setUserJobs(response.data);
     } catch (error) {
       console.log(error);
     }
     setLoading(false);
-  };
-
-  useEffect(() => {
-    fetchUserJobs(creatorId, username);
   }, [creatorId, username]);
 
+  useEffect(() => {
+    fetchUserJobs();
+  }, [fetchUserJobs]);
+
   return (
-    <Card className={styles.results} variant='boxy'>
-      <div className={styles.results__heading}>
-        <h3 className='heading--tertiary'>Top Results</h3>
-      </div>
+    <div
+      className={styles.results}
+      style={{ overflowY: "scroll", height: "800px" }}
+    >
       <div className={styles.results__list}>
         {loading ? (
           <LoadingBouncer />
@@ -63,8 +62,7 @@ const UserJobPosts = () => {
           )
         )}
       </div>
-      <div className={styles.results__pagination}></div>
-    </Card>
+    </div>
   );
 };
 

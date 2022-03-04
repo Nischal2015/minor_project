@@ -211,3 +211,5 @@ CORS_ALLOW_ALL_ORIGINS: True
 
 KHALTI_SECRET_KEY = "test_secret_key_fff7d90db7cb405ea23533acf52cc4bf"
 KHALTI_VERIFY_URL = "https://khalti.com/api/v2/payment/verify/"
+
+CSRF_TRUSTED_ORIGINS = ['http://127.0.0.1:8000/']

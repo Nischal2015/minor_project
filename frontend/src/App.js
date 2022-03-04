@@ -80,7 +80,14 @@ const App = () => {
             <Route path='three' element={<Pagethree />} />
             <Route path='four' element={<Pagefour />} />
           </Route>
-          <Route path='profile/edit' element={<ProfileDetails />} />
+          <Route
+            path='profile/edit'
+            element={
+              <RequireAuth>
+                <ProfileDetails />
+              </RequireAuth>
+            }
+          />
           <Route path='jobs' element={<Outlet />}>
             <Route
               index

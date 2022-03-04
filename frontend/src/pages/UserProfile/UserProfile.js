@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
-
 import Card from "../../components/UI/Card/Card";
 import CircularRatings from "../../components/UI/Ratings/CircularRatings/CircularRatings";
 import Container from "../../components/UI/Container/Container";
-import NotFound from "../NotFound/NotFound";
 import {
   FaFacebook,
   FaTwitter,
@@ -16,13 +14,11 @@ import { useSelector } from "react-redux";
 import styles from "../Profile/Profile.module.scss";
 import Avatar from "react-avatar";
 
-import { NavLink, Outlet } from "react-router-dom";
+import { Navigate, useNavigate, NavLink, Outlet } from "react-router-dom";
 
-// This is the data to be received from the backend
-// import { talentLists } from "../Talent/Talent";
 import axios from "axios";
 import LoadingSpinner from "../../components/UI/Loading/LoadingSpinner";
-import { CustomNavLink } from "../../components/UI/CustomLink/CustomLink";
+import Button from "../../components/UI/Button/Button";
 
 const UserProfile = () => {
   const [profile, setProfile] = useState([]);
@@ -30,16 +26,13 @@ const UserProfile = () => {
   const [loading, setLoading] = useState(false);
   const username = useSelector((state) => state.auth.user?.username);
   const userId = useSelector((state) => state.auth.user?.id);
+  let navigate = useNavigate();
 
   const feature = {
     hoursPerWeek: 35,
     totalJobs: 78,
     totalHours: 500,
   };
-  // This filtering is to be done by the backend
-  // const profileHolder = talentLists.filter(
-  //   (talentItem) => talentItem.id === +id
-  // )[0];
 
   const fetchUserHandler = async (userId) => {
     setError(null);
@@ -59,10 +52,8 @@ const UserProfile = () => {
     userId && fetchUserHandler(userId);
   }, [userId]);
 
-  // const { jobheading, description, img, rating, hourlyRate } = profileHolder;
-  // const { reliability, punctual, communication, qualityWork } = rating;
-
-  if (error) return <NotFound />;
+  if (error)
+    return <Navigate to='edit' state={{ profile: "none" }} replace={true} />;
 
   return loading ? (
     <LoadingSpinner />
@@ -173,9 +164,14 @@ const UserProfile = () => {
             </div>
             <p className={styles.info__body}>{profile.bio}</p>
             <div className={styles.info__footer}>
-              <CustomNavLink variant='small' to='edit'>
+              <Button
+                variant='small'
+                onClick={() =>
+                  navigate("edit", { state: { profile } }, { replace: true })
+                }
+              >
                 Edit Info
-              </CustomNavLink>
+              </Button>
             </div>
           </Card>
           <Card className={styles.profile__projects} variant='boxy'>

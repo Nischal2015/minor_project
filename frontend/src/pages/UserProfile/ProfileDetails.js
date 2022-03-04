@@ -7,42 +7,66 @@ import axios from "axios";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 import Select from "react-select";
-
-import styles from "../Entry/Login";
+import { Navigate, useLocation } from "react-router-dom";
+import styles from "../Entry/Login.module.scss";
 import LoadingSlider from "../../components/UI/Loading/LoadingSlider";
+import { alertActions } from "../../store/alert-slice";
 
 const ProfileDetails = () => {
   const [skillArr, setSkillArr] = useState([]);
   const uid = useSelector((state) => state.auth.user?.id);
+  const isProcessing = useSelector((state) => state.auth.isProcessing);
+  const [profileCreationSuccess, setProfileCreationSuccess] = useState(false);
+  const dispatch = useDispatch();
+  let location = useLocation();
+  let profile = location.state?.profile;
+  console.log(profile?.avatar);
+
   const validationSchema = Yup.object().shape({
-    firstname: Yup.string().required("Firstname is required"),
-    lastname: Yup.string().required("Username is required"),
-    profileTitle: Yup.string().required("Username is required"),
+    firstname: Yup.string()
+      .default(profile?.first_name || "")
+      .required("Firstname is required"),
+    lastname: Yup.string()
+      .default(profile?.last_name || "")
+      .required("Username is required"),
+    profileTitle: Yup.string()
+      .default(profile?.profile_title || "")
+      .required("Username is required"),
     avatar: Yup.mixed(),
-    bio: Yup.string().required("Username is required"),
+    bio: Yup.string()
+      .default(profile?.bio || "")
+      .required("Username is required"),
     dob: Yup.date()
       .required("DOB is required")
       .max(new Date(), "Not a valid date"),
-    country: Yup.string().required("Country is required"),
+    country: Yup.string()
+      .default(profile?.country || "")
+      .required("Country is required"),
     hourlyRate: Yup.number()
       .typeError("you must specify a number")
+      .default(profile?.hourly_rate)
       .required("Hourly Rate is required"),
     hoursPerWeek: Yup.number()
       .typeError("you must specify a number")
+      .default(profile?.hours_per_week)
       .required("Hourly per Week is required"),
-    state: Yup.string(),
-    city: Yup.string(),
+    state: Yup.string().default(profile?.state || ""),
+    city: Yup.string().default(profile?.city || ""),
+    skills: Yup.mixed().default(
+      profile?.skills ? profile.skills.map((item) => item) : ""
+    ),
   });
 
-  const formOptions = { resolver: yupResolver(validationSchema) };
+  const formOptions = {
+    resolver: yupResolver(validationSchema),
+    defaultValues: validationSchema.cast(),
+  };
 
   const fetchSkills = async () => {
     const responseSkills = await axios.get("/api/skills/");
-    // console.log(categoryArr);
-    // const skillsInProject = responseSkills.data.filter((item)=>categoryArr["skills"].includes(item.id))
     setSkillArr(responseSkills.data);
   };
 
@@ -57,17 +81,17 @@ const ProfileDetails = () => {
     formState: { errors },
   } = useForm(formOptions);
 
-  const isProcessing = useSelector((state) => state.auth.isProcessing);
+  const dateConvert = (dob) => {
+    let today = new Date(dob);
+    let dd = String(today.getDate()).padStart(2, "0");
+    let mm = String(today.getMonth() + 1).padStart(2, "0");
+    let yyyy = today.getFullYear();
+    return yyyy + "-" + mm + "-" + dd;
+  };
 
   const sendUserData = async (data) => {
-    console.log(data);
     const formData = new FormData();
     const skillsIdArr = data["skills"].map((item) => item.id);
-    let today = new Date(data.dob);
-    let dd = String(today.getDate()).padStart(2, "0");
-    let mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
-    let yyyy = today.getFullYear();
-    let dob = yyyy + "-" + mm + "-" + dd;
 
     formData.append("user", uid);
     formData.append("first_name", data.firstname);
@@ -75,43 +99,53 @@ const ProfileDetails = () => {
     formData.append("avatar", data.avatar.length === 0 ? "" : data.avatar[0]);
     formData.append("profile_title", data.profileTitle);
     formData.append("bio", data.bio);
-    formData.append("dob", dob);
+    formData.append("dob", dateConvert(data.dob));
     formData.append("country", data.country);
     formData.append("city", data?.city || null);
     formData.append("state", data?.state || null);
     formData.append("skills", skillsIdArr);
     formData.append("hourly_rate", data.hourlyRate);
     formData.append("hours_per_week", data.hoursPerWeek);
-    console.log(formData);
-    console.log(data.avatar.length);
+
+    const configuration = {
+      headers: {
+        "Content-type": "multipart/form-data",
+      },
+    };
 
     try {
-      const response = await axios.put("/api/user-profile/edit/", formData, {
-        headers: {
-          "Content-type": "multipart/form-data",
-        },
-      });
+      const request = profile === "none" ? axios.post : axios.put;
+      const response = await request(
+        "/api/user-profile/edit/",
+        formData,
+        configuration
+      );
       console.log(response.data);
+      dispatch(
+        alertActions.success("Your profile has been successfully updated")
+      );
+      setProfileCreationSuccess(true);
     } catch (error) {
       console.log(error);
+      dispatch(alertActions.error("Failed to update your profile"));
     }
   };
 
-  // Return Statement
   return (
-    <form
-      onSubmit={handleSubmit((data) => {
-        sendUserData(data);
-      })}
-    >
-      <Card className={styles.login} role='group' ariaLabelledBy='kamao'>
-        {isProcessing && <LoadingSlider />}
-        <div className={styles.login__header}>
-          <h2 className='heading--secondary' id='kamao'>
-            Kamao
-          </h2>
-          <span>Welcome to you</span>
-        </div>
+    <Card className={styles.login} role='group' ariaLabelledBy='kamao'>
+      {isProcessing && <LoadingSlider />}
+      {profileCreationSuccess && <Navigate to='/profile' replace={true} />}
+      <div className={styles.login__header}>
+        <h2 className='heading--secondary' id='kamao'>
+          Kamao
+        </h2>
+        <span>Welcome to you</span>
+      </div>
+      <form
+        onSubmit={handleSubmit((data) => {
+          sendUserData(data);
+        })}
+      >
         <div className={styles.login__description}>
           {/* Firstname */}
           <LoginInput
@@ -199,11 +233,11 @@ const ProfileDetails = () => {
         </div>
         <div className={styles.login__footer}>
           <Button type='submit' disabled={isProcessing}>
-            Login
+            Save Profile
           </Button>
         </div>
-      </Card>
-    </form>
+      </form>
+    </Card>
   );
 };
 
