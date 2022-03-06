@@ -11,7 +11,7 @@ export const createUser = (body) => async (dispatch) => {
 
   try {
     dispatch(authActions.processingRequest());
-    await axios.post("auth/users/", body, config);
+    await axios.post("/auth/users/", body, config);
     dispatch(authActions.signupSuccess());
     dispatch(
       alertActions.success(
@@ -53,7 +53,7 @@ export const checkAuthenticated = () => async (dispatch) => {
     const body = { token: localStorage.getItem("access") };
 
     try {
-      const response = await axios.post("auth/jwt/verify/", body, config);
+      const response = await axios.post("/auth/jwt/verify/", body, config);
       if (response.data.code !== "token_not_valid") {
         dispatch(authActions.authenticationSuccess());
       } else {
@@ -78,7 +78,7 @@ export const loadUser = () => async (dispatch) => {
     };
 
     try {
-      const response = await axios.get("auth/users/me/", config);
+      const response = await axios.get("/auth/users/me/", config);
       dispatch(authActions.userLoadedSuccess(response.data));
     } catch (error) {
       dispatch(authActions.userLoadedFail());
@@ -97,7 +97,7 @@ export const login = (body, callback) => async (dispatch) => {
 
   try {
     dispatch(authActions.processingRequest());
-    const response = await axios.post("auth/jwt/create/", body, config);
+    const response = await axios.post("/auth/jwt/create/", body, config);
     dispatch(authActions.loginSuccess(response.data));
     dispatch(loadUser());
     dispatch(alertActions.success("You have succesfully logged in"));
@@ -117,7 +117,7 @@ export const resetPassword = (body) => async (dispatch) => {
 
   try {
     dispatch(authActions.processingRequest());
-    await axios.post("auth/users/reset_password/", body, config);
+    await axios.post("/auth/users/reset_password/", body, config);
     dispatch(authActions.passwordResetSuccess());
     dispatch(
       alertActions.success(`Email has been sent successfully to ${body.email}`)

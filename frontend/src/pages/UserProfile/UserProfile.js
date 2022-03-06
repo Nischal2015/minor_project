@@ -12,18 +12,18 @@ import {
 import { useSelector } from "react-redux";
 
 import styles from "../Profile/Profile.module.scss";
+import styles2 from "./UserProfile.module.scss";
 import Avatar from "react-avatar";
 
-import { Navigate, useNavigate, NavLink, Outlet } from "react-router-dom";
+import { Navigate, useNavigate, NavLink, Outlet, Link } from "react-router-dom";
 
 import axios from "axios";
 import LoadingSpinner from "../../components/UI/Loading/LoadingSpinner";
 import Button from "../../components/UI/Button/Button";
 
 const UserProfile = () => {
-  const [profile, setProfile] = useState([]);
+  const [profile, setProfile] = useState(null);
   const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false);
   const username = useSelector((state) => state.auth.user?.username);
   const userId = useSelector((state) => state.auth.user?.id);
   let navigate = useNavigate();
@@ -36,7 +36,6 @@ const UserProfile = () => {
 
   const fetchUserHandler = async (userId) => {
     setError(null);
-    setLoading(true);
     try {
       const responseProfile = await axios.post(`/api/user-profile/`, {
         userId,
@@ -45,7 +44,6 @@ const UserProfile = () => {
     } catch (error) {
       setError(true);
     }
-    setLoading(false);
   };
 
   useEffect(() => {
@@ -55,7 +53,7 @@ const UserProfile = () => {
   if (error)
     return <Navigate to='edit' state={{ profile: "none" }} replace={true} />;
 
-  return loading ? (
+  return !profile ? (
     <LoadingSpinner />
   ) : (
     <React.Fragment>
@@ -175,13 +173,17 @@ const UserProfile = () => {
             </div>
           </Card>
           <Card className={styles.profile__projects} variant='boxy'>
-            <NavLink to='bids'>Bids</NavLink>
-            {" | "}
-            <NavLink to='job-posts'>Job Posts</NavLink>
-            {" | "}
-            <NavLink to='three'>Link3</NavLink>
-            {" | "}
-            <NavLink to='four'>Link4</NavLink>
+            <div className={styles2["profile__cat--navigation"]}>
+              <div className={styles2["profile__cat--link"]}>
+                <Link to='bids'>Bids</Link>
+                {" | "}
+                <NavLink to='job-posts'>Job Posts</NavLink>
+                {" | "}
+                <NavLink to='three'>Link3</NavLink>
+                {" | "}
+                <NavLink to='four'>Link4</NavLink>
+              </div>
+            </div>
             <Outlet />
           </Card>
         </section>

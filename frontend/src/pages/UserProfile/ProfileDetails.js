@@ -23,7 +23,6 @@ const ProfileDetails = () => {
   const dispatch = useDispatch();
   let location = useLocation();
   let profile = location.state?.profile;
-  console.log(profile?.avatar);
 
   const validationSchema = Yup.object().shape({
     firstname: Yup.string()

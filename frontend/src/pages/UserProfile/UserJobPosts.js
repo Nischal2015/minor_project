@@ -5,31 +5,38 @@ import Budget from "../../components/SideList/Budget";
 import List from "../../components/List/List";
 import PostedTime from "../../components/SideList/PostedTime";
 import { CustomNavLink } from "../../components/UI/CustomLink/CustomLink";
-
 import axios from "axios";
-
+import Searchbar from "../../components/UI/Searchbar/Searchbar";
 import { useSelector } from "react-redux";
 
 const UserJobPosts = () => {
-  const [userJobs, setUserJobs] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [userJobs, setUserJobs] = useState(null);
+  const [printUserJobs, setPrintUserJobs] = useState(null);
   const creatorId = useSelector((state) => state.auth.user?.id);
   const username = useSelector((state) => state.auth.user?.username);
 
   const fetchUserJobs = useCallback(async () => {
-    setLoading(true);
     try {
       const response = await axios.post("/api/jobs/", { creatorId, username });
+      setPrintUserJobs(response.data);
       setUserJobs(response.data);
     } catch (error) {
       console.log(error);
     }
-    setLoading(false);
   }, [creatorId, username]);
 
   useEffect(() => {
     fetchUserJobs();
   }, [fetchUserJobs]);
+
+  const searchDataHandler = (searchTerm) => {
+    const updatedItems =
+      userJobs &&
+      userJobs.filter((job) =>
+        job.project_title.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    setPrintUserJobs(updatedItems);
+  };
 
   return (
     <div
@@ -37,10 +44,11 @@ const UserJobPosts = () => {
       style={{ overflowY: "scroll", height: "800px" }}
     >
       <div className={styles.results__list}>
-        {loading ? (
+        <Searchbar onSearch={searchDataHandler} />
+        {!userJobs ? (
           <LoadingBouncer />
         ) : (
-          userJobs.map(
+          printUserJobs.map(
             ({ id, budget_min, budget_max, creation_date, ...jobList }) => (
               <div className={styles.list} key={id}>
                 <div className={styles.list__text}>
@@ -55,7 +63,9 @@ const UserJobPosts = () => {
                     to={`${id}`}
                     variant='small primary'
                     ariaLabel='See more detail about the freelancer'
-                  ></CustomNavLink>
+                  >
+                    See More
+                  </CustomNavLink>
                 </div>
               </div>
             )

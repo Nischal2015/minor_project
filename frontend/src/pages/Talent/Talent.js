@@ -10,7 +10,6 @@ import List from "../../components/List/List";
 import Slider from "../../components/UI/Slider/Slider";
 import LoadingBouncer from "../../components/UI/Loading/LoadingBouncer";
 
-import profilePic from "../../assets/png/user_hero.png";
 import Avatar from "react-avatar";
 
 import { HiArrowNarrowRight } from "react-icons/hi";
@@ -19,32 +18,7 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 
 import styles from "./Talent.module.scss";
-
-export const talentLists = [
-  {
-    id: 111,
-    jobheading: "Aman Shakya",
-    img: profilePic,
-    description:
-      "My name is Aman Shakya. I teach TOC, Software Engineering, DBMS in Pulchowk Engineering Campus. Sometimes, I like to laugh between the middle of lecture on my own jokes, but many students don't consider them to be funny.",
-    skills: [
-      "TOC",
-      "DBMS",
-      "Reinforcement Learning",
-      ".NET Framework",
-      "Java",
-      "Backend Development",
-      "Software Engineering",
-    ],
-    rating: {
-      reliability: 32,
-      punctual: 23,
-      communication: 54,
-      qualityWork: 59,
-    },
-    hourlyRate: 35,
-  },
-];
+import { MdSearch } from "react-icons/md";
 
 const ratingsCriteria = [
   { id: 1, name: "Reliability" },
@@ -60,8 +34,20 @@ const Talent = () => {
   // const QUALITYWORK_WEIGHT = 0.45;
 
   const [users, setUsers] = useState(null);
+  const [printUsers, setPrintUsers] = useState(null);
   const uid = useSelector((state) => state.auth.user?.id);
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const searchDataHandler = (searchTerm) => {
+    console.log(searchTerm);
+    const updatedItems =
+      users &&
+      users.filter((user) =>
+        user.skills.some((skill) =>
+          skill.skill_name.toLowerCase().includes(searchTerm.toLowerCase())
+        )
+      );
+    setPrintUsers(updatedItems);
+  };
 
   useEffect(() => {
     getUsers(uid, isAuthenticated);
@@ -70,8 +56,9 @@ const Talent = () => {
   const getUsers = async (uid, isAuthenticated) => {
     try {
       const response = isAuthenticated
-        ? await axios.post("api/profiles/", { uid })
-        : await axios.get("api/profiles/");
+        ? await axios.post("/api/profiles/", { uid })
+        : await axios.get("/api/profiles/");
+      setPrintUsers(response.data);
       setUsers(response.data);
     } catch (error) {
       console.log(error);
@@ -98,7 +85,7 @@ const Talent = () => {
           <div className={styles.filter__skills}>
             <h4 className={styles.filter__skills__heading}>Skills</h4>
             <label>
-              <Searchbar variant='small' />
+              <Searchbar variant='small' onSearch={searchDataHandler} />
             </label>
           </div>
         </Card>
@@ -112,8 +99,18 @@ const Talent = () => {
 
             {users === null ? (
               <LoadingBouncer />
+            ) : printUsers.length === 0 ? (
+              <div className={styles["not-found"]}>
+                <MdSearch className={styles["not-found__svg"]} />
+                <h3 className={styles["not-found__heading"]}>
+                  No Matching Users Found
+                </h3>
+                <p className={styles["not-found__message"]}>
+                  Please make sure your keywords are spelled correctly.
+                </p>
+              </div>
             ) : (
-              users
+              printUsers
                 .filter((props) => props.user.id !== uid)
                 .map((props) => {
                   const { user, rating, avatar, ...otherList } = props;
