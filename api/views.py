@@ -1,15 +1,19 @@
+from email import message
 from django.shortcuts import render, redirect
-from .models import User, Profile
-from rest_framework.decorators import api_view
+from django.http import JsonResponse
+from .models import User, Profile, Room, Message
+from rest_framework.decorators import api_view, permission_classes 
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from .serializers import UserSerializer, ProfileSerializer
+from .serializers import UserSerializer, ProfileSerializer, RoomSerializer, MessageSerializer
 from api import serializers
 from rest_framework import status
 from django.contrib.auth import authenticate,login,logout
 from django.shortcuts import get_object_or_404
-
-from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
-from rest_framework_simplejwt.views import TokenObtainPairView
+from .forms import RoomForm
+from django.db.models import Q
+# from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+# from rest_framework_simplejwt.views import TokenObtainPairView
 from django.contrib import messages
 
 
@@ -25,7 +29,7 @@ def api(request):
         'POST /register',
         'POST /signup',
         'POST /create-room',
-        'POST /send-message'
+        'GET / messages/<str:pk>',
         # 'POST /create-post',
         # 'POST /bid',
         # 'PUT /update-user/<str:pk',
@@ -42,44 +46,6 @@ def home(request):
     return render(request, 'api/home.html', context)
 
 
-<<<<<<< HEAD
-
-
-@api_view(['POST'])
-def login(request):
-    #to prevent re-logging in if user is already logged in
-    if request.user.is_authenticated:
-        return Response('logged in')
-
-
-    elif request.method == 'POST': 
-        email = request.POST.get('email').lower()
-        password = request.POST.get('password')
-        print(email)
-        
-        #check is user exists or not
-        try:
-            email = User.objects.get(email = email)
-        except:
-            messages.error(request,'user doesnot exist')
-        
-        #if user exists
-        user = authenticate(request,email = email, password=password)
-
-        #if user is valid
-        if user is not None:
-            login(request,user)
-            serializer = UserSerializer(user)
-            return Response(serializer.data)
-        else:
-            print('password is incorrect')
-            messages.error(request,'incorrect password')
-            return Response('user is not valid')
-
-    # return Response(request,'base/login_register.html',context)
-
-=======
->>>>>>> 3427e58bb3df6b7d60ed57e097370462e866f562
 @api_view(['GET'])
 def getUsers(request):
     users = User.objects.all()
@@ -106,21 +72,122 @@ def getProfile(request, pk):
     serializer = ProfileSerializer(profile, many=False)
     return Response(serializer.data)
 
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def getRoom(request):
+    room_id = request.data['room_id']
+    room = Room.objects.get(id = room_id)
+    serializer = RoomSerializer(room)
+    return Response(serializer.data)
 
 
-class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
-    @classmethod
-    def get_token(cls, user):
-        token = super().get_token(user)
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def getMessages(request):
+    room_id = request.data['room_id']
+    recipient_id = request.data['recipient']
 
-        # Add custom claims
-        token['username'] = user.username
-        token['email'] = user.email
-        # token['password'] = user.password
-        # ...
+    #to check if request is for inbox or outbox
+    message_request_type = ''
+    room = Room.objects.get(id = room_id)
+    # room_messages = room.message_set.all()
+    sender = request.user
+    recipient = User.objects.get(id = recipient_id)
 
-        return token
+    outbox = Message.objects.filter(
+        Q(sender = sender, recipient = recipient) | 
+        Q(sender = recipient, recipient = sender)  
+        
+        )
 
-class MyTokenObtainPairView(TokenObtainPairView):
-    serializer_class = MyTokenObtainPairSerializer
+
+    inbox = Message.objects.filter(
+        sender = recipient,
+        recipient = sender
+        )
+    
+    print('inbox - ',outbox)
+    room_messages = outbox
+    print("request data is - " , request.data)
+    print("authorised user - ",sender)
+    if request.method == 'POST':
+        
+        print(request.GET)
+
+        serializer = MessageSerializer(room_messages, many = True)
+        return Response(serializer.data)
+
+
+    return Response(" Couldn't get messages - sorry brother :) - ")
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def createRoom(request):
+    user = request.user
+    print("authorised user - ",user)
+    if request.method == 'POST':
+        room = Room.objects.create(
+            host = user ,
+            topic = user.username,
+            
+        )
+        print(request.POST)
+
+        serializer = RoomSerializer(room, many = False)
+        return Response(serializer.data)
+
+
+    return Response(" Couldn't create room - sorry brother :) - ",user)
+    # context = {'form':form}
+    # return render(request,'base/room_form.html',context)
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def createMessage(request):
+    room_id = request.data['room_id']
+    room = Room.objects.get(id = room_id)
+    recipient_id = request.data['recipient']
+    recipient = User.objects.get(id = recipient_id)
+    print("request data is - " , request.data)
+    sender = request.user
+    print("authorised user - ",sender)
+    if request.method == 'POST':
+        message = Message.objects.create(
+            text = request.data['text'] ,
+            sender = sender,
+            recipient = recipient,
+            room = room
+            
+        )
+        print(request.POST)
+
+        serializer = MessageSerializer(message, many = False)
+        return Response(serializer.data)
+
+
+    return Response(" Couldn't create room - sorry brother :) - ")
+    # context = {'form':form}
+    # return render(request,'base/room_form.html',context)
+
+
+@api_view(['POST','GET'])
+@permission_classes([IsAuthenticated])
+def room(request):
+    user = request.user 
+    rooms = user.room_set.all()
+    serializedObj = RoomSerializer(rooms,many = True)
+    print('create message user - ',user)
+
+    return Response(serializedObj.data)
+
+# @api_view(['GET'])
+def deleteMessages(request):
+    messages = Message.objects.all()
+    messages.delete()
+    return JsonResponse('message deleted',safe = False)
+
+
+
+
+
 

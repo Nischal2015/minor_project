@@ -2,7 +2,15 @@ import React from "react";
 
 import styles from "./Input.module.scss";
 
-const Input = ({ type, placeholder, id, variant, ariaRequired, required }) => {
+const Input = ({
+  type,
+  myref,
+  placeholder,
+  id,
+  variant,
+  ariaRequired,
+  required,
+}) => {
   return (
     <input
       className={styles.input__text}
@@ -12,6 +20,7 @@ const Input = ({ type, placeholder, id, variant, ariaRequired, required }) => {
       data-variant={variant || null}
       aria-required={ariaRequired || "false"}
       required={required}
+      ref={myref}
     />
   );
 };

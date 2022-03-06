@@ -44,7 +44,7 @@ const Profile = () => {
     setError(null);
     setLoading(true);
     try {
-      const responseProfile = await axios.get(`/profile/${id}`);
+      const responseProfile = await axios.get(`api/profile/${id}`);
       const responseUser = await axios.get(
         `/users/${responseProfile.data.user}`
       );

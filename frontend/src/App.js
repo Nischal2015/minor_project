@@ -8,6 +8,9 @@ import Navbar from "./components/Navigation/Navbar";
 import Footer from "./components/Footer/Footer";
 import { Routes, Route, Outlet } from "react-router-dom";
 import ScrollToTop from "./components/ScrollToTop";
+import Room from "./pages/Message/Room";
+import Inbox from "./pages/Message/Inbox";
+import Message from "./pages/Message/Message";
 
 // Routing pages
 const About = lazy(() => import("./pages/About/About"));
@@ -47,6 +50,9 @@ const App = () => {
             <Route path=':id' element={<Bidding />} />
           </Route>
           <Route path='login' element={<Login />} />
+          <Route path='room' element={<Room />} />
+          <Route path='message' element={<Message />} />
+          <Route path='inbox' element={<Inbox />} />
           <Route path='talent' element={<Outlet />}>
             <Route index element={<Talent />} />
             <Route path=':id' element={<Profile />} />

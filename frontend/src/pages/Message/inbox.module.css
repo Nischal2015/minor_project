@@ -1,0 +1,66 @@
+.inbox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  margin: auto;
+  height: 90vh;
+  width: 70%;
+  border: 1px solid aquamarine;
+  border-radius: 10px;
+}
+
+.container {
+  /* position: absolute; */
+  height: 80vh;
+  width: 70%;
+  background: white;
+  box-shadow: 0 0 10px grey;
+}
+.chatbar {
+  color: blue;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 10vh;
+  background-color: lightblue;
+}
+
+.chatbody {
+  height: 60vh;
+  overflow-y: scroll;
+  margin: 8px 4px;
+  border: 1px solid lightblue;
+  border-radius: 10px;
+}
+
+.chatinputbox {
+  height: 8vh;
+  margin: 5px;
+  /* border: 1px solid lightblue; */
+  border-radius: 10px;
+}
+
+.chat_field {
+  margin-top: 17px;
+  margin-left: 10px;
+  color: grey;
+}
+
+.textmessage {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  margin: 10px;
+}
+
+.textmessage h3 {
+  padding: 5px;
+  color: white;
+  height: fit-content;
+  width: 42%;
+  border: 1px solid aquamarine;
+  border-radius: 5px;
+  background: steelblue;
+}

@@ -63,7 +63,7 @@ export const loadUser = () => async (dispatch) => {
     const config = {
       headers: {
         "Content-Type": "application/json",
-        Authorization: `JWT ${localStorage.getItem("access")}`,
+        Authorization: `Bearer ${localStorage.getItem("access")}`,
         Accept: "application/json",
       },
     };

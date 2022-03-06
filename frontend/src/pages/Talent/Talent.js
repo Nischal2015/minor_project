@@ -68,7 +68,7 @@ const Talent = () => {
   const getUsers = async () => {
     setLoading(true);
     try {
-      const response = await axios.get("profiles/");
+      const response = await axios.get("api/profiles/");
       setUsers(response.data);
     } catch (error) {
       console.log(error);
