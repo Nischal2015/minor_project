@@ -20,6 +20,7 @@ from django.contrib.auth import authenticate, login, logout
 import requests
 from django.contrib import messages
 from rest_framework.views import APIView
+from django.db.models import Q
 
 
 import os
@@ -227,25 +228,9 @@ def postJob(request):
 @api_view(['POST'])
 # @parser_classes([MultiPartParser,FormParser])
 def postBid(request):
-    # if request.method == 'GET':
-    #     project_bid = Project_bid.objects.all()
-    #     serializer = ProjectBidSerializer(project_bid, many=True)
-    #     return Response(serializer.data)
-    # elif request.method == 'POST':
-    #     print(request.data)
-    #     serializer = ProjectBidSerializer(data=request.data)
-    #     print("milan")
-    #     print(serializer.initial_data)
-    #     if serializer.is_valid():
-    #         print("milan")
-    #         serializer.save()
-    #         return Response({'received data': request.data})
-    #     else:
-    #         return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
     if request.method == 'POST':
         print(request.data)
         serializer = ProjectBidSerializer(data=request.data)
-        # print(serializer.initial_data)
         if serializer.is_valid():
             serializer.save()
             return Response({'received data': request.data})
@@ -261,9 +246,9 @@ def getJobs(request):
     elif request.method == 'POST':
         id = request.data["creatorId"]
         if 'username' in request.data:
-            project_define = Project_define.objects.select_related('creator').prefetch_related('skills').filter(creator__id = id)
+            project_define = Project_define.objects.select_related('creator').prefetch_related('skills').filter(creator_id = id)
         else: 
-            project_define = Project_define.objects.select_related('creator').prefetch_related('skills').exclude(creator__id = id)
+            project_define = Project_define.objects.select_related('creator').prefetch_related('skills').exclude(creator_id = id)
         
     serializer = ProjectViewSerializer(project_define,context={'request': request}, many=True)
     return Response(serializer.data)
@@ -274,37 +259,40 @@ def getJob(request, pk):
     serializer = ProjectDefineSerializer(project_define, many=False)
     return Response(serializer.data)
 
-@api_view(['GET'])
+@api_view(['GET', 'POST'])
 def BidList(request):
-    if request.method == 'GET':
-        project_bid = Project_bid.objects.all()
-        serializer = ProjectBidSerializer(project_bid, many=True)
+    project_list = []
+    user_id = request.data['bidderId']
+    if request.method == 'POST':
+        project_bid = Project_bid.objects.filter(bidder = user_id)
+        for project in project_bid:
+            query = Project_define.objects.get(id = project.project_define.id)
+            project_list.append(query)
+        serializer = ProjectDefineSerializer(project_list, many=True)
         return Response(serializer.data)
 
-# @api_view(['GET'])
-# def JobList(request):
-#     if request.method == 'GET':
-#         project_define = Project_define.objects.all()
-#         serializer = ProjectViewSerializer(project_define,context={'request': request}, many=True)
-#         print(serializer.data)
-#         return Response(serializer.data)
+@api_view(['POST', 'GET'])
+def YourBid(request):
+    user_id = request.data['bidderId']
+    project_id = request.data['projectId']
+    if request.method == 'POST':
+        query1 = Project_bid.objects.filter(bidder = user_id)
+        query2 = query1.filter(project_define = project_id)
+        serializer = ProjectBidSerializer(query2, many=True)
+        return Response(serializer.data)
 
 
 @api_view(['GET', 'PUT'])
 def Job_detail(request, pk):
     project_define = get_object_or_404(Project_define, pk=pk)
-    # if request.method == 'GET':
-    #     serializer = ProjectDefineSerializer(project_define, many=True)
-    #     return Response(serializer.data)
-
     if request.method == 'GET':
         serializer = ProjectDefineSerializer(
-            project_define, context={'request': request})
+            project_define)
         return Response(serializer.data)
 
     elif request.method == 'PUT':
         serializer = ProjectDefineSerializer(
-            project_define, data=request.data, context={'request': request})
+            project_define, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)

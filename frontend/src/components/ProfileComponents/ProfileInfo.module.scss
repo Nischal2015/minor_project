@@ -1,0 +1,39 @@
+.profile__info {
+  display: flex;
+  flex-direction: column;
+  gap: 2.4rem;
+
+  padding: 1.6rem 1.2rem;
+}
+
+.info {
+  &__heading {
+    display: flex;
+    justify-content: space-between;
+
+    &__user {
+      h4 {
+        font-size: 2.4rem;
+        margin-bottom: 1.2rem;
+      }
+
+      &--username {
+        font-weight: 500;
+        font-size: 2rem;
+      }
+
+      &--project-title {
+        font-size: 1.8rem;
+      }
+    }
+  }
+
+  &__body {
+    font-size: 1.6rem;
+    line-height: 1.25;
+  }
+
+  &__footer {
+    margin-left: auto;
+  }
+}

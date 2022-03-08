@@ -12,6 +12,7 @@ import { useSelector } from "react-redux";
 const UserJobPosts = () => {
   const [userJobs, setUserJobs] = useState(null);
   const [printUserJobs, setPrintUserJobs] = useState(null);
+  const [searchTerm, setSearchTerm] = useState("");
   const creatorId = useSelector((state) => state.auth.user?.id);
   const username = useSelector((state) => state.auth.user?.username);
 
@@ -25,18 +26,22 @@ const UserJobPosts = () => {
     }
   }, [creatorId, username]);
 
+  const searchDataHandler = useCallback(() => {
+    const updatedItems =
+      userJobs &&
+      userJobs.filter((job) =>
+        job.project_title.toLowerCase().includes(searchTerm)
+      );
+    setPrintUserJobs(updatedItems);
+  }, [userJobs, searchTerm]);
+
   useEffect(() => {
     fetchUserJobs();
   }, [fetchUserJobs]);
 
-  const searchDataHandler = (searchTerm) => {
-    const updatedItems =
-      userJobs &&
-      userJobs.filter((job) =>
-        job.project_title.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-    setPrintUserJobs(updatedItems);
-  };
+  useEffect(() => {
+    searchDataHandler();
+  }, [searchDataHandler]);
 
   return (
     <div
@@ -44,7 +49,10 @@ const UserJobPosts = () => {
       style={{ overflowY: "scroll", height: "800px" }}
     >
       <div className={styles.results__list}>
-        <Searchbar onSearch={searchDataHandler} />
+        <Searchbar
+          value={searchTerm}
+          onChange={(event) => setSearchTerm(event.target.value)}
+        />
         {!userJobs ? (
           <LoadingBouncer />
         ) : (

@@ -2,7 +2,7 @@ import React from "react";
 
 import styles from "./PostedTime.module.scss";
 
-const PostedTime = ({ posted }) => {
+const PostedTime = ({ posted, className }) => {
   let creationDate = Date.parse(posted);
   let time = Date.now();
 
@@ -32,7 +32,7 @@ const PostedTime = ({ posted }) => {
   const displayTime = calculateTime();
 
   return (
-    <p className={styles.posted}>
+    <p className={`${styles.posted} ${className || ""}`}>
       Posted {displayTime[0]} {displayTime[1]} ago
     </p>
   );

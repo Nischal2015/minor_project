@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Budget from "../../components/SideList/Budget";
 import Container from "../../components/UI/Container/Container";
 import Card from "../../components/UI/Card/Card";
@@ -6,13 +6,14 @@ import Searchbar from "../../components/UI/Searchbar/Searchbar";
 import List from "../../components/List/List";
 import Price from "../../components/Price/Price";
 import PostedTime from "../../components/SideList/PostedTime";
-import { MdSearch } from "react-icons/md";
 import { CustomNavLink } from "../../components/UI/CustomLink/CustomLink";
 import { HiArrowNarrowRight } from "react-icons/hi";
 import styles from "./Jobs.module.scss";
 import axios from "axios";
 import LoadingBouncer from "../../components/UI/Loading/LoadingBouncer";
 import { useSelector } from "react-redux";
+import SearchNotFound from "../../components/SearchNotFound/SearchNotFound";
+import { getMemoizedId } from "../../store/auth-slice";
 
 const skills = [
   {
@@ -40,19 +41,28 @@ const skills = [
 const Work = () => {
   const [jobs, setJobs] = useState(null);
   const [printJobs, setPrintJobs] = useState(null);
-  const creatorId = useSelector((state) => state.auth.user?.id);
-  const searchDataHandler = (searchTerm) => {
+  const [maxValue, setMaxValue] = useState("");
+  const [minValue, setMinValue] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
+  const creatorId = useSelector(getMemoizedId);
+
+  const searchDataHandler = useCallback(() => {
     const updatedItems =
       jobs &&
-      jobs.filter((job) =>
-        job.skills.some((skill) =>
+      jobs.filter((job) => {
+        const skillFilter = job.skills.some((skill) =>
           skill.skill_name.toLowerCase().includes(searchTerm.toLowerCase())
-        )
-      );
-    setPrintJobs(updatedItems);
-  };
+        );
+        const minFilter = +job.budget_min >= minValue;
+        const maxFilter =
+          +job.budget_max <= (+maxValue !== 0 ? maxValue : 1000000);
 
-  const fetchJobList = async (creatorId) => {
+        return skillFilter && minFilter && maxFilter;
+      });
+    setPrintJobs(updatedItems);
+  }, [jobs, searchTerm, minValue, maxValue]);
+
+  const fetchJobList = useCallback(async () => {
     try {
       const response = creatorId
         ? await axios.post("/api/jobs/", { creatorId })
@@ -62,10 +72,21 @@ const Work = () => {
     } catch (error) {
       console.log(error);
     }
-  };
-  useEffect(() => {
-    fetchJobList(creatorId);
   }, [creatorId]);
+
+  useEffect(() => {
+    const identifier = setTimeout(() => {
+      searchDataHandler();
+    }, 300);
+
+    return () => {
+      clearTimeout(identifier);
+    };
+  }, [searchDataHandler]);
+
+  useEffect(() => {
+    fetchJobList();
+  }, [fetchJobList]);
 
   return (
     <section className={styles.section__work}>
@@ -74,13 +95,24 @@ const Work = () => {
           <h3 className='heading--tertiary'>Filters</h3>
 
           {/* Price section */}
-          <Price />
+          <Price
+            max={maxValue}
+            min={minValue}
+            onChange={{
+              max: (event) => setMaxValue(event.target.value),
+              min: (event) => setMinValue(event.target.value),
+            }}
+          />
 
           {/* Filters skills section */}
           <div className={styles.filter__skills}>
             <h4 className={styles.filter__skills__heading}>Skills</h4>
 
-            <Searchbar variant='small' onSearch={searchDataHandler} />
+            <Searchbar
+              variant='small'
+              value={searchTerm}
+              onChange={(event) => setSearchTerm(event.target.value)}
+            />
 
             <ul className={styles.filter__skills__list}>
               {skills.map(({ id, name }) => (
@@ -102,15 +134,7 @@ const Work = () => {
             {!jobs ? (
               <LoadingBouncer />
             ) : printJobs.length === 0 ? (
-              <div className={styles["not-found"]}>
-                <MdSearch className={styles["not-found__svg"]} />
-                <h3 className={styles["not-found__heading"]}>
-                  No Matching Jobs Found
-                </h3>
-                <p className={styles["not-found__message"]}>
-                  Please make sure your keywords are spelled correctly.
-                </p>
-              </div>
+              <SearchNotFound term='Jobs' />
             ) : (
               printJobs.map(
                 ({ id, budget_min, budget_max, creation_date, ...jobList }) => (

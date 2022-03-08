@@ -2,6 +2,8 @@ from rest_framework import serializers
 from .models import  User, Profile, Project_define, Skill, Job_category, Project_bid
 
 class UserSerializer(serializers.ModelSerializer):
+    # profile='ProfileSerializer()'
+
     class Meta:
         model = User 
         fields = ['username', 'id']
@@ -25,6 +27,9 @@ class ProfileEditSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class ProjectDefineSerializer(serializers.ModelSerializer):
+    creator = UserSerializer()
+    skills = SkillSerializer(many=True)
+    # profile= ProfileSerializer()
     class Meta:
         model = Project_define
         fields = '__all__'

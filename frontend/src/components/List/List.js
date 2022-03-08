@@ -1,8 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-
 import SkillsList from "../Skills/SkillsList";
-
 import styles from "./List.module.scss";
 
 const MAX_CHARACTER = 350;
@@ -11,7 +9,6 @@ const getContent = (description) => {
   return description.length > MAX_CHARACTER
     ? description.slice(0, MAX_CHARACTER) + "..."
     : description;
-  // console.log(description.length);
 };
 
 const JobList = ({

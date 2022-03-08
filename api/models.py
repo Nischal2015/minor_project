@@ -193,6 +193,9 @@ class Project_bid(models.Model):
     bid_description = models.TextField(null=True)
     bid_status = models.CharField(
         max_length=1, choices=BID_CHOICES, default=BID_PENDING)
+    
+    def __str__(self):
+        return f"{self.project_define} by {self.bidder}"
 
 
 class Rating(models.Model):
@@ -225,8 +228,3 @@ class Bid_document(models.Model):
 
     document = models.FileField(
         null=True, upload_to=settings.MEDIA_ROOT/'bid_documents/')
-
-# class Payment_info(models.Model):
-
-#     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
-#     khalti_name = models.

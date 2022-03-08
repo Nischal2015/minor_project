@@ -18,6 +18,7 @@ urlpatterns = [
     # path('jobList/', views.JobList),
     path('postBid/', views.postBid),
     path('bidList/', views.BidList),
+    path('bid-detail/', views.YourBid),
     path('job/<int:pk>/', views.Job_detail),
     path('bidList/', views.BidList),
     path('skills/', views.getSkills),

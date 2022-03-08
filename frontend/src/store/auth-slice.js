@@ -1,10 +1,10 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSelector, createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   access: localStorage.getItem("access"),
   refresh: localStorage.getItem("refresh"),
   isAuthenticated: localStorage.getItem("isAuthenticate"),
-  user: null,
+  user: JSON.parse(localStorage.getItem("user")),
   isProcessing: false,
 };
 
@@ -77,5 +77,10 @@ const authSlice = createSlice({
 });
 
 export const authActions = authSlice.actions;
+
+export const getMemoizedId = createSelector(
+  (state) => state.auth.user,
+  (user) => user?.id
+);
 
 export default authSlice.reducer;

@@ -1,0 +1,118 @@
+.bid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 3rem;
+  margin-top: 3.6rem;
+  margin-bottom: 6.4rem;
+
+  &__description {
+    display: flex;
+    flex-direction: column;
+    gap: 2.4rem;
+  }
+
+  &__heading {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__title {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+
+    &--heading {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--primary-color);
+    }
+
+    &--posted {
+      font-size: 1.2rem;
+      font-size: 700;
+      margin-left: 1px;
+    }
+  }
+
+  &__skills {
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 2rem;
+    row-gap: 1.2rem;
+    list-style: none;
+  }
+
+  &__client {
+    border: 1px solid var(--color-grey-dark-2);
+    border-radius: 3px;
+    box-shadow: 0 2px 4px 1px rgba(0, 0, 0, 0.1);
+
+    &--header {
+      font-size: 2rem;
+      font-weight: 500;
+      text-align: center;
+      color: var(--primary-color);
+      padding: 0.8rem;
+      border-bottom: 1px solid var(--color-grey-dark-3);
+    }
+
+    &--description {
+      display: flex;
+      flex-direction: column;
+      gap: 1.6rem;
+
+      padding: 1.2rem;
+    }
+
+    &--flex {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+
+      &:first-child {
+        svg {
+          fill: red;
+        }
+      }
+
+      svg {
+        height: 2rem;
+        width: 2rem;
+      }
+
+      p {
+        font-size: 1.6rem;
+      }
+    }
+  }
+
+  &__documents {
+    h4 {
+      font-size: 1.6rem;
+      font-weight: 400;
+      margin-bottom: 1.2rem;
+    }
+
+    a:link,
+    a:visited {
+      text-decoration: none;
+      color: var(--primary-color);
+      border: 1px solid transparent;
+      transition: all 0.15s;
+    }
+
+    a:hover,
+    a:active {
+      border-bottom: 1px solid var(--primary-color);
+    }
+  }
+
+  &__bids {
+    background-color: var(--color-grey-light-2);
+    border-radius: 1px;
+  }
+}
+
+.bid-button {
+  grid-column: 2/-1;
+}

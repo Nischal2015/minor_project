@@ -52,8 +52,6 @@ const PostJob = () => {
     // setLoading(false);
   };
 
-  ///project anusar ko skill haru dekhuna parxa project ma bhako skills haru arry of skill id ko form ma xa
-
   const fetchSkills = async () => {
     const responseSkills = await axios.get("/api/skills/");
     // console.log(categoryArr);

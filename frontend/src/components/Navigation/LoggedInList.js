@@ -5,7 +5,7 @@ import styles from "./LoggedInList.module.scss";
 
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../../store/auth-actions";
-import { MdLogout, MdArrowDropDown } from "react-icons/md";
+import { MdLogout, MdArrowDropDown, MdEditNote } from "react-icons/md";
 import { HiUser } from "react-icons/hi";
 
 const LoggedInList = () => {
@@ -37,6 +37,13 @@ const LoggedInList = () => {
               <Link to='/profile' className={styles["dropdown__content--link"]}>
                 <HiUser />
                 <p>Profile</p>
+              </Link>
+            </li>
+
+            <li>
+              <Link to='/postjob' className={styles["dropdown__content--job"]}>
+                <MdEditNote />
+                <p>Post Job</p>
               </Link>
             </li>
             <li className={styles["dropdown__content--norm"]}>

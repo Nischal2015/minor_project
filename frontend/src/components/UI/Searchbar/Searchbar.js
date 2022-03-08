@@ -1,22 +1,16 @@
-import React, { useState } from "react";
+import React from "react";
 import styles from "./Searchbar.module.scss";
 
 import { MdSearch } from "react-icons/md";
 
-const Searchbar = ({ value, onSearch = () => {}, variant }) => {
-  const [searchTerm, setSearchTerm] = useState("");
-  const onChangeHandler = (event) => {
-    setSearchTerm(event.target.value);
-    onSearch(event.target.value);
-  };
-
+const Searchbar = ({ value, onChange, variant }) => {
   return (
     <div className={styles.input}>
       <input
         type='text'
-        value={searchTerm}
+        value={value}
         className={styles.input__search}
-        onChange={onChangeHandler}
+        onChange={onChange}
         aria-label='Search'
         data-variant={variant || null}
         placeholder='Search'

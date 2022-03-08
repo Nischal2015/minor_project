@@ -7,112 +7,19 @@
     margin-top: 3.6rem;
   }
 
-  &__summary {
-    display: flex;
-    flex-direction: column;
-    gap: 2.4rem;
-    padding: 0 1.6rem;
-    height: fit-content;
-
-    & > * {
-      padding-bottom: 1.6rem;
-
-      &:not(:last-child) {
-        border-bottom: 2px solid var(--color-grey-light-3);
-      }
-    }
-  }
-
   &__description {
     display: flex;
     flex-direction: column;
     gap: 2.4rem;
   }
 
-  &__info,
   &__projects {
     padding: 1.6rem 1.2rem;
-  }
-
-  &__info {
-    display: flex;
-    flex-direction: column;
-    gap: 2.4rem;
   }
 
   &__reviews {
     margin-top: 3rem;
     padding: 0 1.6rem;
-  }
-}
-
-.summary {
-  &__image {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1.2rem;
-    padding-top: 1.6rem;
-
-    div {
-      width: 60%;
-      aspect-ratio: 1;
-    }
-
-    figcaption {
-      font-size: 2rem;
-      font-weight: 600;
-    }
-  }
-
-  &__rating {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    row-gap: 3.2rem;
-
-    div {
-      display: flex;
-      flex-direction: column;
-      gap: 1.2rem;
-      align-items: center;
-      justify-content: center;
-    }
-  }
-
-  &__feature {
-    display: flex;
-    flex-direction: column;
-    gap: 2.4rem;
-
-    font-size: 1.6rem;
-  }
-
-  &__find {
-    display: flex;
-    flex-direction: column;
-    gap: 2.4rem;
-
-    p {
-      font-size: 1.6rem;
-    }
-
-    &--link {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-
-      svg {
-        height: 3.2rem;
-        width: 3.2rem;
-        transition: all 0.2s;
-        cursor: pointer;
-        fill: var(--color-grey-dark-3);
-
-        &:hover {
-          fill: royalblue;
-        }
-      }
-    }
   }
 }
 
@@ -127,40 +34,4 @@
 
     display: flex;
   }
-}
-
-.info {
-  &__heading {
-    display: flex;
-    justify-content: space-between;
-
-    &__user {
-      h4 {
-        font-size: 2.4rem;
-        margin-bottom: 1.2rem;
-      }
-
-      &--username {
-        font-weight: 500;
-        font-size: 2rem;
-      }
-
-      &--project-title {
-        font-size: 1.8rem;
-      }
-    }
-  }
-
-  &__body {
-    font-size: 1.6rem;
-    line-height: 1.25;
-  }
-
-  &__footer {
-    margin-left: auto;
-  }
-}
-
-.rating-name {
-  font-size: 1.6rem;
 }
