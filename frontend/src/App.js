@@ -1,24 +1,16 @@
 // import styles from "./App.module.scss";
 import React, { Suspense, lazy, useEffect } from "react";
 import { checkAuthenticated, loadUser } from "./store/auth-actions";
-
 import LoadingSpinner from "./components/UI/Loading/LoadingSpinner";
 import Navbar from "./components/Navigation/Navbar";
 import Footer from "./components/Footer/Footer";
 import { Routes, Route, Outlet } from "react-router-dom";
 import ScrollToTop from "./components/ScrollToTop";
 import Alert from "./components/UI/Alert/Alert";
-import UserJobPosts from "./pages/UserProfile/UserJobPosts";
-import UserBids from "./pages/UserProfile/UserBids";
-import Pagethree from "./pages/UserProfile/Pagethree";
-import Pagefour from "./pages/UserProfile/Pagefour";
 
 import { useSelector, useDispatch } from "react-redux";
 import { alertActions } from "./store/alert-slice";
 import RequireAuth from "./components/RequireAuth";
-
-import Payment from "./pages/payment/payment";
-import ProfileDetails from "./pages/UserProfile/ProfileDetails";
 
 // Routing pages
 const About = lazy(() => import("./pages/About/About"));
@@ -28,14 +20,20 @@ const Jobs = lazy(() => import("./pages/Jobs/Jobs"));
 const Landing = lazy(() => import("./pages/Landing/Landing"));
 const Login = lazy(() => import("./pages/Entry/Login"));
 const NotFound = lazy(() => import("./pages/NotFound/NotFound"));
+const Pagethree = lazy(() => import("./pages/UserProfile/Pagethree"));
+const Pagefour = lazy(() => import("./pages/UserProfile/Pagefour"));
+const PasswordReset = lazy(() => import("./pages/Entry/PasswordReset"));
+const Payment = lazy(() => import("./pages/payment/payment"));
+const PostJob = lazy(() => import("./pages/Entry/PostJob"));
 const Profile = lazy(() => import("./pages/Profile/Profile"));
+const ProfileDetails = lazy(() => import("./pages/UserProfile/ProfileDetails"));
 const Signup = lazy(() => import("./pages/Entry/Signup"));
 const Talent = lazy(() => import("./pages/Talent/Talent"));
-const PasswordReset = lazy(() => import("./pages/Entry/PasswordReset"));
 const ResetPasswordConfirm = lazy(() =>
   import("./pages/Entry/ResetPasswordConfirm")
 );
-const PostJob = lazy(() => import("./pages/Entry/PostJob"));
+const UserBids = lazy(() => import("./pages/UserProfile/UserBids"));
+const UserJobPosts = lazy(() => import("./pages/UserProfile/UserJobPosts"));
 const UserProfile = lazy(() => import("./pages/UserProfile/UserProfile"));
 
 const App = () => {
