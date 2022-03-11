@@ -14,17 +14,18 @@
   /* position: absolute; */
   height: 80vh;
   width: 70%;
-  background: white;
+
+  background: rgba(255, 255, 255, 0.5);
   box-shadow: 0 0 10px grey;
 }
 .chatbar {
-  color: blue;
+  color: #0184fe;
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 10vh;
-  background-color: lightblue;
+  height: 8vh;
+  background-color: white;
 }
 
 .chatbody {
@@ -51,16 +52,35 @@
 .textmessage {
   display: flex;
   flex-direction: column;
-  gap: 0.8rem;
+
+  gap: 0.3rem;
   margin: 10px;
 }
 
-.textmessage h3 {
+.recipient {
+  /* position: absolute; */
+  background: rgb(196, 196, 196);
+
+  font-weight: 500;
   padding: 5px;
-  color: white;
+  color: black;
   height: fit-content;
   width: 42%;
-  border: 1px solid aquamarine;
-  border-radius: 5px;
-  background: steelblue;
+
+  border-radius: 15px;
+}
+
+.sender {
+  background: #0184fe;
+  border-radius: 15px;
+  right: 100px;
+  color: white;
+}
+
+.form {
+  display: flex;
+}
+
+.form button {
+  margin-left: 5px;
 }

@@ -25,15 +25,11 @@ def api(request):
         'GET /users',
         'GET /login',
         'GET /room/:id',
-        # 'GET /login',
+        
         'POST /register',
         'POST /signup',
         'POST /create-room',
         'GET / messages/<str:pk>',
-        # 'POST /create-post',
-        # 'POST /bid',
-        # 'PUT /update-user/<str:pk',
-        # 'PUT /update-post/<str:pk'
     ]
     return Response(routes)
 
@@ -44,6 +40,7 @@ def home(request):
     users = User.objects.all()
     context = {'users': users}
     return render(request, 'api/home.html', context)
+
 
 
 @api_view(['GET'])
@@ -61,7 +58,6 @@ def getProfiles(request):
 @api_view(['GET'])
 def getUser(request, pk):
     user = get_object_or_404(User, id = pk)
-    # note = User.objects.get(id=pk)
 
     serializer = UserSerializer(user, many=False)
     return Response(serializer.data)
@@ -90,6 +86,7 @@ def getMessages(request):
     #to check if request is for inbox or outbox
     message_request_type = ''
     room = Room.objects.get(id = room_id)
+
     # room_messages = room.message_set.all()
     sender = request.user
     recipient = User.objects.get(id = recipient_id)
@@ -138,8 +135,6 @@ def createRoom(request):
 
 
     return Response(" Couldn't create room - sorry brother :) - ",user)
-    # context = {'form':form}
-    # return render(request,'base/room_form.html',context)
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])

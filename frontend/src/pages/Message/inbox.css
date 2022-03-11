@@ -1,0 +1,21 @@
+.recipient {
+  /* position: absolute; */
+  background: rgb(196, 196, 196);
+
+  font-weight: 500;
+  padding: 5px;
+  color: black;
+  height: fit-content;
+  width: 42%;
+
+  border-radius: 15px;
+}
+
+.sender {
+  margin-left: 400px;
+  right: 200px;
+  background: #0184fe;
+  border-radius: 15px;
+  right: 100px;
+  color: white;
+}

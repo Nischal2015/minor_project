@@ -1,11 +1,15 @@
 import React, { useState, useRef, useEffect } from "react";
 import classes from "./inbox.module.css";
-// import TextField from '@material-ui/core/TextField'
+import "./inbox.css";
+
 import Input from "../../components/UI/Input/Input";
 import Button from "../../components/UI/Button/Button";
 import { useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Inbox = () => {
+  let id = useSelector((state) => state.auth.user?.id);
+
   const [accessToken, setAccessToken] = useState(
     localStorage.getItem("access")
   );
@@ -14,7 +18,7 @@ const Inbox = () => {
   const [room, setRoom] = useState(null);
 
   const textMessage = useRef();
-  //   let fData = new FormData()
+
   let location = useLocation();
   // let room_id = location.state?.id;
 
@@ -22,7 +26,7 @@ const Inbox = () => {
     // e.preventDefault();
     let body = {
       room_id: "31",
-      recipient: 1,
+      recipient: 5,
     };
     let requestOption = {
       method: "POST",
@@ -51,11 +55,9 @@ const Inbox = () => {
     let body = {
       text: textMessage.current.value,
       room_id: "31",
-      recipient: 1,
+      recipient: 5,
     };
 
-    // fData.append('user',1)
-    // fData.append("text", textMessage.current.value);
     if (textMessage.current.value.length > 0) {
       const requestOptions = {
         method: "POST",
@@ -67,8 +69,7 @@ const Inbox = () => {
       };
       let response = await fetch("api/create-message/", requestOptions);
       const data = await response.json();
-      console.log("your message - ", textMessage);
-      console.log("request option - ", requestOptions);
+      console.log("textMessage - ", textMessage);
     }
     textMessage.current.value = "";
     fetchMessages();
@@ -83,15 +84,20 @@ const Inbox = () => {
         <div className={classes.chatbody}>
           {messages.map((message, index) => {
             return (
-              <div key={message.id} className={classes.textmessage}>
-                <h5 key={message.index}>{message.sender.username}</h5>
+              <div
+                key={message.id}
+                className={`${classes.textmessage} recipient ${
+                  message.sender.id === id ? "sender" : ""
+                }`}
+              >
+                <p key={message.index}>@{message.sender.username}</p>
                 <h3 key={message.id}>{message.text}</h3>
               </div>
             );
           })}
         </div>
         <div className={classes.chatinputbox}>
-          <form onSubmit={sendHandler}>
+          <form className={classes.form} onSubmit={sendHandler}>
             <Input
               type="text"
               id="input_message"
@@ -99,11 +105,12 @@ const Inbox = () => {
               placeholder="enter message"
               myref={textMessage}
             />
-            <Button type="submit">Send</Button>
+            <Button className={classes.button} type="submit">
+              Send
+            </Button>
           </form>
         </div>
       </div>
-      Inbox
     </div>
   );
 };
