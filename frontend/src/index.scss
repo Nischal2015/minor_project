@@ -27,12 +27,14 @@
 
   // COLOR GREY
   --color-grey-dark-1: #212529;
-  --color-grey-dark-3: #868e96;
   --color-grey-dark-2: #495057;
+  --color-grey-dark-3: #868e96;
 
   --color-grey-light-1: #fefefe;
   --color-grey-light-2: #e9ecef;
   --color-grey-light-3: #dee2e6;
+
+  --color-grey-light-hover-1: #f7f7fa;
 
   --nav-background: #fbfcfe;
   // --body-background: 229, 231, 235;
@@ -69,19 +71,15 @@ body {
   overflow-x: hidden;
 }
 
-// ::-webkit-scrollbar {
-//   width: 6px;
+::-webkit-scrollbar {
+  width: 6px;
 
-//   &-thumb {
-//     background: var(--color-grey-dark-2);
-//     border-radius: 100px;
-//   }
-
-//   &-track {
-//     box-shadow: inset 0 0 2px rgb(216, 216, 216);
-//     border-radius: 100px;
-//   }
-// }
+  &-thumb {
+    background: var(--color-grey-light-3);
+    border-radius: 100px;
+    transition: all 0.15s;
+  }
+}
 
 // STYLES FOR HEADING
 .heading {

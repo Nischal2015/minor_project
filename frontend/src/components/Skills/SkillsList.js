@@ -6,8 +6,8 @@ import styles from "./SkillsList.module.scss";
 const SkillsList = ({ skills }) => {
   return (
     <ul className={styles.skills_list}>
-      {skills.map((skill, indexer) => (
-        <Skills key={indexer} skill={skill} />
+      {skills.map((skill) => (
+        <Skills key={skill.id} skill={skill.skill_name} />
       ))}
     </ul>
   );

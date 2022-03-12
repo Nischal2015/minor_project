@@ -15,10 +15,12 @@
   appearance: none;
   width: 100%;
   height: 6px;
-  border-radius: 20px;
-  background: var(--color-grey-light-3);
+  border-radius: 2px;
+  background: var(--color-grey-light-3)
+    linear-gradient(var(--primary-color), var(--primary-color)) no-repeat;
   opacity: 0.8;
   transition: opacity 0.2s;
+  cursor: pointer;
   // outline: none;
 
   &:hover {
@@ -32,7 +34,6 @@
     height: 16px;
     border-radius: 50%;
     background: var(--primary-color);
-    cursor: pointer;
     transition: all 0.2s;
 
     &:hover {

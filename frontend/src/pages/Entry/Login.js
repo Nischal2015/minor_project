@@ -10,9 +10,8 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useLocation, Navigate } from "react-router-dom";
+import { Link, useLocation, Navigate, useNavigate } from "react-router-dom";
 import { createUser, login } from "../../store/auth-actions";
-import { alertActions } from "../../store/alert-slice";
 
 import styles from "./Login.module.scss";
 import LoadingSlider from "../../components/UI/Loading/LoadingSlider";
@@ -56,46 +55,42 @@ const Login = () => {
   const {
     register,
     handleSubmit,
-    reset,
-    formState: { errors, isSubmitSuccessful },
+    formState: { errors },
   } = useForm(formOptions);
 
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
-  const alert = useSelector((state) => state.alert.alertType);
-  console.log(alert);
-  const isLogging = useSelector((state) => state.alert.logging);
+  const isProcessing = useSelector((state) => state.auth.isProcessing);
   const dispatch = useDispatch();
 
   let location = useLocation();
+  let from = location.state?.from?.pathname || "/";
+  let navigate = useNavigate();
 
   const locationPath = location.pathname;
-
-  // This is used to reset the form on succesful submission
-  // useEffect(() => {
-  //   if (isSubmitSuccessful && alert) {
-  //     reset();
-  //   }
-  // }, [reset, isSubmitSuccessful, alert]);
 
   useEffect(() => {
     setContainsSignup(locationPath.includes("signup"));
   }, [locationPath]);
 
   if (isAuthenticated) {
-    return <Navigate to='/' />;
+    return <Navigate to='/' replace={true} />;
   }
 
   // Return Statement
   return (
     <form
       onSubmit={handleSubmit((data) => {
-        dispatch(alertActions.clear());
         containsSignup && dispatch(createUser(data));
-        !containsSignup && dispatch(login(data));
+        !containsSignup &&
+          dispatch(
+            login(data, () => {
+              navigate(from, { replace: true });
+            })
+          );
       })}
     >
       <Card className={styles.login} role='group' ariaLabelledBy='kamao'>
-        {isLogging && <LoadingSlider />}
+        {isProcessing && <LoadingSlider />}
         <div className={styles.login__header}>
           <h2 className='heading--secondary' id='kamao'>
             Kamao
@@ -156,9 +151,13 @@ const Login = () => {
         </div>
         <div className={styles.login__footer}>
           {containsSignup ? (
-            <Button type='submit'>Signup</Button>
+            <Button type='submit' disabled={isProcessing}>
+              Signup
+            </Button>
           ) : (
-            <Button type='submit'>Login</Button>
+            <Button type='submit' disabled={isProcessing}>
+              Login
+            </Button>
           )}
           <div className={styles["login__footer--other"]}>
             <Button variant='tertiary'>Continue with Google</Button>

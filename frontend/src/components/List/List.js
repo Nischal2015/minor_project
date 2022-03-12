@@ -1,8 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-
 import SkillsList from "../Skills/SkillsList";
-
 import styles from "./List.module.scss";
 
 const MAX_CHARACTER = 350;
@@ -11,25 +9,25 @@ const getContent = (description) => {
   return description.length > MAX_CHARACTER
     ? description.slice(0, MAX_CHARACTER) + "..."
     : description;
-  // console.log(description.length);
 };
 
 const JobList = ({
-  jobheading,
+  project_title,
   first_name,
   last_name,
   bio,
-  description,
+  project_description,
   skills,
 }) => {
   return (
     <React.Fragment>
       <h3 className={styles.list__heading}>
-        {jobheading || `${first_name} ${last_name}`}
+        {project_title || `${first_name} ${last_name}`}
       </h3>
 
       <p className={styles.list__description}>
-        {(description && getContent(description)) || (bio && getContent(bio))}
+        {(project_description && getContent(project_description)) ||
+          (bio && getContent(bio))}
       </p>
       {skills ? <SkillsList skills={skills} /> : <></>}
     </React.Fragment>

@@ -3,9 +3,17 @@ import PropTypes from "prop-types";
 
 import styles from "./Card.module.scss";
 
-const Card = ({ children, className, variant, ariaLabelledBy, role }) => {
+const Card = ({
+  children,
+  className,
+  variant,
+  ariaLabelledBy,
+  role,
+  style,
+}) => {
   return (
     <div
+      style={style}
       className={`${styles.card} ${className ? className : ""}`}
       data-variant={variant}
       role={role || null}

@@ -3,7 +3,15 @@ import React from "react";
 import PropTypes from "prop-types";
 import styles from "./Button.module.scss";
 
-const Button = ({ type, children, variant, style, onClick }) => {
+const Button = ({
+  type,
+  children,
+  variant,
+  style,
+  onClick = () => {},
+  disabled,
+  id,
+}) => {
   return (
     <button
       type={type || "button"}
@@ -11,6 +19,8 @@ const Button = ({ type, children, variant, style, onClick }) => {
       data-variant={variant}
       onClick={onClick}
       style={style}
+      disabled={disabled}
+      id={id}
     >
       {children}
     </button>
@@ -22,4 +32,5 @@ export default React.memo(Button);
 Button.propTypes = {
   type: PropTypes.string,
   variant: PropTypes.string,
+  style: PropTypes.object,
 };

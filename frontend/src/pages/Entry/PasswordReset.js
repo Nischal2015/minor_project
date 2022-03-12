@@ -6,11 +6,12 @@ import Card from "../../components/UI/Card/Card";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { resetPassword } from "../../store/auth-actions";
 
 import styles from "./Login.module.scss";
 import { alertActions } from "../../store/alert-slice";
+import LoadingSlider from "../../components/UI/Loading/LoadingSlider";
 
 const PasswordReset = () => {
   const validationSchema = Yup.object().shape({
@@ -18,6 +19,7 @@ const PasswordReset = () => {
   });
 
   const formOptions = { resolver: yupResolver(validationSchema) };
+  const isProcessing = useSelector((state) => state.auth.isProcessing);
 
   const {
     register,
@@ -44,6 +46,7 @@ const PasswordReset = () => {
       })}
     >
       <Card className={styles.login} role='group' ariaLabelledBy='reset'>
+        {isProcessing && <LoadingSlider />}
         <div className={styles.login__header}>
           <h2 className='heading--secondary' id='reset'>
             Reset Password

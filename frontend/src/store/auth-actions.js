@@ -10,9 +10,15 @@ export const createUser = (body) => async (dispatch) => {
   };
 
   try {
-    await axios.post("auth/users/", body, config);
+    dispatch(authActions.processingRequest());
+    await axios.post("/auth/users/", body, config);
     dispatch(authActions.signupSuccess());
-    dispatch(alertActions.success("You have successfully signed up"));
+    dispatch(
+      alertActions.success(
+        `You have successfully signed up
+        An verfication email has been sent to `
+      )
+    );
   } catch (error) {
     dispatch(authActions.signupFail());
     dispatch(alertActions.error("Username or email already exists"));
@@ -47,7 +53,7 @@ export const checkAuthenticated = () => async (dispatch) => {
     const body = { token: localStorage.getItem("access") };
 
     try {
-      const response = await axios.post("auth/jwt/verify/", body, config);
+      const response = await axios.post("/auth/jwt/verify/", body, config);
       if (response.data.code !== "token_not_valid") {
         dispatch(authActions.authenticationSuccess());
       } else {
@@ -72,8 +78,7 @@ export const loadUser = () => async (dispatch) => {
     };
 
     try {
-      const response = await axios.get("auth/users/me/", config);
-
+      const response = await axios.get("/auth/users/me/", config);
       dispatch(authActions.userLoadedSuccess(response.data));
     } catch (error) {
       dispatch(authActions.userLoadedFail());
@@ -83,7 +88,7 @@ export const loadUser = () => async (dispatch) => {
   }
 };
 
-export const login = (body) => async (dispatch) => {
+export const login = (body, callback) => async (dispatch) => {
   const config = {
     headers: {
       "Content-Type": "application/json",
@@ -91,13 +96,13 @@ export const login = (body) => async (dispatch) => {
   };
 
   try {
-    const response = await axios.post("auth/jwt/create/", body, config);
-    dispatch(alertActions.loggingState());
+    dispatch(authActions.processingRequest());
+    const response = await axios.post("/auth/jwt/create/", body, config);
     dispatch(authActions.loginSuccess(response.data));
     dispatch(loadUser());
     dispatch(alertActions.success("You have succesfully logged in"));
+    callback();
   } catch (error) {
-    dispatch(alertActions.loggingState());
     dispatch(authActions.loginFail());
     dispatch(alertActions.error("Username or password is incorrect"));
   }
@@ -111,7 +116,8 @@ export const resetPassword = (body) => async (dispatch) => {
   };
 
   try {
-    await axios.post("auth/users/reset_password/", body, config);
+    dispatch(authActions.processingRequest());
+    await axios.post("/auth/users/reset_password/", body, config);
     dispatch(authActions.passwordResetSuccess());
     dispatch(
       alertActions.success(`Email has been sent successfully to ${body.email}`)
@@ -130,6 +136,7 @@ export const resetPasswordConfirm = (body) => async (dispatch) => {
   };
 
   try {
+    dispatch(authActions.processingRequest());
     await axios.post("/auth/users/reset_password_confirm/", body, config);
     dispatch(authActions.passwordResetConfirmSuccess());
     dispatch(alertActions.success("Your password has been reset successfully"));
@@ -137,4 +144,9 @@ export const resetPasswordConfirm = (body) => async (dispatch) => {
     dispatch(authActions.passwordResetConfirmFail());
     dispatch(alertActions.error("Failed to reset password"));
   }
+};
+
+export const logout = () => async (dispatch) => {
+  dispatch(authActions.logout());
+  dispatch(alertActions.success("You have been successfully logged out"));
 };

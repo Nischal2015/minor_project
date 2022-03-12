@@ -11,6 +11,7 @@ const CustomNavLink = ({
   ariaLabel,
   style,
   className,
+  state,
 }) => {
   return (
     <NavLink
@@ -19,6 +20,7 @@ const CustomNavLink = ({
       data-variant={variant}
       aria-label={ariaLabel}
       style={() => style}
+      state={state}
     >
       {children}
     </NavLink>

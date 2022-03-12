@@ -22,6 +22,9 @@ const Slider = ({ text }) => {
         className={styles.slider}
         onChange={sliderChangeHandler}
         aria-label={`${text} slider`}
+        style={{
+          backgroundSize: `${sliderValue}% 100%`,
+        }}
       />
     </div>
   );

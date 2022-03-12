@@ -13,6 +13,7 @@
     // SHAPE
     &[data-variant~="rounded"] {
       border-radius: 500px;
+      transition: all 0.15s;
     }
 
     // SIZE
