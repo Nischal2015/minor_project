@@ -1,0 +1,35 @@
+.edit {
+  padding: 4.8rem 3.6rem;
+  margin-top: 3.6rem;
+  margin-bottom: 6.4rem;
+
+  &__description {
+    display: grid;
+    gap: 1.6rem 3.2rem;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  &__footer {
+    margin-top: 1.6rem;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-grow: 1;
+    gap: 1.6rem;
+  }
+}
+
+textarea[name="bio"] {
+  grid-column: span 2;
+  resize: none;
+  padding: 1.2rem 1.6rem;
+  border-radius: var(--input-radius);
+  font-size: 1.6rem;
+  font-family: inherit;
+  border: 1px solid var(--primary-color);
+  color: var(--color-grey-dark-1);
+
+  &:focus {
+    outline: 2px solid rgba(var(--tint-primary-color), 0.5);
+  }
+}

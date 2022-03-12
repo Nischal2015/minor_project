@@ -47,7 +47,11 @@ const UserProfile = () => {
             profile={profile}
             username={username}
             onClick={() =>
-              navigate("edit", { state: { profile } }, { replace: true })
+              navigate(
+                "edit",
+                { state: { profile, text: "Edit" } },
+                { replace: true }
+              )
             }
           />
           <Card variant='boxy'>

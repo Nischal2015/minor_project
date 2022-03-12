@@ -42,6 +42,7 @@
     &--job:visited,
     &--norm {
       display: flex;
+      justify-content: stretch;
       align-items: center;
       padding: 1.4rem 1.2rem;
       gap: 1.6rem;

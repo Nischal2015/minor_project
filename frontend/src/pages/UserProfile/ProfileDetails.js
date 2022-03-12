@@ -3,7 +3,7 @@ import Button from "../../components/UI/Button/Button";
 import Card from "../../components/UI/Card/Card";
 import LoginInput from "../../components/UI/Input/LoginInput";
 import axios from "axios";
-
+import { useNavigate } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
@@ -11,9 +11,10 @@ import { useSelector, useDispatch } from "react-redux";
 
 import Select from "react-select";
 import { Navigate, useLocation } from "react-router-dom";
-import styles from "../Entry/Login.module.scss";
 import LoadingSlider from "../../components/UI/Loading/LoadingSlider";
 import { alertActions } from "../../store/alert-slice";
+import styles from "./ProfileDetails.module.scss";
+import Container from "../../components/UI/Container/Container";
 
 const ProfileDetails = () => {
   const [skillArr, setSkillArr] = useState([]);
@@ -23,6 +24,8 @@ const ProfileDetails = () => {
   const dispatch = useDispatch();
   let location = useLocation();
   let profile = location.state?.profile;
+  let text = location.state?.text;
+  let navigate = useNavigate();
 
   const validationSchema = Yup.object().shape({
     firstname: Yup.string()
@@ -131,112 +134,134 @@ const ProfileDetails = () => {
   };
 
   return (
-    <Card className={styles.login} role='group' ariaLabelledBy='kamao'>
-      {isProcessing && <LoadingSlider />}
-      {profileCreationSuccess && <Navigate to='/profile' replace={true} />}
-      <div className={styles.login__header}>
-        <h2 className='heading--secondary' id='kamao'>
-          Kamao
-        </h2>
-        <span>Welcome to you</span>
-      </div>
-      <form
-        onSubmit={handleSubmit((data) => {
-          sendUserData(data);
-        })}
+    <Container>
+      <Card
+        className={styles.edit}
+        role='group'
+        ariaLabelledBy={`${text} your Profile`}
+        variant='boxy'
       >
-        <div className={styles.login__description}>
-          {/* Firstname */}
-          <LoginInput
-            name='firstname'
-            placeholder='Firstname'
-            register={register}
-            errors={errors}
-          />
-          <LoginInput
-            name='lastname'
-            placeholder='Lastname'
-            register={register}
-            errors={errors}
-          />
-
-          <input
-            type='file'
-            name='avatar'
-            accept='image/*'
-            placeholder='Avatar'
-            {...register("avatar")}
-          />
-
-          <LoginInput
-            name='profileTitle'
-            placeholder='Profile Title'
-            register={register}
-            errors={errors}
-          />
-          <textarea name='bio' placeholder='Bio' {...register("bio")} />
-          <LoginInput
-            type='date'
-            name='dob'
-            placeholder='DOB'
-            register={register}
-            errors={errors}
-          />
-          <LoginInput
-            name='country'
-            placeholder='Country'
-            register={register}
-            errors={errors}
-          />
-          <LoginInput
-            name='state'
-            placeholder='State'
-            register={register}
-            errors={errors}
-          />
-          <LoginInput
-            name='city'
-            placeholder='City'
-            register={register}
-            errors={errors}
-          />
-          <Controller
-            name='skills'
-            control={control}
-            render={({ field }) => (
-              <Select
-                {...field}
-                isMulti
-                placeholder='Select skills for the project'
-                getOptionLabel={(option) => option.skill_name}
-                getOptionValue={(option) => option.id}
-                options={skillArr}
-              />
-            )}
-            rules={{ required: true }}
-          />
-          <LoginInput
-            type='number'
-            name='hourlyRate'
-            placeholder='Hourly Rate'
-            register={register}
-            errors={errors}
-          />
-          <LoginInput
-            type='number'
-            name='hoursPerWeek'
-            placeholder='Hours Per Week'
-            register={register}
-            errors={errors}
-          />
+        {isProcessing && <LoadingSlider />}
+        {profileCreationSuccess && <Navigate to='/profile' replace={true} />}
+        <div className={styles.login__header}>
+          <h2 className='heading--secondary' id='kamao'>
+            Kamao
+          </h2>
+          <span>{`${text} your Profile`}</span>
         </div>
-        <div className={styles.login__footer}>
-          <Button type='submit' disabled={isProcessing}>
-            Save Profile
-          </Button>
-        </div>
-      </form>
-    </Card>
+        <form
+          onSubmit={handleSubmit((data) => {
+            sendUserData(data);
+          })}
+        >
+          <div className={styles.edit__description}>
+            {/* Firstname */}
+            <LoginInput
+              name='firstname'
+              placeholder='Firstname'
+              register={register}
+              errors={errors}
+            />
+            <LoginInput
+              name='lastname'
+              placeholder='Lastname'
+              register={register}
+              errors={errors}
+            />
+            <LoginInput
+              name='profileTitle'
+              placeholder='Profile Title'
+              register={register}
+              errors={errors}
+            />
+
+            <input
+              type='file'
+              name='avatar'
+              accept='image/*'
+              placeholder='Avatar'
+              {...register("avatar")}
+            />
+
+            <textarea
+              name='bio'
+              placeholder='Write something about you'
+              rows='8'
+              {...register("bio")}
+            />
+            <LoginInput
+              type='date'
+              name='dob'
+              placeholder='DOB'
+              register={register}
+              errors={errors}
+            />
+            <LoginInput
+              name='country'
+              placeholder='Country'
+              register={register}
+              errors={errors}
+            />
+            <LoginInput
+              name='state'
+              placeholder='State'
+              register={register}
+              errors={errors}
+            />
+            <LoginInput
+              name='city'
+              placeholder='City'
+              register={register}
+              errors={errors}
+            />
+            <LoginInput
+              type='number'
+              name='hourlyRate'
+              placeholder='Hourly Rate'
+              register={register}
+              errors={errors}
+            />
+            <LoginInput
+              type='number'
+              name='hoursPerWeek'
+              placeholder='Hours Per Week'
+              register={register}
+              errors={errors}
+            />
+            <Controller
+              name='skills'
+              control={control}
+              render={({ field }) => (
+                <Select
+                  {...field}
+                  isMulti
+                  placeholder='Select skills for the project'
+                  getOptionLabel={(option) => option.skill_name}
+                  getOptionValue={(option) => option.id}
+                  options={skillArr}
+                />
+              )}
+              rules={{ required: true }}
+            />
+          </div>
+          <div className={styles.edit__footer}>
+            <Button type='submit' disabled={isProcessing}>
+              Save Profile
+            </Button>
+            <Button
+              type='button'
+              variant='outline'
+              disabled={isProcessing}
+              onClick={() => {
+                navigate(-1, { replace: true });
+              }}
+            >
+              Cancel
+            </Button>
+          </div>
+        </form>
+      </Card>
+    </Container>
   );
 };
 

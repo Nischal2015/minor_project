@@ -71,12 +71,12 @@
 .profile__summary {
   display: flex;
   flex-direction: column;
-  gap: 2.4rem;
+  gap: 3.2rem;
   padding: 0 1.6rem;
   height: fit-content;
 
   & > * {
-    padding-bottom: 1.6rem;
+    padding-bottom: 3.2rem;
 
     &:not(:last-child) {
       border-bottom: 2px solid var(--color-grey-light-3);

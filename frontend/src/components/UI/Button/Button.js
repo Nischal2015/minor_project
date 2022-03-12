@@ -10,6 +10,7 @@ const Button = ({
   style,
   onClick = () => {},
   disabled,
+  id,
 }) => {
   return (
     <button
@@ -19,6 +20,7 @@ const Button = ({
       onClick={onClick}
       style={style}
       disabled={disabled}
+      id={id}
     >
       {children}
     </button>

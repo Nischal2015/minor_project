@@ -68,7 +68,7 @@ const UserJobPosts = () => {
                   <PostedTime posted={creation_date} />
                   <CustomNavLink
                     className={styles.list__more}
-                    to={`${id}`}
+                    to={`job-details/${id}`}
                     variant='small primary'
                     ariaLabel='See more detail about the freelancer'
                   >

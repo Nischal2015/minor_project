@@ -26,7 +26,7 @@ const CTAList = () => {
           Signup
         </CustomNavLink>
       </li>
-      <li>
+      {/* <li>
         <CustomNavLink
           to='/postjob'
           variant='outline rounded'
@@ -35,7 +35,7 @@ const CTAList = () => {
         >
           PostJob
         </CustomNavLink>
-      </li>
+      </li> */}
     </React.Fragment>
   );
 };

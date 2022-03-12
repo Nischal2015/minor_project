@@ -17,6 +17,7 @@ urlpatterns = [
     path('postJob/', views.postJob),
     # path('jobList/', views.JobList),
     path('postBid/', views.postBid),
+    path('project-bidder-list/', views.JobBids),
     path('bidList/', views.BidList),
     path('bid-detail/', views.YourBid),
     path('job/<int:pk>/', views.Job_detail),

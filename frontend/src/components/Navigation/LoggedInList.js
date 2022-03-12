@@ -46,9 +46,12 @@ const LoggedInList = () => {
                 <p>Post Job</p>
               </Link>
             </li>
-            <li className={styles["dropdown__content--norm"]}>
+            <li
+              onClick={logOutHandler}
+              className={styles["dropdown__content--norm"]}
+            >
               <MdLogout />
-              <p onClick={logOutHandler}>Logout</p>
+              <p>Logout</p>
             </li>
           </ul>
         </div>

@@ -141,7 +141,7 @@ const Talent = () => {
                           />
                         ) : (
                           <Avatar
-                            src={`static/${avatar}`}
+                            src={`/static/${avatar}`}
                             round={true}
                             size='100%'
                             textSizeRatio={2.25}

@@ -104,7 +104,7 @@ const Bidding = () => {
         open={openModal}
         openHandler={openModalHandler}
         projectId={id}
-        data={bidExistList}
+        data={{ bidData: bidExistList }}
       />
       <Container className={styles.bid}>
         <section className={styles.bid__description}>
@@ -165,13 +165,17 @@ const Bidding = () => {
             {projectFile}
           </a>
         </section>
-        <section className={styles.bid__bids}>Your bids</section>
+        {/* <section className={styles.bid__bids}>Your bids</section> */}
 
         <div className={styles["bid-button"]}>
           {bidExistList.length !== 0 ? (
-            <Button variant='small tertiary' onClick={openModalHandler}>
-              View Bid
-            </Button>
+            bidExistList[0].bid_status !== "A" ? (
+              <Button variant='small tertiary' onClick={openModalHandler}>
+                View Bid
+              </Button>
+            ) : (
+              <Button variant='small tertiary'>View Project Activity</Button>
+            )
           ) : (
             <Button variant='small' onClick={openModalHandler}>
               Place Bid

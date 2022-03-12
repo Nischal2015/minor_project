@@ -13,10 +13,14 @@ class SkillSerializer(serializers.ModelSerializer):
         model = Skill
         fields = '__all__'
 
-
+class ProjectBidSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Project_bid
+        fields = '__all__'
 class ProfileSerializer(serializers.ModelSerializer):
     user = UserSerializer()
     skills = SkillSerializer(many=True)
+    bidder_bids=ProjectBidSerializer(many=True)
     class Meta:
         model = Profile
         fields = '__all__'
@@ -46,7 +50,3 @@ class CategorySerializer(serializers.ModelSerializer):
         model = Job_category
         fields = '__all__'
 
-class ProjectBidSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Project_bid
-        fields = '__all__'

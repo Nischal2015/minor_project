@@ -98,9 +98,9 @@ const LoginInput = ({ type, name, placeholder, register, errors }) => {
             <React.Fragment>
               <input
                 className={styles.input__text}
-                type={type || "text"} // email
-                name={name} // email
-                placeholder={placeholder} // Email address
+                type={type || "text"}
+                name={name}
+                placeholder={placeholder}
                 aria-required='true'
                 {...register(name)}
               />

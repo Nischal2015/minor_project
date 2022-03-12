@@ -33,6 +33,7 @@ const ResetPasswordConfirm = lazy(() =>
   import("./pages/Entry/ResetPasswordConfirm")
 );
 const UserBids = lazy(() => import("./pages/UserProfile/UserBids"));
+const UserBidDetail = lazy(() => import("./pages/UserProfile/UserBidDetail"));
 const UserJobPosts = lazy(() => import("./pages/UserProfile/UserJobPosts"));
 const UserProfile = lazy(() => import("./pages/UserProfile/UserProfile"));
 
@@ -82,6 +83,15 @@ const App = () => {
             element={
               <RequireAuth>
                 <ProfileDetails />
+              </RequireAuth>
+            }
+          />
+
+          <Route
+            path='profile/job-posts/job-details/:id'
+            element={
+              <RequireAuth>
+                <UserBidDetail />
               </RequireAuth>
             }
           />

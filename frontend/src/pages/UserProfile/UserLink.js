@@ -8,11 +8,11 @@ const UserLink = () => {
   return (
     <div className={styles.nav}>
       <NavLink to='bids' className={activeLinkChecker}>
-        Bids
+        Your Bids
       </NavLink>
 
       <NavLink to='job-posts' className={activeLinkChecker}>
-        Job Posts
+        Posted Jobs
       </NavLink>
 
       <NavLink to='three' className={activeLinkChecker}>

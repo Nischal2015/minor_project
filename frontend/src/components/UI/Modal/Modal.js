@@ -11,6 +11,7 @@ const Modal = ({ open, openHandler, projectId, data }) => {
     opacity: "1",
     transform: "translate(-50%, -50%) scale(1)",
   };
+
   return (
     <div className={styles.popup} style={open ? popupStyle : {}}>
       <Card
@@ -28,10 +29,10 @@ const Modal = ({ open, openHandler, projectId, data }) => {
           </IoCloseSharp>
         </div>
         <div className={styles["popup__content--body"]}>
-          {data.length === 0 ? (
+          {data.bidData?.length === 0 ? (
             <PostBid projectId={projectId} />
           ) : (
-            <ViewBid data={data[0]} />
+            <ViewBid openHandler={openHandler} data={data} />
           )}
         </div>
       </Card>

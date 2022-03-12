@@ -269,18 +269,48 @@ def BidList(request):
             query = Project_define.objects.get(id = project.project_define.id)
             project_list.append(query)
         serializer = ProjectDefineSerializer(project_list, many=True)
+        return Response(serializer.data) 
+
+@api_view(['POST'])
+def JobBids(request):
+    bidder_list = []
+    project_id = request.data['projectId']
+    if request.method == 'POST':
+        project_bid = Project_bid.objects.filter(project_define = project_id)
+        displayed_project_bid = project_bid.exclude(bid_status = "R")
+        
+        for project in displayed_project_bid:
+            query = Profile.objects.get(user = project.bidder)
+            bidder_list.append(query)
+        serializer = ProfileSerializer(bidder_list, many=True)
         return Response(serializer.data)
 
-@api_view(['POST', 'GET'])
+@api_view(['POST', 'GET', 'PUT'])
 def YourBid(request):
     user_id = request.data['bidderId']
     project_id = request.data['projectId']
+    query1 = Project_bid.objects.filter(project_define = project_id)
+    query2 = query1.filter(bidder = user_id)
     if request.method == 'POST':
-        query1 = Project_bid.objects.filter(bidder = user_id)
-        query2 = query1.filter(project_define = project_id)
         serializer = ProjectBidSerializer(query2, many=True)
         return Response(serializer.data)
-
+    
+    elif request.method == "PUT":
+        # When we send "R" from front-end
+        status = request.data["status"]        
+        query2.update( bid_status = status )
+        if status == "A":
+            bidders = query1.exclude(bidder = user_id)
+            for bidder in bidders:
+                bidder.bid_status = "R"
+                bidder.save()
+            print(type(bidders))
+            serializer = ProjectBidSerializer(query2, many=True)
+            print(serializer.data)
+            return Response(serializer.data)
+        query3 = query1.exclude(bidder = user_id)
+        return Response(ProjectBidSerializer(query3, many=True).data)
+    
 
 @api_view(['GET', 'PUT'])
 def Job_detail(request, pk):
