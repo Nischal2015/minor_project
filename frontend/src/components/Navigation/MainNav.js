@@ -14,10 +14,10 @@ import { useSelector } from "react-redux";
 const MainNav = () => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   return (
-    <React.Fragment>
+    <>
       {/* This division holds the logo */}
       <div className={styles.logo}>
-        <NavLink to='/' aria-label='Takes user to the home page'>
+        <NavLink to="/" aria-label="Takes user to the home page">
           <Logo />
         </NavLink>
       </div>
@@ -30,7 +30,7 @@ const MainNav = () => {
       </nav>
 
       {/* This div holds the search bar */}
-      <Searchbar variant='rounded' />
+      <Searchbar variant="rounded" />
 
       {/* This div is for the CTA section */}
       {isAuthenticated ? (
@@ -40,7 +40,7 @@ const MainNav = () => {
           <CTAList />
         </ul>
       )}
-    </React.Fragment>
+    </>
   );
 };
 

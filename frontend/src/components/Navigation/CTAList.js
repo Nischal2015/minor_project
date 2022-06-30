@@ -5,12 +5,12 @@ import { CustomNavLink } from "../UI/CustomLink/CustomLink";
 const CTAList = () => {
   const ctaStyle = { fontSize: "1.4rem" };
   return (
-    <React.Fragment>
+    <>
       <li>
         <CustomNavLink
-          to='/login'
-          ariaLabel='Signup for our website'
-          variant='outline rounded'
+          to="/login"
+          ariaLabel="Signup for our website"
+          variant="outline rounded"
           style={ctaStyle}
         >
           Login
@@ -18,9 +18,9 @@ const CTAList = () => {
       </li>
       <li>
         <CustomNavLink
-          to='/signup'
-          variant='tertiary rounded'
-          ariaLabel='Login into our website'
+          to="/signup"
+          variant="tertiary rounded"
+          ariaLabel="Login into our website"
           style={ctaStyle}
         >
           Signup
@@ -36,7 +36,7 @@ const CTAList = () => {
           PostJob
         </CustomNavLink>
       </li> */}
-    </React.Fragment>
+    </>
   );
 };
 

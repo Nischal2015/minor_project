@@ -9,23 +9,23 @@ const NavList = () => {
       ? styles["main-nav__link--active"]
       : styles["main-nav__link"];
   return (
-    <React.Fragment>
+    <>
       <li>
-        <NavLink to='/' className={activeLinkChecker}>
+        <NavLink to="/" className={activeLinkChecker}>
           Home
         </NavLink>
       </li>
       <li>
-        <NavLink to='/talent' className={activeLinkChecker}>
+        <NavLink to="/talent" className={activeLinkChecker}>
           Find Talent
         </NavLink>
       </li>
       <li>
-        <NavLink to='/jobs' className={activeLinkChecker}>
+        <NavLink to="/jobs" className={activeLinkChecker}>
           Find Jobs
         </NavLink>
       </li>
-    </React.Fragment>
+    </>
   );
 };
 

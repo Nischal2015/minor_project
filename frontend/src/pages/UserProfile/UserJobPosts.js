@@ -69,8 +69,8 @@ const UserJobPosts = () => {
                   <CustomNavLink
                     className={styles.list__more}
                     to={`job-details/${id}`}
-                    variant='small primary'
-                    ariaLabel='See more detail about the freelancer'
+                    variant="small primary"
+                    ariaLabel="See more detail about the freelancer"
                   >
                     See More
                   </CustomNavLink>

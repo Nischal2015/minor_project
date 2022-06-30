@@ -14,7 +14,7 @@ const Card = ({
   return (
     <div
       style={style}
-      className={`${styles.card} ${className ? className : ""}`}
+      className={`${styles.card} ${className || ""}`}
       data-variant={variant}
       role={role || null}
       aria-labelledby={ariaLabelledBy || null}

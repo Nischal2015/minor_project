@@ -20,7 +20,7 @@ const JobList = ({
   skills,
 }) => {
   return (
-    <React.Fragment>
+    <>
       <h3 className={styles.list__heading}>
         {project_title || `${first_name} ${last_name}`}
       </h3>
@@ -30,7 +30,7 @@ const JobList = ({
           (bio && getContent(bio))}
       </p>
       {skills ? <SkillsList skills={skills} /> : <></>}
-    </React.Fragment>
+    </>
   );
 };
 

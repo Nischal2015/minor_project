@@ -43,7 +43,7 @@ const UserBidDetail = () => {
 
   const getBidders = useCallback(async () => {
     try {
-      const responseBid = await axios.post(`/api/project-bidder-list/`, {
+      const responseBid = await axios.post("/api/project-bidder-list/", {
         projectId: id,
       });
       setBidders(responseBid.data);
@@ -83,7 +83,7 @@ const UserBidDetail = () => {
   if (error) return <NotFound />;
 
   return (
-    <React.Fragment>
+    <>
       <Modal
         open={openModal}
         openHandler={openModalHandler}
@@ -112,24 +112,24 @@ const UserBidDetail = () => {
             {skills &&
               skills.map((skill) => (
                 <li key={skill.id}>
-                  <Button variant='small outline'>{skill.skill_name}</Button>
+                  <Button variant="small outline">{skill.skill_name}</Button>
                 </li>
               ))}
           </ul>
         </section>
         <section className={styles.bid__documents}>
           <h4>Related Documents</h4>
-          <div></div>
+          <div />
           <a
             href={`/static${projectFile}`}
-            target='_blank'
-            rel='noopener noreferrer'
+            target="_blank"
+            rel="noopener noreferrer"
           >
             {projectFile}
           </a>
         </section>
 
-        <section className={styles2["received-bids"]}></section>
+        <section className={styles2["received-bids"]} />
       </Container>
 
       <Container>
@@ -142,19 +142,19 @@ const UserBidDetail = () => {
                   {avatar === null ? (
                     <Avatar
                       name={`${otherList.first_name} ${otherList.last_name}`}
-                      round={true}
-                      size='100%'
+                      round
+                      size="100%"
                       textSizeRatio={2.25}
-                      alt='Name Initials Avatar'
+                      alt="Name Initials Avatar"
                       maxInitials={3}
                     />
                   ) : (
                     <Avatar
                       src={`/static/${avatar}`}
-                      round={true}
-                      size='100%'
+                      round
+                      size="100%"
                       textSizeRatio={2.25}
-                      alt='Profile Avatar'
+                      alt="Profile Avatar"
                     />
                   )}
                 </NavLink>
@@ -173,8 +173,8 @@ const UserBidDetail = () => {
                   <Button
                     id={user.id}
                     className={styles.list__more}
-                    variant='small tertiary'
-                    ariaLabel='Get access to your room'
+                    variant="small tertiary"
+                    ariaLabel="Get access to your room"
                   >
                     View Project Activity
                   </Button>
@@ -183,8 +183,8 @@ const UserBidDetail = () => {
                     id={user.id}
                     className={styles.list__more}
                     onClick={openModalHandler}
-                    variant='small'
-                    ariaLabel='See more detail about the freelancer'
+                    variant="small"
+                    ariaLabel="See more detail about the freelancer"
                   >
                     View Bid
                   </Button>
@@ -194,7 +194,7 @@ const UserBidDetail = () => {
           );
         })}
       </Container>
-    </React.Fragment>
+    </>
   );
 };
 

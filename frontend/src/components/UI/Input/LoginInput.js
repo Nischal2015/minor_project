@@ -56,33 +56,33 @@ const LoginInput = ({ type, name, placeholder, register, errors }) => {
       {(() => {
         if (type === "number") {
           return (
-            <React.Fragment>
+            <>
               <input
                 className={styles.input__text}
                 type={type || "text"} // email
                 name={name} // email
                 placeholder={placeholder} // Email address
-                aria-required='true'
-                min='1'
-                step='any'
+                aria-required="true"
+                min="1"
+                step="any"
                 {...register(name, { required: true, valueAsNumber: true })}
               />
 
               {errors[name] && (
                 <p className={styles.error}>This field is required</p>
               )}
-            </React.Fragment>
+            </>
           );
         } else if (type === "file") {
           return (
-            <React.Fragment>
+            <>
               <input
                 className={styles.input__text}
                 type={type || "text"} // email
                 name={name} // email
                 placeholder={placeholder} // Email address
-                aria-required='true'
-                accept='image/*,.pdf,.doc,.docx'
+                aria-required="true"
+                accept="image/*,.pdf,.doc,.docx"
                 // value={selectedFile}
                 {...register(name, {
                   required: true,
@@ -91,24 +91,24 @@ const LoginInput = ({ type, name, placeholder, register, errors }) => {
               {errors[name] && (
                 <p className={styles.error}>This field is required</p>
               )}
-            </React.Fragment>
+            </>
           );
         } else {
           return (
-            <React.Fragment>
+            <>
               <input
                 className={styles.input__text}
                 type={type || "text"}
                 name={name}
                 placeholder={placeholder}
-                aria-required='true'
+                aria-required="true"
                 {...register(name)}
               />
 
               {errors[name] && (
                 <p className={styles.error}>{errors[name]?.message}</p>
               )}
-            </React.Fragment>
+            </>
           );
         }
       })()}
