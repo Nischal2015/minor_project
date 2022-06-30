@@ -79,8 +79,8 @@ const Talent = () => {
   return (
     <section className={styles.section__work}>
       <Container className={styles.talent}>
-        <Card className={styles.filter} variant='boxy'>
-          <h3 className='heading--tertiary'>Filters</h3>
+        <Card className={styles.filter} variant="boxy">
+          <h3 className="heading--tertiary">Filters</h3>
 
           {/* Filters pricing section */}
           <Price
@@ -104,16 +104,16 @@ const Talent = () => {
             <h4 className={styles.filter__skills__heading}>Skills</h4>
             <label>
               <Searchbar
-                variant='small'
+                variant="small"
                 onChange={(event) => setSearchTerm(event.target.value)}
               />
             </label>
           </div>
         </Card>
 
-        <Card className={styles.results} variant='boxy'>
+        <Card className={styles.results} variant="boxy">
           <div className={styles.results__heading}>
-            <h3 className='heading--tertiary'>Top Results</h3>
+            <h3 className="heading--tertiary">Top Results</h3>
           </div>
           <div className={styles.results__list}>
             {/* FROM API */}
@@ -121,7 +121,7 @@ const Talent = () => {
             {users === null ? (
               <LoadingBouncer />
             ) : printUsers.length === 0 ? (
-              <SearchNotFound term='Users' />
+              <SearchNotFound term="Users" />
             ) : (
               printUsers
                 .filter((props) => props.user.id !== uid)
@@ -133,19 +133,19 @@ const Talent = () => {
                         {avatar === null ? (
                           <Avatar
                             name={`${otherList.first_name} ${otherList.last_name}`}
-                            round={true}
-                            size='100%'
+                            round
+                            size="100%"
                             textSizeRatio={2.25}
-                            alt='Name Initials Avatar'
+                            alt="Name Initials Avatar"
                             maxInitials={3}
                           />
                         ) : (
                           <Avatar
                             src={`/static/${avatar}`}
-                            round={true}
-                            size='100%'
+                            round
+                            size="100%"
                             textSizeRatio={2.25}
-                            alt='Profile Avatar'
+                            alt="Profile Avatar"
                           />
                         )}
                       </picture>
@@ -159,8 +159,8 @@ const Talent = () => {
                         <CustomNavLink
                           className={styles.list__more}
                           to={`/talent/${user.id}`}
-                          variant='small primary'
-                          ariaLabel='See more detail about the freelancer'
+                          variant="small primary"
+                          ariaLabel="See more detail about the freelancer"
                         >
                           See More{" "}
                           <span>
@@ -173,7 +173,7 @@ const Talent = () => {
                 })
             )}
           </div>
-          <div className={styles.results__pagination}></div>
+          <div className={styles.results__pagination} />
         </Card>
       </Container>
     </section>

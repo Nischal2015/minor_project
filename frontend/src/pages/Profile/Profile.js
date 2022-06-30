@@ -34,7 +34,7 @@ const Profile = () => {
     fetchUserHandler();
   }, [fetchUserHandler]);
 
-  let username = profile?.user?.username;
+  const username = profile?.user?.username;
 
   // const { reliability, punctual, communication, qualityWork } = rating;
 
@@ -43,23 +43,23 @@ const Profile = () => {
   return loading ? (
     <LoadingSpinner />
   ) : (
-    <React.Fragment>
+    <>
       <Container className={styles.profile__top}>
         <ProfileSummary profile={profile} />
         <section className={styles.profile__description}>
           <ProfileInfo profile={profile} username={username} />
-          <Card className={styles.profile__projects} variant='boxy'>
+          <Card className={styles.profile__projects} variant="boxy">
             Project Section
           </Card>
         </section>
       </Container>
       <Container>
-        <Card className={styles.profile__reviews} variant='boxy'>
+        <Card className={styles.profile__reviews} variant="boxy">
           <h3 className={styles.reviews__heading}>Reviews</h3>
-          <div className={styles.reviews__projects}></div>
+          <div className={styles.reviews__projects} />
         </Card>
       </Container>
-    </React.Fragment>
+    </>
   );
 };
 

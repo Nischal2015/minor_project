@@ -5,7 +5,7 @@ import Button from "../UI/Button/Button";
 
 const ProfileInfo = ({ profile, username, onClick }) => {
   return (
-    <Card className={styles.profile__info} variant='boxy'>
+    <Card className={styles.profile__info} variant="boxy">
       <div className={styles.info__heading}>
         <div className={styles.info__heading__user}>
           <h4>
@@ -18,11 +18,11 @@ const ProfileInfo = ({ profile, username, onClick }) => {
             {profile.profile_title}
           </span>
         </div>
-        <div className={styles["info__heading--review"]}></div>
+        <div className={styles["info__heading--review"]} />
       </div>
       <p className={styles.info__body}>{profile.bio}</p>
       <div className={styles.info__footer}>
-        <Button variant='small' onClick={onClick}>
+        <Button variant="small" onClick={onClick}>
           Edit Info
         </Button>
       </div>

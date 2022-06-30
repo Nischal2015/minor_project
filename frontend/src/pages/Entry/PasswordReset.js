@@ -45,25 +45,25 @@ const PasswordReset = () => {
         dispatch(resetPassword(data));
       })}
     >
-      <Card className={styles.login} role='group' ariaLabelledBy='reset'>
+      <Card className={styles.login} role="group" ariaLabelledBy="reset">
         {isProcessing && <LoadingSlider />}
         <div className={styles.login__header}>
-          <h2 className='heading--secondary' id='reset'>
+          <h2 className="heading--secondary" id="reset">
             Reset Password
           </h2>
         </div>
         <div className={styles.login__description}>
           {/* Email */}
           <LoginInput
-            type='email'
-            name='email'
-            placeholder='Email address'
+            type="email"
+            name="email"
+            placeholder="Email address"
             register={register}
             errors={errors}
           />
         </div>
         <div className={styles.login__footer}>
-          <Button type='submit'>Submit</Button>
+          <Button type="submit">Submit</Button>
         </div>
       </Card>
     </form>

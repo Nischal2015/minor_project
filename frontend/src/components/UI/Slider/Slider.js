@@ -15,9 +15,9 @@ const Slider = ({ text }) => {
         {text}:<span> {sliderValue}</span>
       </p>
       <input
-        type='range'
-        min='0'
-        max='100'
+        type="range"
+        min="0"
+        max="100"
         value={sliderValue}
         className={styles.slider}
         onChange={sliderChangeHandler}

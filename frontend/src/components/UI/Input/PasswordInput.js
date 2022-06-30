@@ -25,7 +25,7 @@ const PasswordInput = ({ name, placeholder, errors, register }) => {
           name={name}
           placeholder={placeholder}
           onFocus={() => setFocus(true)}
-          aria-required='true'
+          aria-required="true"
           {...register(name, {
             onBlur: () => setFocus(false),
           })}

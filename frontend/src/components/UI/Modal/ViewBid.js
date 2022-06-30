@@ -3,8 +3,8 @@ import React from "react";
 import Button from "../Button/Button";
 
 const ViewBid = ({ data, openHandler }) => {
-  let bidData = data?.bidData;
-  let setBidders = data?.setBidders;
+  const bidData = data?.bidData;
+  const setBidders = data?.setBidders;
   const acceptBidHandler = async () => {
     try {
       const response = await axios.put("/api/bid-detail/", {
@@ -39,10 +39,10 @@ const ViewBid = ({ data, openHandler }) => {
       <div>Amount:{bidData[0]?.offered_amount}</div>
       <div>Duration:{bidData[0]?.offered_duration}</div>
       <div>Status:{bidData[0]?.bid_status}</div>
-      <Button variant='small' onClick={acceptBidHandler}>
+      <Button variant="small" onClick={acceptBidHandler}>
         Accept
       </Button>
-      <Button variant='small tertiary' onClick={rejectBidHandler}>
+      <Button variant="small tertiary" onClick={rejectBidHandler}>
         Reject
       </Button>
     </div>

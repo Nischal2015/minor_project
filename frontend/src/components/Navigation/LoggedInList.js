@@ -22,9 +22,9 @@ const LoggedInList = () => {
         <div className={styles.dropdown__username}>
           <Avatar
             name={user.username}
-            size='40px'
+            size="40px"
             textSizeRatio={2.25}
-            alt='Name Initials Avatar'
+            alt="Name Initials Avatar"
             maxInitials={3}
           />
           <p className={styles.dropdown__user}>{`@${user.username}`}</p>
@@ -34,14 +34,14 @@ const LoggedInList = () => {
         <div className={styles.dropdown__content}>
           <ul className={styles["dropdown__content--list"]}>
             <li>
-              <Link to='/profile' className={styles["dropdown__content--link"]}>
+              <Link to="/profile" className={styles["dropdown__content--link"]}>
                 <HiUser />
                 <p>Profile</p>
               </Link>
             </li>
 
             <li>
-              <Link to='/postjob' className={styles["dropdown__content--job"]}>
+              <Link to="/postjob" className={styles["dropdown__content--job"]}>
                 <MdEditNote />
                 <p>Post Job</p>
               </Link>

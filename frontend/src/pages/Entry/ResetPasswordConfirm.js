@@ -45,7 +45,7 @@ const ResetPasswordConfirm = () => {
   }, [reset, isSubmitSuccessful]);
 
   if (isSubmitSuccessful) {
-    return <Navigate to='/login' />;
+    return <Navigate to="/login" />;
   }
 
   // Return Statement
@@ -57,32 +57,32 @@ const ResetPasswordConfirm = () => {
         dispatch(resetPasswordConfirm(formData));
       })}
     >
-      <Card className={styles.login} role='group' ariaLabelledBy='reset'>
+      <Card className={styles.login} role="group" ariaLabelledBy="reset">
         {isProcessing && <LoadingSlider />}
         <div className={styles.login__header}>
-          <h2 className='heading--secondary' id='reset'>
+          <h2 className="heading--secondary" id="reset">
             Confirm Password
           </h2>
         </div>
         <div className={styles.login__description}>
           {/* Enter Password */}
           <PasswordInput
-            name='new_password'
-            placeholder='Enter password'
+            name="new_password"
+            placeholder="Enter password"
             register={register}
             errors={errors}
           />
 
           {/* Verify Password */}
           <PasswordInput
-            name='re_new_password'
-            placeholder='Verify password'
+            name="re_new_password"
+            placeholder="Verify password"
             register={register}
             errors={errors}
           />
         </div>
         <div className={styles.login__footer}>
-          <Button type='submit'>Reset Password</Button>
+          <Button type="submit">Reset Password</Button>
         </div>
       </Card>
     </form>
