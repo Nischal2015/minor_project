@@ -3,14 +3,13 @@ import Button from "../../components/UI/Button/Button";
 import Card from "../../components/UI/Card/Card";
 import LoginInput from "../../components/UI/Input/LoginInput";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Navigate, useLocation } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import { useSelector, useDispatch } from "react-redux";
 
 import Select from "react-select";
-import { Navigate, useLocation } from "react-router-dom";
 import LoadingSlider from "../../components/UI/Loading/LoadingSlider";
 import { alertActions } from "../../store/alert-slice";
 import styles from "./ProfileDetails.module.scss";
@@ -22,10 +21,10 @@ const ProfileDetails = () => {
   const isProcessing = useSelector((state) => state.auth.isProcessing);
   const [profileCreationSuccess, setProfileCreationSuccess] = useState(false);
   const dispatch = useDispatch();
-  let location = useLocation();
-  let profile = location.state?.profile;
-  let text = location.state?.text;
-  let navigate = useNavigate();
+  const location = useLocation();
+  const profile = location.state?.profile;
+  const text = location.state?.text;
+  const navigate = useNavigate();
 
   const validationSchema = Yup.object().shape({
     firstname: Yup.string()
@@ -84,16 +83,16 @@ const ProfileDetails = () => {
   } = useForm(formOptions);
 
   const dateConvert = (dob) => {
-    let today = new Date(dob);
-    let dd = String(today.getDate()).padStart(2, "0");
-    let mm = String(today.getMonth() + 1).padStart(2, "0");
-    let yyyy = today.getFullYear();
+    const today = new Date(dob);
+    const dd = String(today.getDate()).padStart(2, "0");
+    const mm = String(today.getMonth() + 1).padStart(2, "0");
+    const yyyy = today.getFullYear();
     return yyyy + "-" + mm + "-" + dd;
   };
 
   const sendUserData = async (data) => {
     const formData = new FormData();
-    const skillsIdArr = data["skills"].map((item) => item.id);
+    const skillsIdArr = data.skills.map((item) => item.id);
 
     formData.append("user", uid);
     formData.append("first_name", data.firstname);
@@ -137,14 +136,14 @@ const ProfileDetails = () => {
     <Container>
       <Card
         className={styles.edit}
-        role='group'
+        role="group"
         ariaLabelledBy={`${text} your Profile`}
-        variant='boxy'
+        variant="boxy"
       >
         {isProcessing && <LoadingSlider />}
-        {profileCreationSuccess && <Navigate to='/profile' replace={true} />}
+        {profileCreationSuccess && <Navigate to="/profile" replace />}
         <div className={styles.login__header}>
-          <h2 className='heading--secondary' id='kamao'>
+          <h2 className="heading--secondary" id="kamao">
             Kamao
           </h2>
           <span>{`${text} your Profile`}</span>
@@ -157,85 +156,85 @@ const ProfileDetails = () => {
           <div className={styles.edit__description}>
             {/* Firstname */}
             <LoginInput
-              name='firstname'
-              placeholder='Firstname'
+              name="firstname"
+              placeholder="Firstname"
               register={register}
               errors={errors}
             />
             <LoginInput
-              name='lastname'
-              placeholder='Lastname'
+              name="lastname"
+              placeholder="Lastname"
               register={register}
               errors={errors}
             />
             <LoginInput
-              name='profileTitle'
-              placeholder='Profile Title'
+              name="profileTitle"
+              placeholder="Profile Title"
               register={register}
               errors={errors}
             />
 
             <input
-              type='file'
-              name='avatar'
-              accept='image/*'
-              placeholder='Avatar'
+              type="file"
+              name="avatar"
+              accept="image/*"
+              placeholder="Avatar"
               {...register("avatar")}
             />
 
             <textarea
-              name='bio'
-              placeholder='Write something about you'
-              rows='8'
+              name="bio"
+              placeholder="Write something about you"
+              rows="8"
               {...register("bio")}
             />
             <LoginInput
-              type='date'
-              name='dob'
-              placeholder='DOB'
+              type="date"
+              name="dob"
+              placeholder="DOB"
               register={register}
               errors={errors}
             />
             <LoginInput
-              name='country'
-              placeholder='Country'
+              name="country"
+              placeholder="Country"
               register={register}
               errors={errors}
             />
             <LoginInput
-              name='state'
-              placeholder='State'
+              name="state"
+              placeholder="State"
               register={register}
               errors={errors}
             />
             <LoginInput
-              name='city'
-              placeholder='City'
+              name="city"
+              placeholder="City"
               register={register}
               errors={errors}
             />
             <LoginInput
-              type='number'
-              name='hourlyRate'
-              placeholder='Hourly Rate'
+              type="number"
+              name="hourlyRate"
+              placeholder="Hourly Rate"
               register={register}
               errors={errors}
             />
             <LoginInput
-              type='number'
-              name='hoursPerWeek'
-              placeholder='Hours Per Week'
+              type="number"
+              name="hoursPerWeek"
+              placeholder="Hours Per Week"
               register={register}
               errors={errors}
             />
             <Controller
-              name='skills'
+              name="skills"
               control={control}
               render={({ field }) => (
                 <Select
                   {...field}
                   isMulti
-                  placeholder='Select skills for the project'
+                  placeholder="Select skills for the project"
                   getOptionLabel={(option) => option.skill_name}
                   getOptionValue={(option) => option.id}
                   options={skillArr}
@@ -245,12 +244,12 @@ const ProfileDetails = () => {
             />
           </div>
           <div className={styles.edit__footer}>
-            <Button type='submit' disabled={isProcessing}>
+            <Button type="submit" disabled={isProcessing}>
               Save Profile
             </Button>
             <Button
-              type='button'
-              variant='outline'
+              type="button"
+              variant="outline"
               disabled={isProcessing}
               onClick={() => {
                 navigate(-1, { replace: true });

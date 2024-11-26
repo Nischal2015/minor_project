@@ -12,7 +12,7 @@ const NotFound = () => {
       <Container className={styles.error}>
         <div className={styles["error-image"]}>
           {/* <Error />  */}
-          <img src={error} alt='Not Found' />
+          <img src={error} alt="Not Found" />
         </div>
         <div className={styles["error-block"]}>
           <div className={styles["error-block__number"]}>404</div>
@@ -22,9 +22,9 @@ const NotFound = () => {
               isn't available!
             </p>
             <CustomNavLink
-              to='/'
+              to="/"
               style={{ width: "fit-content" }}
-              ariaLabel='Go to Home Page'
+              ariaLabel="Go to Home Page"
             >
               Visit Homepage &rarr;
             </CustomNavLink>

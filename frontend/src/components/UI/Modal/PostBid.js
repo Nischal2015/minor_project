@@ -9,7 +9,7 @@ import { useForm } from "react-hook-form";
 import styles from "./PostBid.module.scss";
 
 const PostBid = ({ projectId }) => {
-  let userId = useSelector((state) => state.auth.user.id);
+  const userId = useSelector((state) => state.auth.user.id);
 
   const {
     register,
@@ -57,26 +57,26 @@ const PostBid = ({ projectId }) => {
     >
       <div className={styles.login__description}>
         <LoginInput
-          type='number'
-          name='offered_duration'
-          placeholder='Enter the duration to complete'
+          type="number"
+          name="offered_duration"
+          placeholder="Enter the duration to complete"
           register={register}
           errors={errors}
         />
 
         <LoginInput
-          type='number'
-          name='offered_amount'
-          placeholder='Enter amount to earn from project'
+          type="number"
+          name="offered_amount"
+          placeholder="Enter amount to earn from project"
           register={register}
           errors={errors}
         />
 
         <textarea
-          name='bid_description'
-          rows='4'
-          cols='50'
-          placeholder='Enter the description about you'
+          name="bid_description"
+          rows="4"
+          cols="50"
+          placeholder="Enter the description about you"
           {...register("bid_description", {
             required: true,
           })}
@@ -87,7 +87,7 @@ const PostBid = ({ projectId }) => {
           </p>
         )}
 
-        <Button variant='small' type='submit'>
+        <Button variant="small" type="submit">
           Submit
         </Button>
       </div>

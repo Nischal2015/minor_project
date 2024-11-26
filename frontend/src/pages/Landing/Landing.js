@@ -6,7 +6,7 @@ import AboutSection from "./AboutSection";
 
 const Landing = () => {
   return (
-    <React.Fragment>
+    <>
       {/* Hero Section */}
       <HeroSection />
 
@@ -15,7 +15,7 @@ const Landing = () => {
 
       {/* About us Section */}
       <AboutSection />
-    </React.Fragment>
+    </>
   );
 };
 

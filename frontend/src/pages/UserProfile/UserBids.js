@@ -68,8 +68,8 @@ const UserBids = () => {
                   <CustomNavLink
                     className={styles.list__more}
                     to={`/jobs/${id}`}
-                    variant='small primary'
-                    ariaLabel='See more detail about the job'
+                    variant="small primary"
+                    ariaLabel="See more detail about the job"
                   >
                     See More
                   </CustomNavLink>

@@ -6,8 +6,8 @@ import PostBid from "./PostBid";
 import ViewBid from "./ViewBid";
 
 const Modal = ({ open, openHandler, projectId, data }) => {
-  let popupStyle = { visibility: "visible", opacity: "1" };
-  let contentStyle = {
+  const popupStyle = { visibility: "visible", opacity: "1" };
+  const contentStyle = {
     opacity: "1",
     transform: "translate(-50%, -50%) scale(1)",
   };
@@ -16,14 +16,14 @@ const Modal = ({ open, openHandler, projectId, data }) => {
     <div className={styles.popup} style={open ? popupStyle : {}}>
       <Card
         className={styles.popup__content}
-        variant='boxy'
+        variant="boxy"
         style={open ? contentStyle : {}}
       >
         <div className={styles["popup__content--header"]}>
           <IoCloseSharp
             onClick={openHandler}
             className={styles["popup__content--close"]}
-            title='Close'
+            title="Close"
           >
             Close
           </IoCloseSharp>

@@ -5,11 +5,11 @@ import styles from "./ShowPasswordIcon.module.scss";
 
 const ShowPasswordIcon = ({ hidePassword, setHidePassword }) => {
   return (
-    <div role='button' className={styles.password} onClick={setHidePassword}>
+    <div role="button" className={styles.password} onClick={setHidePassword}>
       {!hidePassword ? (
-        <FaEye aria-label='Hides password' />
+        <FaEye aria-label="Hides password" />
       ) : (
-        <FaEyeSlash aria-label='Shows password' />
+        <FaEyeSlash aria-label="Shows password" />
       )}
     </div>
   );

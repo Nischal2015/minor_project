@@ -91,8 +91,8 @@ const Work = () => {
   return (
     <section className={styles.section__work}>
       <Container className={styles.work}>
-        <Card className={styles.filter} variant='boxy'>
-          <h3 className='heading--tertiary'>Filters</h3>
+        <Card className={styles.filter} variant="boxy">
+          <h3 className="heading--tertiary">Filters</h3>
 
           {/* Price section */}
           <Price
@@ -109,7 +109,7 @@ const Work = () => {
             <h4 className={styles.filter__skills__heading}>Skills</h4>
 
             <Searchbar
-              variant='small'
+              variant="small"
               value={searchTerm}
               onChange={(event) => setSearchTerm(event.target.value)}
             />
@@ -117,7 +117,7 @@ const Work = () => {
             <ul className={styles.filter__skills__list}>
               {skills.map(({ id, name }) => (
                 <li key={id}>
-                  <input type='checkbox' id={id} />
+                  <input type="checkbox" id={id} />
                   <label htmlFor={id}>{name}</label>
                 </li>
               ))}
@@ -126,15 +126,15 @@ const Work = () => {
         </Card>
 
         {/* This is for the results display section */}
-        <Card className={styles.results} variant='boxy'>
+        <Card className={styles.results} variant="boxy">
           <div className={styles.results__heading}>
-            <h3 className='heading--tertiary'>Top Results</h3>
+            <h3 className="heading--tertiary">Top Results</h3>
           </div>
           <div className={styles.results__list}>
             {!jobs ? (
               <LoadingBouncer />
             ) : printJobs.length === 0 ? (
-              <SearchNotFound term='Jobs' />
+              <SearchNotFound term="Jobs" />
             ) : (
               printJobs.map(
                 ({ id, budget_min, budget_max, creation_date, ...jobList }) => (
@@ -149,8 +149,8 @@ const Work = () => {
                       <CustomNavLink
                         className={styles.list__more}
                         to={`${id}`}
-                        variant='small primary'
-                        ariaLabel='See more detail about the freelancer'
+                        variant="small primary"
+                        ariaLabel="See more detail about the freelancer"
                       >
                         See More{" "}
                         <span>

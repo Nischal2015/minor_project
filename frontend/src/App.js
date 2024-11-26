@@ -47,7 +47,7 @@ const App = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    let interval = setTimeout(() => {
+    const interval = setTimeout(() => {
       if (alert) {
         dispatch(alertActions.clear());
       }
@@ -56,16 +56,16 @@ const App = () => {
   }, [alert, dispatch]);
 
   return (
-    <React.Fragment>
+    <>
       <Suspense fallback={<LoadingSpinner />}>
         {/* <ScrollToTop /> */}
         <Navbar />
         {alert && <Alert />}
         <Routes>
-          <Route path='/' element={<Landing />} />
-          <Route path='about' element={<About />} />
+          <Route path="/" element={<Landing />} />
+          <Route path="about" element={<About />} />
           <Route
-            path='profile'
+            path="profile"
             element={
               <RequireAuth>
                 <UserProfile />
@@ -73,13 +73,13 @@ const App = () => {
             }
           >
             <Route index element={<UserBids />} />
-            <Route path='bids' element={<UserBids />} />
-            <Route path='job-posts' element={<UserJobPosts />} />
-            <Route path='three' element={<Pagethree />} />
-            <Route path='four' element={<Pagefour />} />
+            <Route path="bids" element={<UserBids />} />
+            <Route path="job-posts" element={<UserJobPosts />} />
+            <Route path="three" element={<Pagethree />} />
+            <Route path="four" element={<Pagefour />} />
           </Route>
           <Route
-            path='profile/edit'
+            path="profile/edit"
             element={
               <RequireAuth>
                 <ProfileDetails />
@@ -88,25 +88,25 @@ const App = () => {
           />
 
           <Route
-            path='profile/job-posts/job-details/:id'
+            path="profile/job-posts/job-details/:id"
             element={
               <RequireAuth>
                 <UserBidDetail />
               </RequireAuth>
             }
           />
-          <Route path='jobs' element={<Outlet />}>
+          <Route path="jobs" element={<Outlet />}>
             <Route
               index
               element={
-                <React.Fragment>
+                <>
                   <ScrollToTop />
                   <Jobs />
-                </React.Fragment>
+                </>
               }
             />
             <Route
-              path=':id'
+              path=":id"
               element={
                 <RequireAuth>
                   <Bidding />
@@ -114,19 +114,19 @@ const App = () => {
               }
             />
           </Route>
-          <Route path='login' element={<Login />} />
-          <Route path='talent' element={<Outlet />}>
+          <Route path="login" element={<Login />} />
+          <Route path="talent" element={<Outlet />}>
             <Route
               index
               element={
-                <React.Fragment>
+                <>
                   <ScrollToTop />
                   <Talent />
-                </React.Fragment>
+                </>
               }
             />
             <Route
-              path=':id'
+              path=":id"
               element={
                 <RequireAuth>
                   <ScrollToTop />
@@ -136,28 +136,28 @@ const App = () => {
             />
           </Route>
           <Route
-            path='postjob'
+            path="postjob"
             element={
               <RequireAuth>
                 <PostJob />
               </RequireAuth>
             }
           />
-          <Route path='signup' element={<Outlet />}>
+          <Route path="signup" element={<Outlet />}>
             <Route index element={<Signup />} />
           </Route>
-          <Route path='reset-password' element={<PasswordReset />} />
-          <Route path='activate/:uid/:token' element={<ActivateUser />} />
+          <Route path="reset-password" element={<PasswordReset />} />
+          <Route path="activate/:uid/:token" element={<ActivateUser />} />
           <Route
-            path='password/reset/confirm/:uid/:token'
+            path="password/reset/confirm/:uid/:token"
             element={<ResetPasswordConfirm />}
           />
-          <Route path='payment' element={<Payment />} />
-          <Route path='*' element={<NotFound />} />
+          <Route path="payment" element={<Payment />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
         <Footer />
       </Suspense>
-    </React.Fragment>
+    </>
   );
 };
 

@@ -9,7 +9,7 @@ import { FaFacebook, FaInstagram, FaLinkedin, FaTwitter } from "react-icons/fa";
 import styles from "./Footer.module.scss";
 
 const Footer = () => {
-  var date = new Date();
+  const date = new Date();
   return (
     <footer className={styles.section__footer}>
       <Container>
@@ -21,33 +21,33 @@ const Footer = () => {
 
             <div className={styles.footer__social}>
               <a
-                href='https://pcampus.edu.np/'
-                target='_blank'
-                rel='noopener noreferrer'
+                href="https://pcampus.edu.np/"
+                target="_blank"
+                rel="noopener noreferrer"
                 aria-label="Link to Kamao's Facebook Page"
               >
                 <FaFacebook className={styles.facebook} />
               </a>
               <a
-                href='https://pcampus.edu.np/'
-                target='_blank'
-                rel='noopener noreferrer'
+                href="https://pcampus.edu.np/"
+                target="_blank"
+                rel="noopener noreferrer"
                 aria-label="Link to Kamao's Instagram Page"
               >
                 <FaInstagram className={styles.instagram} />
               </a>
               <a
-                href='https://pcampus.edu.np/'
-                target='_blank'
-                rel='noopener noreferrer'
+                href="https://pcampus.edu.np/"
+                target="_blank"
+                rel="noopener noreferrer"
                 aria-label="Link to Kamao's Linkedin Profile"
               >
                 <FaLinkedin className={styles.linkedin} />
               </a>
               <a
-                href='https://pcampus.edu.np/'
-                target='_blank'
-                rel='noopener noreferrer'
+                href="https://pcampus.edu.np/"
+                target="_blank"
+                rel="noopener noreferrer"
                 aria-label="Link to Kamao's Twitter Handle"
               >
                 <FaTwitter className={styles.twitter} />

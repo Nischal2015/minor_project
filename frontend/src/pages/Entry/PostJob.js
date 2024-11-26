@@ -46,8 +46,8 @@ const PostJob = () => {
   };
 
   const registerJob = async (formData) => {
-    const skillFromForm = formData["skills"];
-    const projectCatFromForm = formData["job_category"];
+    const skillFromForm = formData.skills;
+    const projectCatFromForm = formData.job_category;
     const skillIdArr = skillFromForm.map((item) => item.id);
     formData.job_category = projectCatFromForm.id;
     const fData = new FormData();
@@ -90,12 +90,12 @@ const PostJob = () => {
     <Container>
       <Card
         className={styles.postjob}
-        role='group'
-        ariaLabelledBy='Post your job'
-        variant='boxy'
+        role="group"
+        ariaLabelledBy="Post your job"
+        variant="boxy"
       >
         <div className={styles.postjob__header}>
-          <h2 className='heading--secondary' id='kamao'>
+          <h2 className="heading--secondary" id="kamao">
             Create Job Posting
           </h2>
         </div>
@@ -114,29 +114,29 @@ const PostJob = () => {
         >
           <div className={styles.postjob__description}>
             <LoginInput
-              type='text'
-              name='project_title'
-              placeholder='Enter the project title'
+              type="text"
+              name="project_title"
+              placeholder="Enter the project title"
               register={register}
               errors={errors}
             />
 
             <LoginInput
-              type='number'
-              name='project_length'
-              placeholder='Project length in months'
+              type="number"
+              name="project_length"
+              placeholder="Project length in months"
               register={register}
               errors={errors}
             />
 
             <Controller
-              name='job_category'
+              name="job_category"
               control={control}
               render={({ field }) => (
                 <Select
                   {...field}
                   className={styles["form-control"]}
-                  placeholder='Select project category'
+                  placeholder="Select project category"
                   getOptionLabel={(option) => option.job_name}
                   getOptionValue={(option) => option.id}
                   options={categoryArr}
@@ -151,17 +151,17 @@ const PostJob = () => {
             )}
 
             <LoginInput
-              type='number'
-              name='budget_min'
-              placeholder='Enter the minimum budget'
+              type="number"
+              name="budget_min"
+              placeholder="Enter the minimum budget"
               register={register}
               errors={errors}
             />
 
             <LoginInput
-              type='number'
-              name='budget_max'
-              placeholder='Enter the maximum budget'
+              type="number"
+              name="budget_max"
+              placeholder="Enter the maximum budget"
               register={register}
               errors={errors}
             />
@@ -169,18 +169,18 @@ const PostJob = () => {
             <label>
               {/* Enter the bidding deadline */}
               <LoginInput
-                type='datetime-local'
-                name='bid_deadline'
-                placeholder=''
+                type="datetime-local"
+                name="bid_deadline"
+                placeholder=""
                 register={register}
                 errors={errors}
               />
             </label>
 
             <input
-              type='file'
-              name='projectFile'
-              accept='image/*,.pdf,.doc,.docx'
+              type="file"
+              name="projectFile"
+              accept="image/*,.pdf,.doc,.docx"
               {...register("projectFile")}
             />
             {errors.projectFile && (
@@ -190,9 +190,9 @@ const PostJob = () => {
             )}
 
             <textarea
-              name='project_description'
-              rows='8'
-              placeholder='Enter the description for the project'
+              name="project_description"
+              rows="8"
+              placeholder="Enter the description for the project"
               {...register("project_description", {
                 required: true,
               })}
@@ -204,13 +204,13 @@ const PostJob = () => {
             )}
 
             <Controller
-              name='skills'
+              name="skills"
               control={control}
               render={({ field }) => (
                 <Select
                   {...field}
                   isMulti
-                  placeholder='Select skills for the project'
+                  placeholder="Select skills for the project"
                   getOptionLabel={(option) => option.skill_name}
                   getOptionValue={(option) => option.id}
                   options={skillArr}
@@ -225,8 +225,8 @@ const PostJob = () => {
             )}
           </div>
           <div className={styles.postjob__footer}>
-            <Button type='submit'>Post Job</Button>
-            <Button type='button' variant='outline'>
+            <Button type="submit">Post Job</Button>
+            <Button type="button" variant="outline">
               Cancel
             </Button>
           </div>

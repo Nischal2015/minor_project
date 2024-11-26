@@ -13,7 +13,7 @@ const verifyPayment = async (token, amount) => {
   }
 };
 
-let config = {
+const config = {
   // replace this key with yours
   publicKey: "test_public_key_0f04b9bc00614f89b7746a139d9fa052",
   productIdentity: "1234567890",
@@ -44,11 +44,11 @@ let config = {
 };
 
 const Payment = () => {
-  let checkout = new KhaltiCheckout(config);
+  const checkout = new KhaltiCheckout(config);
 
   return (
     <Button
-      id='payment-button'
+      id="payment-button"
       onClick={() => {
         checkout.show({ amount: 1000 });
       }}

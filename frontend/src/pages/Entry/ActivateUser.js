@@ -18,9 +18,9 @@ const ActivateUser = () => {
     navigate("/login", { replace: true });
   };
   return (
-    <Card className={styles.login} role='group' ariaLabelledBy='activate'>
+    <Card className={styles.login} role="group" ariaLabelledBy="activate">
       <div className={styles.login__header}>
-        <h2 className='heading--secondary' id='activate'>
+        <h2 className="heading--secondary" id="activate">
           Activate User
         </h2>
       </div>

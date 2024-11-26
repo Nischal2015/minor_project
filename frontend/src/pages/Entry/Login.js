@@ -62,9 +62,9 @@ const Login = () => {
   const isProcessing = useSelector((state) => state.auth.isProcessing);
   const dispatch = useDispatch();
 
-  let location = useLocation();
-  let from = location.state?.from?.pathname || "/";
-  let navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
+  const navigate = useNavigate();
 
   const locationPath = location.pathname;
 
@@ -73,7 +73,7 @@ const Login = () => {
   }, [locationPath]);
 
   if (isAuthenticated) {
-    return <Navigate to='/' replace={true} />;
+    return <Navigate to="/" replace />;
   }
 
   // Return Statement
@@ -89,10 +89,10 @@ const Login = () => {
           );
       })}
     >
-      <Card className={styles.login} role='group' ariaLabelledBy='kamao'>
+      <Card className={styles.login} role="group" ariaLabelledBy="kamao">
         {isProcessing && <LoadingSlider />}
         <div className={styles.login__header}>
-          <h2 className='heading--secondary' id='kamao'>
+          <h2 className="heading--secondary" id="kamao">
             Kamao
           </h2>
           <span>Welcome to you</span>
@@ -100,9 +100,9 @@ const Login = () => {
         <div className={styles.login__description}>
           {/* Email */}
           <LoginInput
-            type='email'
-            name='email'
-            placeholder='Email address'
+            type="email"
+            name="email"
+            placeholder="Email address"
             register={register}
             errors={errors}
           />
@@ -110,9 +110,9 @@ const Login = () => {
           {/* Username */}
           {containsSignup && (
             <LoginInput
-              type='text'
-              name='username'
-              placeholder='Username'
+              type="text"
+              name="username"
+              placeholder="Username"
               register={register}
               errors={errors}
             />
@@ -120,8 +120,8 @@ const Login = () => {
 
           {/* Password */}
           <PasswordInput
-            name='password'
-            placeholder='Password'
+            name="password"
+            placeholder="Password"
             errors={errors}
             register={register}
           />
@@ -129,8 +129,8 @@ const Login = () => {
           {/* Retype password */}
           {containsSignup && (
             <PasswordInput
-              name='re_password'
-              placeholder='Confirm Password'
+              name="re_password"
+              placeholder="Confirm Password"
               errors={errors}
               register={register}
             />
@@ -138,11 +138,11 @@ const Login = () => {
 
           <div className={styles.login__constraints}>
             <span>
-              <input type='checkbox' id='remember' />
-              <label htmlFor='remember'>Remember me</label>
+              <input type="checkbox" id="remember" />
+              <label htmlFor="remember">Remember me</label>
             </span>
             <Link
-              to='/reset-password'
+              to="/reset-password"
               className={styles["login__signup--link"]}
             >
               Forgot Password?
@@ -151,16 +151,16 @@ const Login = () => {
         </div>
         <div className={styles.login__footer}>
           {containsSignup ? (
-            <Button type='submit' disabled={isProcessing}>
+            <Button type="submit" disabled={isProcessing}>
               Signup
             </Button>
           ) : (
-            <Button type='submit' disabled={isProcessing}>
+            <Button type="submit" disabled={isProcessing}>
               Login
             </Button>
           )}
           <div className={styles["login__footer--other"]}>
-            <Button variant='tertiary'>Continue with Google</Button>
+            <Button variant="tertiary">Continue with Google</Button>
             <Button>Continue with Facebook</Button>
           </div>
         </div>
@@ -168,14 +168,14 @@ const Login = () => {
           {containsSignup ? (
             <>
               Already have an account?{" "}
-              <Link to='/login' className={styles["login__signup--link"]}>
+              <Link to="/login" className={styles["login__signup--link"]}>
                 Login
               </Link>
             </>
           ) : (
             <>
               Don't have an account?{" "}
-              <Link to='/signup' className={styles["login__signup--link"]}>
+              <Link to="/signup" className={styles["login__signup--link"]}>
                 Signup
               </Link>
             </>

@@ -9,24 +9,24 @@ const Price = ({ max, min, onChange }) => {
       <h4 className={styles.filter__price__heading}>Price</h4>
       <div className={styles.filter__price__group}>
         <div className={styles.filter__pricing}>
-          <label htmlFor='min'>min</label>
+          <label htmlFor="min">min</label>
           <Input
             onChange={onChange?.min}
             value={min}
-            type='number'
-            id='min'
-            variant='small'
+            type="number"
+            id="min"
+            variant="small"
           />
         </div>
 
         <div className={styles.filter__pricing}>
-          <label htmlFor='max'>max</label>
+          <label htmlFor="max">max</label>
           <Input
             onChange={onChange?.max}
             value={max}
-            type='number'
-            id='max'
-            variant='small'
+            type="number"
+            id="max"
+            variant="small"
           />
         </div>
       </div>

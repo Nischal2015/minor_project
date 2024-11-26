@@ -15,12 +15,12 @@ const UserProfile = () => {
   const [error, setError] = useState(null);
   const username = useSelector((state) => state.auth.user?.username);
   const userId = useSelector((state) => state.auth.user?.id);
-  let navigate = useNavigate();
+  const navigate = useNavigate();
 
   const fetchUserHandler = async (userId) => {
     setError(null);
     try {
-      const responseProfile = await axios.post(`/api/user-profile/`, {
+      const responseProfile = await axios.post("/api/user-profile/", {
         userId,
       });
       setProfile(responseProfile.data);
@@ -33,13 +33,14 @@ const UserProfile = () => {
     userId && fetchUserHandler(userId);
   }, [userId]);
 
-  if (error)
-    return <Navigate to='edit' state={{ profile: "none" }} replace={true} />;
+  if (error) {
+    return <Navigate to="edit" state={{ profile: "none" }} replace />;
+  }
 
   return !profile ? (
     <LoadingSpinner />
   ) : (
-    <React.Fragment>
+    <>
       <Container className={styles.profile__top}>
         <ProfileSummary profile={profile} username={username} />
         <section className={styles.profile__description}>
@@ -54,19 +55,19 @@ const UserProfile = () => {
               )
             }
           />
-          <Card variant='boxy'>
+          <Card variant="boxy">
             <UserLink />
             <Outlet />
           </Card>
         </section>
       </Container>
       <Container>
-        <Card className={styles.profile__reviews} variant='boxy'>
+        <Card className={styles.profile__reviews} variant="boxy">
           <h3 className={styles.reviews__heading}>Reviews</h3>
-          <div className={styles.reviews__projects}></div>
+          <div className={styles.reviews__projects} />
         </Card>
       </Container>
-    </React.Fragment>
+    </>
   );
 };
 

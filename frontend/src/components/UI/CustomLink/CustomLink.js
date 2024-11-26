@@ -16,7 +16,7 @@ const CustomNavLink = ({
   return (
     <NavLink
       to={to}
-      className={`${styles.btn} ${className ? className : null}`}
+      className={`${styles.btn} ${className || null}`}
       data-variant={variant}
       aria-label={ariaLabel}
       style={() => style}

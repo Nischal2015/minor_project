@@ -94,12 +94,12 @@ const Bidding = () => {
   } = job;
 
   const { country, created } = profile;
-  let fullDate = new Date(created);
-  let fullYear = fullDate.getFullYear();
-  let month = fullDate.getMonth();
-  let date = fullDate.getDate();
+  const fullDate = new Date(created);
+  const fullYear = fullDate.getFullYear();
+  const month = fullDate.getMonth();
+  const date = fullDate.getDate();
   return job.length !== 0 && profile.length !== 0 ? (
-    <React.Fragment>
+    <>
       <Modal
         open={openModal}
         openHandler={openModalHandler}
@@ -128,7 +128,7 @@ const Bidding = () => {
             {skills &&
               skills.map((skill) => (
                 <li key={skill.id}>
-                  <Button variant='small outline'>{skill.skill_name}</Button>
+                  <Button variant="small outline">{skill.skill_name}</Button>
                 </li>
               ))}
           </ul>
@@ -156,11 +156,11 @@ const Bidding = () => {
         </section>
         <section className={styles.bid__documents}>
           <h4>Related Documents</h4>
-          <div></div>
+          <div />
           <a
             href={`/static${projectFile}`}
-            target='_blank'
-            rel='noopener noreferrer'
+            target="_blank"
+            rel="noopener noreferrer"
           >
             {projectFile}
           </a>
@@ -170,20 +170,20 @@ const Bidding = () => {
         <div className={styles["bid-button"]}>
           {bidExistList.length !== 0 ? (
             bidExistList[0].bid_status !== "A" ? (
-              <Button variant='small tertiary' onClick={openModalHandler}>
+              <Button variant="small tertiary" onClick={openModalHandler}>
                 View Bid
               </Button>
             ) : (
-              <Button variant='small tertiary'>View Project Activity</Button>
+              <Button variant="small tertiary">View Project Activity</Button>
             )
           ) : (
-            <Button variant='small' onClick={openModalHandler}>
+            <Button variant="small" onClick={openModalHandler}>
               Place Bid
             </Button>
           )}
         </div>
       </Container>
-    </React.Fragment>
+    </>
   ) : (
     <LoadingBouncer />
   );
